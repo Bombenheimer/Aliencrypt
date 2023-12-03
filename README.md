@@ -1,5 +1,7 @@
 # Aliencrypt
-Useful tool to encrypt files from a chosen path
+Useful tool to encrypt files from a chosen path. Compatable with GNU/Linux, macOS, and Windows.
+
+<img src="https://github.com/Bombenheimer/Aliencrypt/main/Images/Image3.png"/>
 
 ### Installation on GNU/Linux & macOS
 
