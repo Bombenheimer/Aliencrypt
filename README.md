@@ -30,7 +30,7 @@ https://github.com/Bombenheimer/Aliencrypt/assets/145699702/9c0d714e-80f4-4342-b
 
 <details>
 <summary> Details </summary>
-- Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong>
+Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong>
 
-- Version: 1.0
+Version: 1.0
 </details>
