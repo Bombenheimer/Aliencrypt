@@ -27,3 +27,9 @@ Examples and demonstration
 <img src="https://github.com/Bombenheimer/Aliencrypt/blob/fe8482485ca0b43e413ba1950e10ca1a0ef7d959/Images/Image4.png"/>
 
 https://github.com/Bombenheimer/Aliencrypt/assets/145699702/9c0d714e-80f4-4342-bfb0-5d4b39eaf6b4
+
+<details>
+<summary> Details </summary>
+- Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong>
+- Version: 1.0
+</details>
