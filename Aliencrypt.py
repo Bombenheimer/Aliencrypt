@@ -5,6 +5,8 @@ from cryptography.fernet import Fernet as fernet
 
 # USER INTERFACE
 
+os.system("clear")
+
 print("             ___       __   __       __  ___ ")
 print(" /\  |    | |__  |\ | /  ` |__) \ / |__)  |  ")
 print("/~~\ |___ | |___ | \| \__, |  \  |  |     |  ")
