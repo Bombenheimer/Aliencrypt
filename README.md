@@ -3,7 +3,7 @@ Useful tool to encrypt files from a chosen path. Compatable with GNU/Linux, macO
 
 Version ```1.2.0```. See changelog for details.
 
-<img src="https://github.com/Bombenheimer/Aliencrypt/blob/011e81b3f4631662b13bc51b86f71700456736ad/Images/Image3.png"/>
+<img width="1440" alt="Logo-Display" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/8927f26e-f0e9-4fdd-a177-8f7ae1bce6ca">
 
 ### Installation on GNU/Linux & macOS
 
@@ -25,8 +25,6 @@ pip3 install -r requirements.txt
 python3 Aliencrypt.py
 ```
 Examples and demonstration
-
-<img src="https://github.com/Bombenheimer/Aliencrypt/blob/fe8482485ca0b43e413ba1950e10ca1a0ef7d959/Images/Image4.png"/>
 
 https://github.com/Bombenheimer/Aliencrypt/assets/145699702/9c0d714e-80f4-4342-bfb0-5d4b39eaf6b4
 
