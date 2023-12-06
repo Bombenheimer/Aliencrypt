@@ -1,18 +1,29 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import os
+import time
 from cryptography.fernet import Fernet as fernet
 
 # USER INTERFACE
 
 os.system("clear")
 
-print("             ___       __   __       __  ___ ")
-print(" /\  |    | |__  |\ | /  ` |__) \ / |__)  |  ")
-print("/~~\ |___ | |___ | \| \__, |  \  |  |     |  ")
-print("                                             ")
+logo = """
+  dBBBBBb     dBP    dBP dBBBP  dBBBBb  dBBBP dBBBBBb dBP dBP dBBBBBb dBBBBBBP
+       BB                          dBP            dBP    dBP      dB'         
+   dBP BB   dBP    dBP dBBP   dBP dBP dBP     dBBBBK    dBP   dBBBP'   dBP    
+  dBP  BB  dBP    dBP dBP    dBP dBP dBP     dBP  BB   dBP   dBP      dBP     
+ dBBBBBBB dBBBBP dBP dBBBBP dBP dBP dBBBBP  dBP  dB'  dBP   dBP      dBP      
 
-print("*-----------------------------------------*\n")
+                                ᴀʟɪᴇɴᴄʀʏᴘᴛ
+                        [~ᴘʀᴏɢʀᴀᴍ ʙʏ ʙᴏᴍʙᴇɴʜᴇɪᴍᴇʀ~]
+"""
+
+for char in logo:
+    print(char, end='', flush=True)
+    time.sleep(0.01)
+
+print()
 
 path = input("Specify File Path: ")
 
