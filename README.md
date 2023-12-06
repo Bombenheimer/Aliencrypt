@@ -1,7 +1,7 @@
 # Aliencrypt
 Useful tool to encrypt files from a chosen path. Compatable with GNU/Linux, macOS, and Windows.
 
-Version ```1.1.0```. See changelog for details.
+Version ```1.2.0```. See changelog for details.
 
 <img src="https://github.com/Bombenheimer/Aliencrypt/blob/011e81b3f4631662b13bc51b86f71700456736ad/Images/Image3.png"/>
 
@@ -34,5 +34,5 @@ https://github.com/Bombenheimer/Aliencrypt/assets/145699702/9c0d714e-80f4-4342-b
 <summary> Details </summary>
 Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong>
 
-Version: 1.1.0
+Version: 1.2.0
 </details>
