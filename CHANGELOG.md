@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.1] - 2023-12-8
+### Removed
+- The lines ```with open('alien.key', 'wb') as alien:``` and ```alien.write(key)``` to remove the function of making an unecessary decryption key
+
 ## [1.2.0] - 2023-12-6
 ### Added
 - New logo and byline for program
