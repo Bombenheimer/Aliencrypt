@@ -54,9 +54,6 @@ f = fernet(key)
 
 if choice == "y":
 
-	with open('alien.key', 'wb') as alien:
-		alien.write(key)
-
 	for paper in file_bin:
 		with open(paper, 'rb') as thefile:
 			contents = thefile.read()
