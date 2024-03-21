@@ -3,7 +3,7 @@ Useful tool to encrypt files from a chosen path. Compatable with GNU/Linux and m
 
 Big update!!! Version ```2.0.0```. See changelog for details.
 
-<img width="1440" alt="Logo-Display" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/8927f26e-f0e9-4fdd-a177-8f7ae1bce6ca">
+<img width="1280" alt="Logo-Display v2.0.0" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/e8c286f6-ff69-4b45-8ce5-b6468c7ef78f">
 
 ### Installation
 
@@ -41,11 +41,36 @@ Once installed, Aliencrypt must be ran using root permissions like so:
 sudo Aliencrypt
 ```
 
-This is for added protection. If you do not use ```sudo```, the Aliencrypt will refuse to run.
+This is for added protection. If you do not use ```sudo```, the Aliencrypt will refuse to run:
+
+<img width="1280" alt="Root-Permissions-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/a4dcd2ab-f06a-469a-a515-6905114c1d03">
+
 
 # Demonstration
 
-https://github.com/Bombenheimer/Aliencrypt/assets/145699702/fb8c7ccb-1316-46f2-bf93-27a055e08227
+## Encrypt Files (Option 0)
+
+Test Files
+<img width="1280" alt="Test-Files" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/747c3bae-3767-4519-b551-758479e4ccdf">
+
+Option 0
+<img width="1280" alt="Option0-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/cddb9414-f372-4c6b-8c1a-7b95ccfc2b41">
+
+Encrypted Files
+<img width="1280" alt="Encrypted-Files-Demo-1" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/d87fb89b-f240-402e-bb6b-6d47e87d1d8c">
+
+
+## Show Files (Option 1)
+<img width="1280" alt="Option1-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/f64a4908-9333-433f-bfd6-c1d1f6a7ad78">
+
+
+## File Information (Option 2)
+<img width="1280" alt="Option2-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/26de83e8-1549-46b5-a590-4c4eaa63f427">
+
+
+## Change Colors (Option 3)
+<img width="1280" alt="Option3-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/925f5f05-6d97-4be8-9a53-90e2296c96d8">
+
 
 <details>
 <summary> Details </summary>
