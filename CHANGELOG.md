@@ -1,5 +1,9 @@
 # Changelog
 
+# [2.1.1] - 2024-3-22
+### Added
+- Names for decryption keys are now unique each time they are generated
+
 # [2.1.0] - 2024-3-22
 ### Added
 - New option to overwrite files with random data and delete them
