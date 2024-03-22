@@ -1,5 +1,12 @@
 # Changelog
 
+# [2.1.0] - 2024-3-22
+### Added
+- New option to overwrite files with random data and delete them
+- "Show files" option now shows file sizes including B, KiB, MiB, GiB, and TiB
+- New color: Dark Tech
+- Minor changes
+
 # [2.0.0] - 2024-3-20
 ### Added
 - Alienscrypt must now be ran as root to protect files from tampering. See README for details
