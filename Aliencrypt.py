@@ -4,7 +4,7 @@
 import string
 from sys import exit
 from time import sleep
-from random import choices
+from random import choices, choice, shuffle
 from cryptography.fernet import Fernet as fernet
 from os import geteuid, system, path, walk, rename, stat, fsync, urandom, remove
 
@@ -23,7 +23,8 @@ def PrintWelcome(COLOR_1, COLOR_2):
 
                             {COLOR_2}Aliencrypt
                 [Program designed by Bombenheimer]
-                            {COLOR_1}Version 2.1.0{COLOR_2}
+                 https://github.com/Bombenheimer/
+                            {COLOR_1}Version 2.1.1{COLOR_2}
 
     Press {COLOR_1}ENTER{COLOR_2} to continue.
     """
@@ -80,8 +81,27 @@ def CollectFiles(userPath):
 
     return file_list
 
+# GENERATE A DECRYPTION KEY NAME SO IT IS UNIQUE EACH TIME
+def KeyNameGen():
+    lowercase = "abcdefghijklmnopqrstuvwxyz"
+    uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    numbers = "0123456789"
+
+    characters = []
+    char_choices = [lowercase, uppercase, numbers]
+
+    for _ in range(15):
+        char_type = choice(char_choices)
+        char = choice(char_type)
+        characters.append(char)
+        shuffle(characters)
+
+    key_name = ''.join(characters)
+
+    return key_name
+
 # OPTION 0: ENCRYPT ALL FILES
-def EncryptFiles(file_list, userPath, COLOR_1, COLOR_2):
+def EncryptFiles(file_list, userPath, key_name, COLOR_1, COLOR_2):
     encryption_key = fernet.generate_key()
     f = fernet(encryption_key)
 
@@ -146,7 +166,7 @@ def EncryptFiles(file_list, userPath, COLOR_1, COLOR_2):
     match (userChoice):
         # CREATES A DECRYPTION KEY
         case "y":
-            with open('alien.key', 'wb') as decryption_key:
+            with open(f'KEY-{key_name}.key', 'wb') as decryption_key:
                 decryption_key.write(encryption_key)
 
         # EXITS THE PROGRAM
@@ -475,7 +495,8 @@ def main():
 
             match (int(userOption)):
                 case 0:
-                    EncryptFiles(file_list, userPath, COLOR_1, COLOR_2)
+                    key_name = KeyNameGen()
+                    EncryptFiles(file_list, userPath, key_name, COLOR_1, COLOR_2)
                 case 1:
                     ShowFiles(file_list, COLOR_1, COLOR_2)
                 case 2:
