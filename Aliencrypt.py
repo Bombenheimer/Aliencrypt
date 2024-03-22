@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
-# IMPORTING NECESSARY MODULES
-from os import geteuid, system, path, walk, rename
+# IMPORTING NECESSARY MODULES FOR PROGRAM
+import string
 from sys import exit
 from time import sleep
+from random import choices
 from cryptography.fernet import Fernet as fernet
+from os import geteuid, system, path, walk, rename, stat, fsync, urandom, remove
 
-# CHECK IF SCRIPT IS BEING RAN AS ROOT
+# CHECK IF PROGRAM IS BEING RAN AS ROOT
 def IsRoot():
     return geteuid() == 0
 
@@ -31,8 +33,9 @@ def PrintWelcome(COLOR_1, COLOR_2):
         {COLOR_1}[0]{COLOR_2}- Encrypt Files
         {COLOR_1}[1]{COLOR_2}- Show Files
         {COLOR_1}[2]{COLOR_2}- File Information
-        {COLOR_1}[3]{COLOR_2}- Change Colors
-        {COLOR_1}[4]{COLOR_2}- Exit
+        {COLOR_1}[3]{COLOR_2}- Overwrite And Delete Files
+        {COLOR_1}[4]{COLOR_2}- Change Colors
+        {COLOR_1}[5]{COLOR_2}- Exit
     """
     PROMPT_PATH = """
     Enter the full path to the directory you wish to test.
@@ -106,6 +109,7 @@ def EncryptFiles(file_list, userPath, COLOR_1, COLOR_2):
     userChoice = input("    Option: ")
 
     match (userChoice):
+        # ENCRYPTS THE FILE CONTENTS
         case "y":
             for file in file_list:
                 with open(file, 'rb') as readfile:
@@ -114,16 +118,22 @@ def EncryptFiles(file_list, userPath, COLOR_1, COLOR_2):
                 with open(file, 'wb') as writefile:
                     writefile.write(encrypted_contents)
 
+            # ENCRYPTS THE FILENAME
             for file in file_list:
                 name, file_extention = path.splitext(file)
                 byte_name = name.encode("utf-8")
                 encrypted_name = f.encrypt(byte_name)
                 encrypted_name_str = encrypted_name.decode("utf-8")
                 rename(f"{name}{file_extention}", f"{userPath}/{encrypted_name_str}{file_extention}")
+
+        # EXITS THE PROGRAM
         case "n":
             exit(0)
+
+        # PRINT INCORRECT INPUT AND EXITS THE PROGRAM
         case _:
             print("Incorrect input. Try again.")
+            exit(0)
 
     for char in PROMPT_MSG:
         print(char, end='', flush=True)
@@ -134,11 +144,16 @@ def EncryptFiles(file_list, userPath, COLOR_1, COLOR_2):
     print()
 
     match (userChoice):
+        # CREATES A DECRYPTION KEY
         case "y":
             with open('alien.key', 'wb') as decryption_key:
                 decryption_key.write(encryption_key)
+
+        # EXITS THE PROGRAM
         case "n":
             exit(0)
+
+        # PRINTS INCORRECT INPUT AND EXITS THE PROGRAM
         case _:
             print("Incorrect Input. Try again")
 
@@ -149,7 +164,9 @@ def ShowFiles(file_list, COLOR_1, COLOR_2):
     list_length = len(file_list)
 
     TITLE = f"""
-                                    {COLOR_1}File List{COLOR_2}
+                                    {COLOR_1}FILE LIST{COLOR_2}
+
+NUMBER          FILESIZE              FILENAME
     """
 
     system("clear")
@@ -160,8 +177,41 @@ def ShowFiles(file_list, COLOR_1, COLOR_2):
 
     print()
 
+    # TESTS NUMBER OF BYTES TO PRINT CORRECT UNITS
     for i in range(list_length):
-        print(f"{COLOR_1}{i + 1}{COLOR_2}...............{path.basename(file_list[i])}\n", end='', flush=True)
+        file_size = path.getsize(file_list[i])
+        file_name = path.basename(file_list[i])
+        file_unit = "BiB"
+        
+        if (file_size >= 0 and file_size <= 1023):
+            file_unit = "BiB"
+
+        elif(file_size >= 1024 and file_size <= 1048575):
+            file_unit = "KiB"
+            file_size = file_size / 1024
+
+        elif(file_size >= 1048576 and file_size <= 1073741823):
+            file_unit = "MiB"
+            file_size = file_size / (1024 ** 2)
+
+        elif(file_size >= 1073741824 and file_size <= 1099511627775):
+            file_unit = "GiB"
+            file_size = file_size / (1024 ** 3)
+
+        elif(file_size >= 1099511627776 and file_size <= 1125899906842623):
+            file_unit = "TiB"
+            file_size = file_size / (1024 ** 4)
+
+        # TESTS FILE NUMBER THEN PRINTS THE FILES
+        if ((i + 1) >= 0 and (i + 1) <= 9):
+            print(f"{COLOR_1}{i + 1}{COLOR_2}...............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+        
+        elif ((i + 1) >= 10 and (i + 1) <= 99):
+            print(f"{COLOR_1}{i + 1}{COLOR_2}..............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+
+        elif ((i + 1) >= 100 and (i + 1) <= 999):
+            print(f"{COLOR_1}{i + 1}{COLOR_2}.............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+
         sleep(0.01)
         print()
 
@@ -217,7 +267,7 @@ def ShowFileInfo(file_list, COLOR_1, COLOR_2):
     file_extention_list = []
 
     TITLE = f"""
-                                    {COLOR_1}File Information{COLOR_2}
+                                    {COLOR_1}FILE INFORMATION{COLOR_2}
     """
 
     for file in file_list:
@@ -287,7 +337,9 @@ def ShowFileInfo(file_list, COLOR_1, COLOR_2):
 
     Log Files:  {COLOR_1}{number_log}{COLOR_2}
     """
-
+    
+    system("clear")
+    
     for char in TITLE:
         print(char, end='', flush=True)
         sleep(0.01)
@@ -300,7 +352,64 @@ def ShowFileInfo(file_list, COLOR_1, COLOR_2):
 
     return 0
 
-# OPTION 3: CHANGE COLORS WHEN PROMPTED
+# OPTION 3: OVERWRITE AND DELETE FILES
+def OverwriteAndDelete(COLOR_1, COLOR_2, file_list, userPath):
+    WARN_MSG = f"""
+    Are you sure you want to destroy all {COLOR_1}{len(file_list)}{COLOR_2} files?
+                Files may become damaged.
+        
+            Path: {COLOR_1}{userPath}
+        
+            {COLOR_1}[y]{COLOR_2} - Yes
+            {COLOR_1}[n]{COLOR_2} - No
+    """
+    for char in WARN_MSG:
+        print(char, end='', flush=True)
+        sleep(0.01)
+
+    print()
+
+    userChoice = input("    Option: ")
+
+    match (userChoice):
+        # OVERWRITES FILES
+        case "y":
+            pass_num = 3
+            for file in file_list:
+                with open(file, 'rb+') as f:
+                    file_size = path.getsize(file)
+                    for _ in range(pass_num):
+                        f.seek(0)
+                        random_data = ''.join(choices(string.ascii_letters + string.digits, k=file_size))
+                        f.write(random_data.encode())
+                        f.flush()
+                        fsync(f.fileno())
+                        f.seek(0)
+                        f.write(urandom(file_size))
+                        f.flush
+                        fsync(f.fileno())
+
+            # TRUNCATES AND REMOVES FILES
+            for file in file_list:
+                new_filename = ''.join(choices(string.ascii_letters + string.digits, k=10))
+                new_path = path.join(userPath, new_filename)
+                rename(file, new_path)
+                with open(new_path, 'w') as f:
+                    f.truncate(0)
+                remove(new_path)
+
+        # EXITS THE PROGRAM
+        case "n":
+            exit(0)
+    
+        # PRINTS INCORRECT INPUT TO USER AND EXITS THE PROGRAM
+        case _:
+            print("Incorrect input. Try again.")
+            exit(0)
+
+    return 0
+
+# OPTION 4: CHANGE COLORS WHEN PROMPTED
 def ChangeColors(COLOR_1, COLOR_2):
     MSG = f"""
     Pick a color option.
@@ -309,6 +418,7 @@ def ChangeColors(COLOR_1, COLOR_2):
         {COLOR_1}[1]{COLOR_2} - Holiday Season
         {COLOR_1}[2]{COLOR_2} - Frozen Dark
         {COLOR_1}[3]{COLOR_2} - Happy Go Lucky
+        {COLOR_1}[4]{COLOR_2} - Dark Tech
     """
     for char in MSG:
         print(char, end='', flush=True)
@@ -329,6 +439,9 @@ def ChangeColors(COLOR_1, COLOR_2):
         case "3":
             COLOR_1 = "\033[38;5;82m"
             COLOR_2 = "\033[38;5;220m"
+        case "4":
+            COLOR_1 = "\033[38;5;87m"
+            COLOR_2 = "\033[38;5;57m"
         case _:
             print("Incorrect input, try again.")
             sleep(2)
@@ -336,7 +449,7 @@ def ChangeColors(COLOR_1, COLOR_2):
 
     return COLOR_1, COLOR_2
 
-# PRINT EXIT MESSAGE
+# OPTION 5: PRINT EXIT MESSAGE
 def PrintExit(COLOR_1, COLOR_2):
     print(f"     {COLOR_2}Exiting Aliencrypt...")
     sleep(3)
@@ -344,7 +457,7 @@ def PrintExit(COLOR_1, COLOR_2):
 
     return 0
 
-# MAIN FUNCTION
+# MAIN FUNCTION WHERE ALL EXECUTABLE FUNCTIONS AND GLOBAL VARIABLES ARE HELD
 def main():
     # DEFAULT PROGRAM COLORS
     COLOR_1 = "\033[38;5;46m"
@@ -352,19 +465,23 @@ def main():
 
     # SEQUENCE FOR PROGRAM TO FOLLOW INCLUDING USER INPUT AND LOGIC CONTROL
     def MainSequence(COLOR_1, COLOR_2):
+        # PRINT WELCOME MESSAGE AND PROMPT FOR INPUT
         userOption, userPath = PrintWelcome(COLOR_1, COLOR_2)
 
-        if (path.exists(userPath) == True and int(userOption) != 3 and int(userOption) != 4):
-            # OPTION FOR WHEN THE USER DID NOT CHOOSE A COLOR OR EXIT AND PATH IS VALID
+        # OPTION FOR WHEN THE USER DID NOT CHOOSE A COLOR OR EXIT AND PATH IS VALID. IF ALL ARE TRUE,
+        # PROGRAM WILL COLLECT FILES, THEN DECIDE TO ENCRYPT, SHOW, SHOW INFO ABOUT, OR OVERWRITE AND DESTROY FILES
+        if (path.exists(userPath) == True and int(userOption) != 4 and int(userOption) != 5):
             file_list = CollectFiles(userPath)
 
-            match(int(userOption)):
+            match (int(userOption)):
                 case 0:
                     EncryptFiles(file_list, userPath, COLOR_1, COLOR_2)
                 case 1:
                     ShowFiles(file_list, COLOR_1, COLOR_2)
                 case 2:
                     ShowFileInfo(file_list, COLOR_1, COLOR_2)
+                case 3:
+                    OverwriteAndDelete(COLOR_1, COLOR_2, file_list, userPath)
                 case _:
                     print("     Incorrect input, Try again.")
                     print()
@@ -374,14 +491,16 @@ def main():
                         sleep(0.01)
                     userCont = input("")
                     MainSequence(COLOR_1, COLOR_2)
-
-        elif ((path.exists(userPath) == True or path.exists(userPath) == False) and int(userOption) == 3):
-            # OPTION FOR WHEN THE USER DID CHOOSE A COLOR, BUT PATH IS VALID
+            
+        # OPTION FOR WHEN THE USER DID CHOOSE A COLOR, BUT PATH IS VALID
+        # IF ALL ARE TRUE, COLOR CHANGE FUNCTION WILL START AND THE PROGRAM WILL RESTART
+        elif ((path.exists(userPath) == True or path.exists(userPath) == False) and int(userOption) == 4):
             COLOR_1, COLOR_2 = ChangeColors(COLOR_1, COLOR_2)
             MainSequence(COLOR_1, COLOR_2)
 
-        elif (path.exists(userPath) == False and int(userOption) != 3 and int(userOption) != 4):
-            # OPTION FOR WHEN THE USER DID NOT WANT TO EXIT OR CHOOSE A COLOR, BUT PATH IS NOT VALID
+        # OPTION FOR WHEN THE USER DID NOT WANT TO EXIT OR CHOOSE A COLOR, BUT PATH IS NOT VALID
+        # IF ALL ARE TRUE, PRINT THAT THE DIRECTORY PATH DOES NOT EXIST AND RESTART THE PROGRAM
+        elif (path.exists(userPath) == False and int(userOption) != 4 and int(userOption) != 5):
             print(f"    Sorry, the path {userPath} does not exist. Try again.")
             print()
             sleep(2)
@@ -391,12 +510,14 @@ def main():
             userCont = input("")
             MainSequence(COLOR_1, COLOR_2)
 
-        elif (int(userOption) == 4 and (path.exists(userPath) == True or path.exists(userPath) == False)):
-            # OPTION FOR WHEN USER CHOSES TO EXIT BUT PATH IS VALID
+        # OPTION FOR WHEN USER CHOSES TO EXIT BUT PATH IS VALID
+        # IF ALL ARE TRUE, PRINT EXIT PROGRAM AND THE PROGRAM WILL EXIT
+        elif (int(userOption) == 5 and (path.exists(userPath) == True or path.exists(userPath) == False)):
             PrintExit(COLOR_1, COLOR_2)
 
         return 0
 
+    # EXECUTES THE MAIN SEQUENCE FUNCTION TO START PROGRAM
     MainSequence(COLOR_1, COLOR_2)
 
     return 0
