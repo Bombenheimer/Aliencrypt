@@ -1,7 +1,7 @@
 # Aliencrypt
 "Swiss army knife" for file handling. Compatable with GNU/Linux and macOS. :alien:
 
-Big update!!! Version ```2.1.0```. See changelog for details.
+Big update!!! Version ```2.1.1```. See changelog for details.
 
 <img width="1280" alt="Logo-Display v2.0.0" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/e8c286f6-ff69-4b45-8ce5-b6468c7ef78f">
 
@@ -97,7 +97,7 @@ Encrypted Files
   <ul>
     <li>Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong></li>
     <li>Programming Languages: Python, Bash</li>
-    <li>Software Version: v2.0.0</li>
+    <li>Software Version: v2.1.1</li>
   </ul>
 </details>
 
