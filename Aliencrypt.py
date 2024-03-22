@@ -23,7 +23,7 @@ def PrintWelcome(COLOR_1, COLOR_2):
 
                             {COLOR_2}Aliencrypt
                 [Program designed by Bombenheimer]
-                            {COLOR_1}Version 2.0.0{COLOR_2}
+                            {COLOR_1}Version 2.1.0{COLOR_2}
 
     Press {COLOR_1}ENTER{COLOR_2} to continue.
     """
