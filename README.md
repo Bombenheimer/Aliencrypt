@@ -40,22 +40,44 @@ To check if pip installation was successful, run:
 pip --version
 ```
 
-## 2: Clone Repo
-To install, run:
+## 2: Clone Repo and run
+To install and run the program, run:
 ```bash
 git clone https://github.com/Bombenheimer/Aliencrypt.git
 cd Aliencrypt
 pip3 install -r requirements.txt
-sudo ./install.sh
+sudo python3 Aliencrypt.py
 ```
 
+## 3 (Optional) Create Executable
+
+### Using Nuitka
 > [!IMPORTANT]
-> Once installed, Aliencrypt MUST be ran using root permissions.
-> If you do not use ```sudo```, Aliencrypt will refuse to run.
-```
+> Nuitka does not currently work with Python 3.12, only 3.11 and lower.
+
+At this point in the installation process, you can run Aliencrypt by executing the program directly. But if you want to turn the program into an executable binary later, you can use Nuitka by running:
+```bash
+nuitka3 --output-filename=Aliencrypt Aliencrypt.py
+sudo mv Aliencrypt /usr/local/bin
 sudo Aliencrypt
 ```
-This is an example of what will happen when you don't use ```sudo```:
+
+This will use Nuitka to turn the program into an executable and move it to your local software binary directory. It is recommended to use Nuitka as it will make the compliled result much faster by turn the source code into C and the compile it.
+
+### Using Pyinstaller
+If you decide to use Pyinstaller, you can run:
+```
+pyinstaller --onefile --clean --noconfirm --log-level=ERROR Aliencrypt.py
+sudo mv dist/Aliencrypt /usr/local/bin
+rm -rf build/ dist/
+sudo Aliencrypt
+```
+
+This will use Pyinstaller to turn the script into an executable and move it to your local software binary and delete uncessesary generated directories.
+
+> [!IMPORTANT]
+> Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run. This is an example of what will happen when you don't use ```sudo```:
+
 <img width="1280" alt="Root-Permissions-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/a4dcd2ab-f06a-469a-a515-6905114c1d03">
 
 # Demonstration
