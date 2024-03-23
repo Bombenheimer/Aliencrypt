@@ -6,7 +6,7 @@ from sys import exit
 from time import sleep
 from random import choices, choice, shuffle
 from cryptography.fernet import Fernet as fernet
-from os import geteuid, system, path, walk, rename, stat, fsync, urandom, remove
+from os import geteuid, system, path, walk, rename, stat, fsync, urandom, remove, stat
 
 # CHECK IF PROGRAM IS BEING RAN AS ROOT
 def IsRoot():
@@ -24,19 +24,19 @@ def PrintWelcome(COLOR_1, COLOR_2):
                             {COLOR_2}Aliencrypt
                 [Program designed by Bombenheimer]
                  https://github.com/Bombenheimer/
-                            {COLOR_1}Version 2.1.1{COLOR_2}
+                          {COLOR_1}Version 2.2.1{COLOR_2}
 
     Press {COLOR_1}ENTER{COLOR_2} to continue.
     """
     USER_OPTIONS = f"""
     Select an option:
     
-        {COLOR_1}[0]{COLOR_2}- Encrypt Files
-        {COLOR_1}[1]{COLOR_2}- Show Files
-        {COLOR_1}[2]{COLOR_2}- File Information
-        {COLOR_1}[3]{COLOR_2}- Overwrite And Delete Files
-        {COLOR_1}[4]{COLOR_2}- Change Colors
-        {COLOR_1}[5]{COLOR_2}- Exit
+        {COLOR_1}[0]{COLOR_2} - Encrypt Files
+        {COLOR_1}[1]{COLOR_2} - Show Files
+        {COLOR_1}[2]{COLOR_2} - File Information
+        {COLOR_1}[3]{COLOR_2} - Overwrite And Delete Files
+        {COLOR_1}[4]{COLOR_2} - Change Colors
+        {COLOR_1}[5]{COLOR_2} - Exit
     """
     PROMPT_PATH = """
     Enter the full path to the directory you wish to test.
@@ -74,7 +74,7 @@ def CollectFiles(userPath):
 
     for root, dirs, files in walk(userPath):
         for file in files:
-            if (file == "Aliencrypt.py"):
+            if (file == "Aliencrypt.py" and file == "Aliencrypt"):
                 continue
             full_file_path = path.join(root, file)
             file_list.append(full_file_path)
@@ -120,6 +120,8 @@ def EncryptFiles(file_list, userPath, key_name, COLOR_1, COLOR_2):
         {COLOR_1}[y]{COLOR_2} - Yes
         {COLOR_1}[n]{COLOR_2} - No
     """
+    system("clear")
+
     for char in WARN_MSG:
         print(char, end='', flush=True)
         sleep(0.01)
@@ -186,7 +188,7 @@ def ShowFiles(file_list, COLOR_1, COLOR_2):
     TITLE = f"""
                                     {COLOR_1}FILE LIST{COLOR_2}
 
-NUMBER          FILESIZE              FILENAME
+NUMBER          FILE SIZE           FILE PERMISSIONS  FILENAME
     """
 
     system("clear")
@@ -199,6 +201,7 @@ NUMBER          FILESIZE              FILENAME
 
     # TESTS NUMBER OF BYTES TO PRINT CORRECT UNITS
     for i in range(list_length):
+        # CONVERTING FILE SIZE IN BITS TO A MORE READABLE FORMAT
         file_size = path.getsize(file_list[i])
         file_name = path.basename(file_list[i])
         file_unit = "BiB"
@@ -222,15 +225,21 @@ NUMBER          FILESIZE              FILENAME
             file_unit = "TiB"
             file_size = file_size / (1024 ** 4)
 
+        # TEST FILES FOR PERMISSIONS AND COVERTS IT
+        file_info = stat(file_list[i])
+        file_perm_oct = file_info.st_mode & 0o777
+        file_perm_convert = oct(file_perm_oct)
+        file_per = file_perm_convert[2::]
+
         # TESTS FILE NUMBER THEN PRINTS THE FILES
         if ((i + 1) >= 0 and (i + 1) <= 9):
-            print(f"{COLOR_1}{i + 1}{COLOR_2}...............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+            print(f"{COLOR_1}{i + 1}{COLOR_2}...............{file_size:06.2f} {file_unit}..........{file_per}...............{file_name}\n", end='', flush=True)
         
         elif ((i + 1) >= 10 and (i + 1) <= 99):
-            print(f"{COLOR_1}{i + 1}{COLOR_2}..............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+            print(f"{COLOR_1}{i + 1}{COLOR_2}..............{file_size:06.2f} {file_unit}..........{file_per}...............{file_name}\n", end='', flush=True)
 
         elif ((i + 1) >= 100 and (i + 1) <= 999):
-            print(f"{COLOR_1}{i + 1}{COLOR_2}.............{file_size:06.2f} {file_unit}............{file_name}\n", end='', flush=True)
+            print(f"{COLOR_1}{i + 1}{COLOR_2}.............{file_size:06.2f} {file_unit}..........{file_per}...............{file_name}\n", end='', flush=True)
 
         sleep(0.01)
         print()
@@ -373,7 +382,7 @@ def ShowFileInfo(file_list, COLOR_1, COLOR_2):
     return 0
 
 # OPTION 3: OVERWRITE AND DELETE FILES
-def OverwriteAndDelete(COLOR_1, COLOR_2, file_list, userPath):
+def OverwriteAndDelete(file_list, userPath, COLOR_1, COLOR_2):
     WARN_MSG = f"""
     Are you sure you want to destroy all {COLOR_1}{len(file_list)}{COLOR_2} files?
                 Files may become damaged.
@@ -383,6 +392,8 @@ def OverwriteAndDelete(COLOR_1, COLOR_2, file_list, userPath):
             {COLOR_1}[y]{COLOR_2} - Yes
             {COLOR_1}[n]{COLOR_2} - No
     """
+    system("clear")
+
     for char in WARN_MSG:
         print(char, end='', flush=True)
         sleep(0.01)
@@ -440,6 +451,8 @@ def ChangeColors(COLOR_1, COLOR_2):
         {COLOR_1}[3]{COLOR_2} - Happy Go Lucky
         {COLOR_1}[4]{COLOR_2} - Dark Tech
     """
+    system("clear")
+
     for char in MSG:
         print(char, end='', flush=True)
         sleep(0.01)
@@ -471,7 +484,7 @@ def ChangeColors(COLOR_1, COLOR_2):
 
 # OPTION 5: PRINT EXIT MESSAGE
 def PrintExit(COLOR_1, COLOR_2):
-    print(f"     {COLOR_2}Exiting Aliencrypt...")
+    print(f"    {COLOR_2}Exiting Aliencrypt...")
     sleep(3)
     exit(0)
 
@@ -491,23 +504,25 @@ def main():
         # OPTION FOR WHEN THE USER DID NOT CHOOSE A COLOR OR EXIT AND PATH IS VALID. IF ALL ARE TRUE,
         # PROGRAM WILL COLLECT FILES, THEN DECIDE TO ENCRYPT, SHOW, SHOW INFO ABOUT, OR OVERWRITE AND DESTROY FILES
         if (path.exists(userPath) == True and int(userOption) != 4 and int(userOption) != 5):
-            file_list = CollectFiles(userPath)
-
             match (int(userOption)):
                 case 0:
+                    file_list = CollectFiles(userPath)
                     key_name = KeyNameGen()
                     EncryptFiles(file_list, userPath, key_name, COLOR_1, COLOR_2)
                 case 1:
+                    file_list = CollectFiles(userPath)
                     ShowFiles(file_list, COLOR_1, COLOR_2)
                 case 2:
+                    file_list = CollectFiles(userPath)
                     ShowFileInfo(file_list, COLOR_1, COLOR_2)
                 case 3:
-                    OverwriteAndDelete(COLOR_1, COLOR_2, file_list, userPath)
+                    file_list = CollectFiles(userPath)
+                    OverwriteAndDelete(file_list, userPath, COLOR_1, COLOR_2)
                 case _:
-                    print("     Incorrect input, Try again.")
+                    print("    Incorrect input, Try again.")
                     print()
                     sleep(2)
-                    for char in "   Press {COLOR_1}ENTER{COLOR_2} to continue.":
+                    for char in f"    Press {COLOR_1}ENTER{COLOR_2} to continue.":
                         print(char, end='', flush=True)
                         sleep(0.01)
                     userCont = input("")
@@ -525,7 +540,7 @@ def main():
             print(f"    Sorry, the path {userPath} does not exist. Try again.")
             print()
             sleep(2)
-            for char in "   Press {COLOR_1}ENTER{COLOR_2} to continue.":
+            for char in f"    Press {COLOR_1}ENTER{COLOR_2} to continue.":
                 print(char, end='', flush=True)
                 sleep(0.01)
             userCont = input("")

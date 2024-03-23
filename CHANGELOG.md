@@ -1,5 +1,10 @@
 # Changelog
 
+# [2.2.1] - 2024-3-23
+### Added
+- "Show files" option now shows file permissions
+- Fixed a bug where Aliencrypt collected files when the user input an invald option
+
 # [2.1.1] - 2024-3-22
 ### Added
 - Names for decryption keys are now unique each time they are generated
