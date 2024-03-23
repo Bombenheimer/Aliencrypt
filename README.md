@@ -119,7 +119,7 @@ Encrypted Files
   <ul>
     <li>Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong></li>
     <li>Programming Languages: Python, Bash</li>
-    <li>Software Version: v2.1.1</li>
+    <li>Software Version: v2.2.1</li>
   </ul>
 </details>
 
