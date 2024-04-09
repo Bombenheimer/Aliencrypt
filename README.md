@@ -3,8 +3,6 @@
 
 Version ```2.2.1```. See changelog for details.
 
-<img src="https://img.shields.io/github/license/bombenheimer/Aliencrypt" /> 
-
 <img width="1280" alt="Logo-Display v2.0.0" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/e8c286f6-ff69-4b45-8ce5-b6468c7ef78f">
 
 >[!CAUTION]
