@@ -1,7 +1,14 @@
-# Aliencrypt
-"Swiss army knife" for file handling. Compatable with GNU/Linux and macOS. :alien:
+<div id="header" align="center">
+  
+  # <div style="text-align: center;"> **Aliencrypt** </div>
 
-Version ```2.2.1```. See changelog for details.
+  <img src='https://img.shields.io/github/license/bombenheimer/aliencrypt?style=for-the-badge'> <img src='https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=for-the-badge'>
+  
+  **"Swiss army knife"** for file handling. Compatable with GNU/Linux and macOS. :alien:
+
+  Version ```2.2.2```. See [**changelog**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) for details.
+
+</div>
 
 <img width="1280" alt="Logo-Display v2.0.0" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/e8c286f6-ff69-4b45-8ce5-b6468c7ef78f">
 
