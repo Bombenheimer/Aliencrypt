@@ -1,5 +1,9 @@
 # Changelog
 
+# [2.2.2] - 2024-4-8
+### Changed
+- Minor change to filename and README file
+
 # [2.2.1] - 2024-3-23
 ### Added
 - "Show files" option now shows file permissions
