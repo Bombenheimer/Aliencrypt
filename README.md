@@ -2,7 +2,9 @@
   
   # <div style="text-align: center;"> **Aliencrypt** </div>
 
-  <img src='https://img.shields.io/github/license/bombenheimer/aliencrypt?style=for-the-badge'> <img src='https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=for-the-badge'>
+  ![GitHub Repo License](https://img.shields.io/github/license/bombenheimer/aliencrypt?style=for-the-badge) ![GitHub Repo Creation Date](https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=for-the-badge)
+
+  ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=for-the-badge)
   
   **"Swiss army knife"** for file handling. Compatable with GNU/Linux and macOS. :alien:
 
