@@ -22,37 +22,6 @@
 
 # Installation
 
-## 1: Install python3
-To check if ```python3``` is installed, run:
-```bash
-python3 --version
-```
-
-If ```python3``` is not installed, you must [install](https://www.python.org) it first for your system.
-
-## 2: Install pip
-If ```python3``` is installed run:
-```bash
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3 get-pip.py
-```
-
-This will install the ```pip``` package manager. However, if this does not work, you can install pip via your package manager:
-
-| Operating System | Package Manager | Command |
-| -------- | -------- | -------- |
-| Debian GNU/Linux | Apt | ```sudo apt install python3-pip``` |
-| Fedora GNU/Linux | Dnf | ```sudo dnf install python3-pip``` |
-| Arch GNU/Linux | Pacman | ```sudo pacman -S python-pip``` |
-| CentOS/RHEL | Yum | ```sudo yum install python3-pip``` |
-| macOS | Homebrew or MacPorts | ```brew install python3``` or ```sudo port install py-pip``` |
-
-To check if pip installation was successful, run:
-```
-pip --version
-```
-
-## 2: Clone Repo and run
 To install and run the program, run:
 ```bash
 git clone https://github.com/Bombenheimer/Aliencrypt.git
@@ -60,32 +29,6 @@ cd Aliencrypt
 pip3 install -r requirements.txt
 sudo python3 Aliencrypt.py
 ```
-
-## 3 (Optional) Create Executable
-
-### Using Nuitka
-> [!IMPORTANT]
-> Nuitka does not currently work with Python 3.12, only 3.11 and lower.
-
-At this point in the installation process, you can run Aliencrypt by executing the program directly. But if you want to turn the program into an executable binary later, you can use Nuitka by running:
-```bash
-nuitka3 --output-filename=Aliencrypt Aliencrypt.py
-sudo mv Aliencrypt /usr/local/bin
-sudo Aliencrypt
-```
-
-This will use Nuitka to turn the program into an executable and move it to your local software binary directory. It is recommended to use Nuitka as it will make the compliled result much faster by turn the source code into C and the compile it.
-
-### Using Pyinstaller
-If you decide to use Pyinstaller, you can run:
-```
-pyinstaller --onefile --clean --noconfirm --log-level=ERROR Aliencrypt.py
-sudo mv dist/Aliencrypt /usr/local/bin
-rm -rf build/ dist/
-sudo Aliencrypt
-```
-
-This will use Pyinstaller to turn the script into an executable and move it to your local software binary and delete uncessesary generated directories.
 
 > [!IMPORTANT]
 > Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run. This is an example of what will happen when you don't use ```sudo```:
