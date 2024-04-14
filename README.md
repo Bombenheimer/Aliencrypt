@@ -2,17 +2,20 @@
   
   # <div style="text-align: center;"> **Aliencrypt** </div>
 
-  ![GitHub Repo License](https://img.shields.io/github/license/bombenheimer/aliencrypt?style=for-the-badge&logo=github) ![GitHub Repo Creation Date](https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=for-the-badge&logo=github)
+  **"Swiss army knife"** for file handling. :alien:
 
-  ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=for-the-badge&logo=github) ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=for-the-badge&logo=github)
+  | | Status
+  -|-
+  **License** | ![GitHub Repo License](https://img.shields.io/github/license/bombenheimer/aliencrypt?style=flat&logo=github)
+  **Creation Date** | ![GitHub Repo Creation Date](https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=flat&logo=github)
+  **Watchers** | ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=flat&logo=github)
+  **Stars** | ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=flat&logo=github)
+  **Version** | ![Static Badge](https://img.shields.io/badge/v2.2.2-black?style=flat&logo=github&logoColor=white&label=Version&color=5D3FD3)
+  **Supported OS** | ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=linux&logoColor=white&label=GNU%20%2F%20Linux&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=apple&logoColor=white&label=macOS&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Not%20Supported-red?style=flat&logo=windows&logoColor=white&label=Windows&color=FF3131)
   
-  **"Swiss army knife"** for file handling. Compatable with GNU/Linux and macOS. :alien:
-
-  Version ```2.2.2```. See [**changelog**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) for details.
+  See [**changelog**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) for details.
 
 </div>
-
-<img width="1280" alt="Logo-Display v2.0.0" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/e8c286f6-ff69-4b45-8ce5-b6468c7ef78f">
 
 >[!CAUTION]
 > Aliencrypt performs various operations on files, many of which can result in files being unrecoverable and / or destroyed, and can even render your system compromised. It is highly advisable that you ALWAYS use root permissions and ALWAYS check if you are using the correct file path.
@@ -122,14 +125,5 @@ Encrypted Files
 🌈 When this option is chosen, it will ask you what color scheme you would like to pick and it will restart the program to it change to those colors.
 
 <img width="1280" alt="Option3-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/925f5f05-6d97-4be8-9a53-90e2296c96d8">
-
-<details>
-<summary> Details </summary>
-  <ul>
-    <li>Author: <strong><a href="https://github.com/Bombenheimer">Bombenheimer</a></strong></li>
-    <li>Programming Languages: Python, Bash</li>
-    <li>Software Version: v2.2.1</li>
-  </ul>
-</details>
 
 [^1]: Using the Fernet symmetric encryption algorithm; Using 128 bit AES.
