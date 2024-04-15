@@ -11,6 +11,7 @@
   **Watchers** | ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=flat&logo=github)
   **Stars** | ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=flat&logo=github)
   **Version** | ![Static Badge](https://img.shields.io/badge/v2.2.2-black?style=flat&logo=github&logoColor=white&label=Version&color=5D3FD3)
+  **Last Commit** | ![GitHub Last Commit](https://badgen.net/github/last-commit/bombenheimer/aliencrypt/?icon=github)
   **Supported OS** | ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=linux&logoColor=white&label=GNU%20%2F%20Linux&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=apple&logoColor=white&label=macOS&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Not%20Supported-red?style=flat&logo=windows&logoColor=white&label=Windows&color=FF3131)
   
   See [**changelog**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) for details.
