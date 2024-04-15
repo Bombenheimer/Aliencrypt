@@ -32,9 +32,7 @@ sudo python3 Aliencrypt.py
 ```
 
 > [!IMPORTANT]
-> Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run. This is an example of what will happen when you don't use ```sudo```:
-
-<img width="1280" alt="Root-Permissions-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/a4dcd2ab-f06a-469a-a515-6905114c1d03">
+> Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run.
 
 # Demonstration
 > [!TIP]
