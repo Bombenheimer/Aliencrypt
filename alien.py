@@ -24,7 +24,7 @@ def PrintWelcome(COLOR_1, COLOR_2):
                             {COLOR_2}Aliencrypt
                 [Program designed by Bombenheimer]
                  https://github.com/Bombenheimer/
-                          {COLOR_1}Version 2.2.1{COLOR_2}
+                          {COLOR_1}Version 2.2.2{COLOR_2}
 
     Press {COLOR_1}ENTER{COLOR_2} to continue.
     """
