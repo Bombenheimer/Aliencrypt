@@ -28,7 +28,7 @@ To install and run the program, run:
 git clone https://github.com/Bombenheimer/Aliencrypt.git
 cd Aliencrypt
 pip3 install -r requirements.txt
-sudo python3 Aliencrypt.py
+sudo python3 alien.py
 ```
 
 > [!IMPORTANT]
