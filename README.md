@@ -34,9 +34,7 @@ sudo python3 alien.py
 > [!IMPORTANT]
 > Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run.
 
-# Demonstration
-> [!TIP]
-> It is recommended to check if you are using the correct path you are testing with either option 1 or 2, and then use option 0.
+# Usage
 
 ## Encrypt Files (Option 0)
 🔐 When this option is chosen, it will encrypt[^1] all files in the directory you have chosen and ask if you would like to create a decryption key to decrypt the files at a later time. This option also encrypts the names of the files as well (v2.0.0 and up), for extra security. The generated keys have a unique name as well, so you can keep track of each one that you use.
