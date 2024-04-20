@@ -21,18 +21,35 @@
 >[!CAUTION]
 > Aliencrypt performs various operations on files, many of which can result in files being unrecoverable and / or destroyed, and can even render your system compromised. It is highly advisable that you ALWAYS use root permissions and ALWAYS check if you are using the correct file path.
 
+# Dependencies
+<details>
+  </br>
+
+  **C version dependencies**
+  - gcc (C99 and up)
+  - [Libsodium](https://github.com/jedisct1/libsodium/releases/tag/1.0.19-RELEASE)
+  - [Libexif](https://github.com/libexif/libexif/releases/tag/v0.6.24)
+
+  **Python version dependencies**
+  - [Python 3+](https://www.python.org/)
+  - Pip
+  - Cryptography Library (Installed from pip)
+  
+</details>
+
 # Installation
+<details>
+  </br>
+  
+  **To install and run the python version of the program, run:**
+  ```bash
+  git clone https://github.com/Bombenheimer/Aliencrypt.git
+  cd Aliencrypt
+  pip3 install -r requirements.txt
+  sudo python3 alien.py
+  ```
 
-To install and run the program, run:
-```bash
-git clone https://github.com/Bombenheimer/Aliencrypt.git
-cd Aliencrypt
-pip3 install -r requirements.txt
-sudo python3 alien.py
-```
-
-> [!IMPORTANT]
-> Once installed, Aliencrypt MUST be ran using root permissions. If you do not use ```sudo```, Aliencrypt will refuse to run.
+</details>
 
 # Usage
 
