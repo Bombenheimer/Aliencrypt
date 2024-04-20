@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 
+"""
+ INTRODUCTION:
+     This program was designed by Bombenheimer.
+     Follow me on GitHub for more projects like these and collaborate.
+
+ SOCIALS:
+     - GitHub: https://github.com/Bombenheimer/
+     - Linkedin: https://www.linkedin.com/in/bruce-smith-4a4941296/
+     - Discord: https://discord.com/channels/@arrgs8
+     - Spotify: https://open.spotify.com/user/31i7hr5eqfinn6ricygtgsywuthu?si=6150908ac8814b04
+
+ IMPORTANT NOTES:
+     (1) This Program MUST be ran as root!
+     (2) This Program also requires Cryptography for cryptographic file operations. See repo for details.
+"""
+
 # IMPORTING NECESSARY MODULES FOR PROGRAM
 import string
 from sys import exit
