@@ -32,7 +32,7 @@
 #ifndef _WIN32
 
 // UNIX SPECIFIC LIBRARIES
-#include <strings.h> // FUNCTIONS: strerror(), strcmp(), strstr(), strlen(), strrchr(), strcpy(), strcat(), strdup()
+#include <strings.h> // FUNCTIONS: strcmp(), strstr(), strlen(), strrchr(), strcpy(), strcat(), strdup()
 #include <unistd.h> // FUNCTIONS: geteuid(), unlink()
 #include <dirent.h> // FUNCTIONS, MACROS, AND STRUCTS: DIR, opendir() readdir(), closedir(), struct dirent
 #include <iso646.h> // MACROS: and, or, not
@@ -116,7 +116,7 @@
 #define LOG_NUM 1
 
 // VERSION NUMBER
-#define VER_NUM "3.0.0"
+#define VER_NUM "3.0.1"
 
 // FUNCTION PROTOTYPES FOR OPERATIONS
 int PrintLogo(bool showLogo, char* color1, char* color2);
@@ -218,7 +218,7 @@ int main(int argc, char* argv[])
 	{
 		errno = 1;
 		fprintf(stderr, "%sWARNING%s: Aliencrypt MUST be run as root!\n", color1, color2);
-		fprintf(stderr, "aliencrypt : %s\n", strerror(errno));
+		fprintf(stderr, "aliencrypt : Operation not permitted\n");
 		return errno;
 	}
 	else
@@ -422,7 +422,7 @@ int main(int argc, char* argv[])
 						{
 							errno = 2;
 							fprintf(stderr, "%sERROR%s: Directory or file does not exist or cannot be accessed.\n", color1, color2);
-							fprintf(stderr, "aliencrypt : %s\n", strerror(errno));
+							fprintf(stderr, "aliencrypt : No such file or directory\n");
 							return errno;
 
 						} // END OF DIRECTORY CHECK
@@ -448,7 +448,7 @@ int main(int argc, char* argv[])
 					{
 						errno = 2;
 						fprintf(stderr, "%sERROR%s: Key file does not exist.", color1, color2);
-						fprintf(stderr, "aliencrypt : %s\n", strerror(errno));
+						fprintf(stderr, "aliencrypt : Operation not permitted\n");
 						return errno;
 					}
 					else
@@ -752,7 +752,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		char* L7 = "                       Aliencrypt (Unix C Version)\n";
 		char* L8 = "                   [Program designed by Bombenheimer]\n";
 		char* L9 = "                    https://github.com/Bombenheimer/\n";
-		char* L10 = "                                 v3.0.0\n";
+		char* L10 = "                                 v3.0.1\n";
 
 		// GET THE LENGTH OF THE PROGRAM LOGO
 		int programLogoLen = snprintf(NULL, 0, "%s%s %s %s %s %s%s %s %s %s %s %s%s", color1, L1, L2, L3, L4, L5, color2, L6, L7, L8, L9, color1, L10);
@@ -1602,12 +1602,12 @@ int EncryptFiles(bool encryptFiles, unsigned int numFiles, char** fileList, char
 			// ENCRYPT THE DATA
 			if (crypto_secretbox_detached(encrypted_data, tag, inputData, inputSize, nonce, key) != 0)
 			{
-				free(inputData);
-				free(encrypted_data);
-				free(pathToFile);
 				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to encrypt file %s.\n", color1, color2, pathToFile);
 				fprintf(stderr, "aliencrypt : ENCRYPT_ERR\n");
+				free(inputData);
+				free(encrypted_data);
+				free(pathToFile);
 				return errno;
 			}
 
