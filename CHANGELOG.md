@@ -1,5 +1,28 @@
 # Changelog
 
+# [3.0.0] - 2024-4-23
+### Added
+- C version: Aliencrypt has now been rewritten in C with an manpage and a Makefile for installation
+  * More colors
+  * Program can be ran with command line options
+  * Safety checks
+  * Better performance
+  * Status checks
+  * Decrypt files option
+  * Remove Exif Metadata option
+- Both versions: Overwrite passes to the shred in both program versions have been upgraded to 5
+- Both versions: Show files option shows more files up to 9999
+
+### Fixed
+- Python version: Fixed an issue where ebook file extentions were not being checked (.lrf, .mobi)
+- Python version: Fixed key length
+
+### Removed
+- Python version: Removed feature to encrypt filenames as it made filenames too long on some systems and caused errors
+- Python version: Removed lowercase options to generate keynames
+- Python version: Removed install.sh script
+- Python version: Removed File check from where it would check if Aliencrypt.py is one of the files
+
 # [2.2.2] - 2024-4-8
 ### Changed
 - Minor change to filename and README file
@@ -41,7 +64,6 @@
   * Image files (.png, .heic, .jepg, .jpg, etc...)
   * Scripting / Programming files (.py, .c, .java, .js, etc...)
   * And much MUCH MORE!!!
-
 - You can also show the list of files in the directory that you are encrypting after chooisng a path encrypt files, or exit for another time
 - Made don't want to encrypt files? that's okay! You can choose to go back to the options or exit as well
 - More efficient code to improve user experience

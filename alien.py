@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 
+"""
+ INTRODUCTION:
+     This program was designed by Bombenheimer.
+     Follow me on GitHub for more projects like these and collaborate.
+
+ SOCIALS:
+     - GitHub: https://github.com/Bombenheimer/
+     - Linkedin: https://www.linkedin.com/in/bruce-smith-4a4941296/
+     - Discord: https://discord.com/channels/@arrgs8
+     - Spotify: https://open.spotify.com/user/31i7hr5eqfinn6ricygtgsywuthu?si=6150908ac8814b04
+
+ IMPORTANT NOTES:
+     (1) This Program MUST be ran as root!
+     (2) This Program also requires Cryptography for cryptographic file operations. See repo for details.
+"""
+
 # IMPORTING NECESSARY MODULES FOR PROGRAM
 import string
 from sys import exit
@@ -24,7 +40,7 @@ def PrintWelcome(COLOR_1, COLOR_2):
                             {COLOR_2}Aliencrypt
                 [Program designed by Bombenheimer]
                  https://github.com/Bombenheimer/
-                          {COLOR_1}Version 2.2.2{COLOR_2}
+                          {COLOR_1}Version 3.0.0{COLOR_2}
 
     Press {COLOR_1}ENTER{COLOR_2} to continue.
     """
@@ -74,8 +90,6 @@ def CollectFiles(userPath):
 
     for root, dirs, files in walk(userPath):
         for file in files:
-            if (file == "Aliencrypt.py" and file == "Aliencrypt"):
-                continue
             full_file_path = path.join(root, file)
             file_list.append(full_file_path)
 
@@ -241,6 +255,9 @@ NUMBER          FILE SIZE           FILE PERMISSIONS  FILENAME
         elif ((i + 1) >= 100 and (i + 1) <= 999):
             print(f"{COLOR_1}{i + 1}{COLOR_2}.............{file_size:06.2f} {file_unit}..........{file_per}...............{file_name}\n", end='', flush=True)
 
+        elif ((i + 1) >= 1000 and (i + 1) <= 9999):
+            print(f"{COLOR_1}{i + 1}{COLOR_2}............{file_size:06.2f} {file_unit}..........{file_per}...............{file_name}\n", end='', flush=True)
+
         sleep(0.01)
         print()
 
@@ -260,7 +277,7 @@ def ShowFileInfo(file_list, COLOR_1, COLOR_2):
                 '.odt','.pages','.pdf','.rst','.rtf','.tex','.txt','.wpd','.wps','.zabw']
 
     ebook = ['.azw','.azw3','.azw4','.cbc','.cbr','.cbz','.chm','.epub','.fb2','.htm','.htmlz','.lit',
-             'lrf','mobi','.pdb','.pml','.prc','.rb','.snb','.tcr','.txtz']
+             '.lrf','.mobi','.pdb','.pml','.prc','.rb','.snb','.tcr','.txtz']
 
     font = ['.eot','.otf','.ttf','.woff','.woff2']
 
