@@ -14,6 +14,11 @@
  * 	(2) This Program also requires Libexif and Libsodium for file I/O operations. See repo for details.
  */
 
+// DEFINE MACRO FOR GNU SOURCE
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 // STANDARD LIBRARIES
 #include <stdio.h> // FUNCTIONS: printf(), fflush() fprintf()
 #include <errno.h> // MACROS: errno
@@ -1433,7 +1438,7 @@ void RemoveExif(bool removeExif, char** fileList, char* pathToDir, unsigned int 
 char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 {
 	// ALLOCATE SPACE FOR THE KEY NAME
-	char* fullKeyName = (char *)malloc(sizeof(char *) * (KEY_NAME_LEN + 8));
+	char* fullKeyName = (char *)malloc(sizeof(char *) * KEY_NAME_LEN + 9);
 
 	// CHECK IF MEMORY WAS ALLOCATED
 	if (not(fullKeyName))
@@ -1456,7 +1461,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 
 		// FORMATED STRING AND ARRAY TO HOLD GENERATED KEYNAME
 		char* keyName = "KEY-%s.key";
-		char genString[KEY_NAME_LEN + 2];
+		char genString[KEY_NAME_LEN + 1];
 
 		// PRINT START OF OPERATION STATUS TO STDOUT
 		printf("%sGenerating key for decryption...\033[38;5;231m\n", color2);
@@ -1465,7 +1470,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 		srand(time(NULL));
 
 		// GENERATE KEYNAME
-		for (int i = 0; i < KEY_NAME_LEN;)
+		for (int i = 0; i < KEY_NAME_LEN - 1;)
 		{
 			int charSet = rand() % 2;
 			int charSetLen = strlen(keyChars[charSet]);
@@ -1475,10 +1480,12 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 				genString[i++] = keyChars[charSet][rand() % charSetLen];
 			}
 		}
+
+		// NULL TERMINATE GENERATED STRING
+		genString[KEY_NAME_LEN - 1] = '\0';
 		
 		// COPY CONTENTS TO KEYNAME VARIABLE
-		snprintf(fullKeyName, KEY_NAME_LEN + 4, keyName, genString);
-		strcat(fullKeyName, ".key");
+		snprintf(fullKeyName, KEY_NAME_LEN + 9, keyName, genString);
 
 		// INCREMENT NUM OF FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
