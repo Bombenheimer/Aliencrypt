@@ -121,7 +121,7 @@
 #define LOG_NUM 1
 
 // VERSION NUMBER
-#define VER_NUM "3.0.1"
+#define VER_NUM "3.0.2"
 
 // FUNCTION PROTOTYPES FOR OPERATIONS
 int PrintLogo(bool showLogo, char* color1, char* color2);
@@ -757,7 +757,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		char* L7 = "                       Aliencrypt (Unix C Version)\n";
 		char* L8 = "                   [Program designed by Bombenheimer]\n";
 		char* L9 = "                    https://github.com/Bombenheimer/\n";
-		char* L10 = "                                 v3.0.1\n";
+		char* L10 = "                                 v3.0.2\n";
 
 		// GET THE LENGTH OF THE PROGRAM LOGO
 		int programLogoLen = snprintf(NULL, 0, "%s%s %s %s %s %s%s %s %s %s %s %s%s", color1, L1, L2, L3, L4, L5, color2, L6, L7, L8, L9, color1, L10);
