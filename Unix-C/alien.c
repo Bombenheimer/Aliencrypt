@@ -630,7 +630,7 @@ int main(int argc, char* argv[])
 				{
 					errno = 1;
 					fprintf(stderr, "%sWARNING%s: The directory you have entered is a sensitive directory.\n", color1, color2);
-					printf(stderr, "aliencrypt : %s : %s\n", LinuxDirs[i], strerror(errno));
+					fprintf(stderr, "aliencrypt : %s : %s\n", LinuxDirs[i], strerror(errno));
 					return errno;
 				}
 				
