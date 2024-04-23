@@ -1,5 +1,9 @@
 # Changelog
 
+# [3.0.1] - 2024-4-23
+### Fixed
+- C version: Bugs and security fixes
+
 # [3.0.0] - 2024-4-23
 ### Added
 - C version: Aliencrypt has now been rewritten in C with an manpage and a Makefile for installation
