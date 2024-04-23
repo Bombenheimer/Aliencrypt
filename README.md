@@ -1,87 +1,85 @@
 <div id="header" align="center">
   
-  # <div style="text-align: center;"> **Aliencrypt** </div>
+  # <div style="text-align: center;"> **ＡＬＩＥＮＣＲＹＰＴ** </div>
 
-  **"Swiss army knife"** for file handling. :alien:
+  **"sᴡɪss ᴀʀᴍʏ ᴋɴɪғᴇ"** ғᴏʀ ғɪʟᴇ ʜᴀɴᴅʟɪɴɢ. :alien:
 
-  | | Status
+  | | sᴛᴀᴛᴜs
   -|-
-  **License** | ![GitHub Repo License](https://img.shields.io/github/license/bombenheimer/aliencrypt?style=flat&logo=github)
-  **Creation Date** | ![GitHub Repo Creation Date](https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=flat&logo=github)
-  **Watchers** | ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=flat&logo=github)
-  **Stars** | ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=flat&logo=github)
-  **Version** | ![GitHub Release](https://img.shields.io/github/v/release/bombenheimer/aliencrypt?style=flat&logo=github&color=5D3FD3)
-  **Last Commit** | ![GitHub last commit](https://img.shields.io/github/last-commit/bombenheimer/aliencrypt?style=flat&logo=github)
-  **Project Size** | ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/bombenheimer/aliencrypt?style=flat&logo=github&color=orange)
-  **Downloads** | ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bombenheimer/aliencrypt/total?style=flat&logo=github)
-  **Supported OS** | ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=linux&logoColor=white&label=GNU%20%2F%20Linux&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=apple&logoColor=white&label=macOS&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Not%20Supported-red?style=flat&logo=windows&logoColor=white&label=Windows&color=FF3131)
+  **ʟɪᴄᴇɴsᴇ** | ![GitHub Repo License](https://img.shields.io/github/license/bombenheimer/aliencrypt?style=flat&logo=github)
+  **ᴄʀᴇᴀᴛɪᴏɴ ᴅᴀᴛᴇ** | ![GitHub Repo Creation Date](https://img.shields.io/github/created-at/bombenheimer/aliencrypt?style=flat&logo=github)
+  **ᴡᴀᴛᴄʜᴇʀs** | ![GitHub watchers](https://img.shields.io/github/watchers/bombenheimer/aliencrypt?style=flat&logo=github)
+  **sᴛᴀʀs** | ![GitHub Repo stars](https://img.shields.io/github/stars/bombenheimer/aliencrypt?style=flat&logo=github)
+  **ᴠᴇʀsɪᴏɴ** | ![GitHub Release](https://img.shields.io/github/v/release/bombenheimer/aliencrypt?style=flat&logo=github&color=5D3FD3)
+  **ʟᴀsᴛ ᴄᴏᴍᴍɪᴛ** | ![GitHub last commit](https://img.shields.io/github/last-commit/bombenheimer/aliencrypt?style=flat&logo=github)
+  **ᴘʀᴏᴊᴇᴄᴛ sɪᴢᴇ** | ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/bombenheimer/aliencrypt?style=flat&logo=github&color=orange)
+  **ᴅᴏᴡɴʟᴏᴀᴅs** | ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bombenheimer/aliencrypt/total?style=flat&logo=github)
+  **sᴜᴘᴘᴏʀᴛᴇᴅ ᴏs** | ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=linux&logoColor=white&label=GNU%20%2F%20Linux&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=apple&logoColor=white&label=macOS&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Not%20Supported-red?style=flat&logo=windows&logoColor=white&label=Windows&color=FF3131)
   
-  See [**changelog**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) for details.
+  sᴇᴇ [**ᴄʜᴀɴɢᴇʟᴏɢ**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) ғᴏʀ ᴅᴇᴛᴀɪʟs.
 
 </div>
 
 >[!CAUTION]
 > Aliencrypt performs various operations on files, many of which can result in files being unrecoverable and / or destroyed, and can even render your system compromised. It is highly advisable that you ALWAYS use root permissions and ALWAYS check if you are using the correct file path.
 
-# Dependencies
+# ＤＥＰＥＮＤＥＮＣＩＥＳ
 <details>
   </br>
 
-  **C version dependencies**
-  - gcc (C99 and up)
-  - [Libsodium](https://github.com/jedisct1/libsodium/releases/tag/1.0.19-RELEASE)
-  - [Libexif](https://github.com/libexif/libexif/releases/tag/v0.6.24)
+  **ᴄ ᴠᴇʀsɪᴏɴ ᴅᴇᴘᴇɴᴅᴇɴᴄɪᴇs**
+  - ɢᴄᴄ (ᴄ99 ᴀɴᴅ ᴜᴘ)
+  - [ʟɪʙsᴏᴅɪᴜᴍ](https://github.com/jedisct1/libsodium/releases/tag/1.0.19-RELEASE)
+  - [ʟɪʙᴇxɪғ](https://github.com/libexif/libexif/releases/tag/v0.6.24)
 
-  **Python version dependencies**
-  - [Python 3+](https://www.python.org/)
-  - Pip
-  - Cryptography Library (Installed from pip)
+  **ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ ᴅᴇᴘᴇɴᴅᴇɴᴄɪᴇs**
+  - [ᴘʏᴛʜᴏɴ 3+](https://www.python.org/)
+  - ᴘɪᴘ
+  - ᴄʀʏᴘᴛᴏɢʀᴀᴘʜʏ ʟɪʙʀᴀʀʏ (ɪɴsᴛᴀʟʟᴇᴅ ғʀᴏᴍ ᴘɪᴘ)
   
 </details>
 
-# Installation
+# ＩＮＳＴＡＬＬＡＴＩＯＮ
 <details>
   </br>
 
-  **To install and run the C version of the program, run:**
+  **ᴛᴏ ɪɴsᴛᴀʟʟ ᴀɴᴅ ʀᴜɴ ᴛʜᴇ ᴄ ᴠᴇʀsɪᴏɴ ᴏғ ᴛʜᴇ ᴘʀᴏɢʀᴀᴍ, ʀᴜɴ:**
   ```bash
   sudo make
   sudo make install
   sudo make clean
   ```
   
-  **To install and run the python version of the program, run:**
+  **ᴛᴏ ɪɴsᴛᴀʟʟ ᴀɴᴅ ʀᴜɴ ᴛʜᴇ ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ ᴏғ ᴛʜᴇ ᴘʀᴏɢʀᴀᴍ, ʀᴜɴ:**
   ```bash
-  git clone https://github.com/Bombenheimer/Aliencrypt.git
-  cd Aliencrypt
   pip3 install -r requirements.txt
   sudo python3 alien.py
   ```
 </details>
 
-# Usage
+# ＵＳＡＧＥ
 <details>
 
 </br>
 <div id="header" align="center">
 
-  ## C Program Usage
+  ## Ｃ ＰＲＯＧＲＡＭ ＵＳＡＧＥ
   
-  **Command Line Arguments**
-  **Argument** | **Description** | **Options**
+  **ᴄᴏᴍᴍᴀɴᴅ ʟɪɴᴇ ᴀʀɢᴜᴍᴇɴᴛs**
+  **ᴀʀɢᴜᴍᴇɴᴛ** | **ᴅᴇsᴄʀɪᴘᴛɪᴏɴ** | **ᴏᴘᴛɪᴏɴs**
   -|-|-
-  **--encrypt** | Encrypt a file or all files in a directory | N / A
-  **--decrypt** | Decrypt a file or all files in a directory | N / A
-  **--show-files** | Show files and file info about a file or all files in a directory | N / A
-  **--show-file-types** | Show the type of a file or all files in a directory | N / A
-  **--remove-exif** | Remove exif metadata from a file or all files in a directory (jpeg images only) | N / A
-  **--shred** | Overwrite and a file or all files in a directory | N / A
-  **--help** | Show program usage options | N / A
-  **--path=** | Provide a file path to a directory or file | N / A
-  **--key=** | Provide a generated decryption key | N / A
-  **--version** | Show program version | N / A
+  **--encrypt** | ᴇɴᴄʀʏᴘᴛ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
+  **--decrypt** | ᴅᴇᴄʀʏᴘᴛ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
+  **--show-files** | sʜᴏᴡ ғɪʟᴇs ᴀɴᴅ ғɪʟᴇ ɪɴғᴏ ᴀʙᴏᴜᴛ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
+  **--show-file-types** | sʜᴏᴡ ᴛʜᴇ ᴛʏᴘᴇ ᴏғ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
+  **--remove-exif** | ʀᴇᴍᴏᴠᴇ ᴇxɪғ ᴍᴇᴛᴀᴅᴀᴛᴀ ғʀᴏᴍ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ (ᴊᴘᴇɢ ɪᴍᴀɢᴇs ᴏɴʟʏ) | ɴ / ᴀ
+  **--shred** | ᴏᴠᴇʀᴡʀɪᴛᴇ ᴀɴᴅ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
+  **--help** | sʜᴏᴡ ᴘʀᴏɢʀᴀᴍ ᴜsᴀɢᴇ ᴏᴘᴛɪᴏɴs | ɴ / ᴀ
+  **--path=** | ᴘʀᴏᴠɪᴅᴇ ᴀ ғɪʟᴇ ᴘᴀᴛʜ ᴛᴏ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ ᴏʀ ғɪʟᴇ | ɴ / ᴀ
+  **--key=** | ᴘʀᴏᴠɪᴅᴇ ᴀ ɢᴇɴᴇʀᴀᴛᴇᴅ ᴅᴇᴄʀʏᴘᴛɪᴏɴ ᴋᴇʏ | ɴ / ᴀ
+  **--version** | sʜᴏᴡ ᴘʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ | ɴ / ᴀ
 
-  **For more information on program usage, reference the manpage:**
+  **ғᴏʀ ᴍᴏʀᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ ᴘʀᴏɢʀᴀᴍ ᴜsᴀɢᴇ, ʀᴇғᴇʀᴇɴᴄᴇ ᴛʜᴇ ᴍᴀɴᴘᴀɢᴇ:**
   <div id="header" align="left">
     
   ```bash
@@ -91,41 +89,30 @@
   
 </br>
 
-## Python Program Usage
+## ＰＹＴＨＯＮ ＰＲＯＧＲＡＭ ＵＳＡＧＥ
   
-### Encrypt Files (Option 0)
-When this option is chosen, it will encrypt all files in the directory you have chosen and ask if you would like to create a decryption key to decrypt the files at a later time. This option also encrypts the names of the files as well (v2.0.0 and up), for extra security. The generated keys have a unique name as well, so you can keep track of each one that you use.
-
-**Test Files**
-
-<img width="1280" alt="Test-Files" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/747c3bae-3767-4519-b551-758479e4ccdf">
-
-**Option 0**
+### ᴇɴᴄʀʏᴘᴛ ғɪʟᴇs (ᴏᴘᴛɪᴏɴ 0)
+ᴡʜᴇɴ ᴛʜɪs ᴏᴘᴛɪᴏɴ ɪs ᴄʜᴏsᴇɴ, ɪᴛ ᴡɪʟʟ ᴇɴᴄʀʏᴘᴛ ᴀʟʟ ғɪʟᴇs ɪɴ ᴛʜᴇ ᴅɪʀᴇᴄᴛᴏʀʏ ʏᴏᴜ ʜᴀᴠᴇ ᴄʜᴏsᴇɴ ᴀɴᴅ ᴀsᴋ ɪғ ʏᴏᴜ ᴡᴏᴜʟᴅ ʟɪᴋᴇ ᴛᴏ ᴄʀᴇᴀᴛᴇ ᴀ ᴅᴇᴄʀʏᴘᴛɪᴏɴ ᴋᴇʏ ᴛᴏ ᴅᴇᴄʀʏᴘᴛ ᴛʜᴇ ғɪʟᴇs ᴀᴛ ᴀ ʟᴀᴛᴇʀ ᴛɪᴍᴇ
 
 <img width="1280" alt="Option0-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/cddb9414-f372-4c6b-8c1a-7b95ccfc2b41">
 
-**Encrypted Files**
 
-<img width="1280" alt="Encrypted-Files-Demo-1" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/d87fb89b-f240-402e-bb6b-6d47e87d1d8c">
-
-
-### Show Files (Option 1)
-When this option is chosen, it will show all files in the directory you have chosen as well as hidden ones.
+### sʜᴏᴡ ғɪʟᴇs (ᴏᴘᴛɪᴏɴ 1)
+ᴡʜᴇɴ ᴛʜɪs ᴏᴘᴛɪᴏɴ ɪs ᴄʜᴏsᴇɴ, ɪᴛ ᴡɪʟʟ sʜᴏᴡ ᴀʟʟ ғɪʟᴇs ɪɴ ᴛʜᴇ ᴅɪʀᴇᴄᴛᴏʀʏ ʏᴏᴜ ʜᴀᴠᴇ ᴄʜᴏsᴇɴ ᴀs ᴡᴇʟʟ ᴀs ʜɪᴅᴅᴇɴ ᴏɴᴇs
 
 <img width="1280" alt="Option1-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/f64a4908-9333-433f-bfd6-c1d1f6a7ad78">
 
 
-### File Information (Option 2)
-When this option is chosen, it will show how many of each type of file is inside the directory you have chosen based on the file extention.
+### ғɪʟᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ (ᴏᴘᴛɪᴏɴ 2)
+ᴡʜᴇɴ ᴛʜɪs ᴏᴘᴛɪᴏɴ ɪs ᴄʜᴏsᴇɴ, ɪᴛ ᴡɪʟʟ sʜᴏᴡ ʜᴏᴡ ᴍᴀɴʏ ᴏғ ᴇᴀᴄʜ ᴛʏᴘᴇ ᴏғ ғɪʟᴇ ɪs ɪɴsɪᴅᴇ ᴛʜᴇ ᴅɪʀᴇᴄᴛᴏʀʏ ʏᴏᴜ ʜᴀᴠᴇ ᴄʜᴏsᴇɴ
 
 <img width="1280" alt="Option2-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/26de83e8-1549-46b5-a590-4c4eaa63f427">
 
 
-### Change Colors (Option 3)
-When this option is chosen, it will ask you what color scheme you would like to pick and it will restart the program to it change to those colors.
+### ᴄʜᴀɴɢᴇ ᴄᴏʟᴏʀs (ᴏᴘᴛɪᴏɴ 3)
+ᴡʜᴇɴ ᴛʜɪs ᴏᴘᴛɪᴏɴ ɪs ᴄʜᴏsᴇɴ, ɪᴛ ᴡɪʟʟ ᴀsᴋ ʏᴏᴜ ᴡʜᴀᴛ ᴄᴏʟᴏʀ sᴄʜᴇᴍᴇ ʏᴏᴜ ᴡᴏᴜʟᴅ ʟɪᴋᴇ ᴛᴏ ᴘɪᴄᴋ ᴀɴᴅ ɪᴛ ᴡɪʟʟ ʀᴇsᴛᴀʀᴛ ᴛʜᴇ ᴘʀᴏɢʀᴀᴍ ᴛᴏ ɪᴛ ᴄʜᴀɴɢᴇ ᴛᴏ ᴛʜᴏsᴇ ᴄᴏʟᴏʀs
 
 <img width="1280" alt="Option3-Demo" src="https://github.com/Bombenheimer/Aliencrypt/assets/145699702/925f5f05-6d97-4be8-9a53-90e2296c96d8">
 
 </div>
-
 </details>
