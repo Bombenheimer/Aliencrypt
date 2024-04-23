@@ -32,7 +32,7 @@
 #ifndef _WIN32
 
 // UNIX SPECIFIC LIBRARIES
-#include <strings.h> // FUNCTIONS: strcmp(), strstr(), strlen(), strrchr(), strcpy(), strcat(), strdup()
+#include <string.h> // FUNCTIONS: strcmp(), strstr(), strlen(), strrchr(), strcpy(), strcat(), strdup()
 #include <unistd.h> // FUNCTIONS: geteuid(), unlink()
 #include <dirent.h> // FUNCTIONS, MACROS, AND STRUCTS: DIR, opendir() readdir(), closedir(), struct dirent
 #include <iso646.h> // MACROS: and, or, not
