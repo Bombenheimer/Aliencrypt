@@ -42,6 +42,13 @@
 # Installation
 <details>
   </br>
+
+  **To install and run the C version of the program, run:**
+  ```bash
+  sudo make
+  sudo make install
+  sudo make clean
+  ```
   
   **To install and run the python version of the program, run:**
   ```bash
@@ -50,7 +57,6 @@
   pip3 install -r requirements.txt
   sudo python3 alien.py
   ```
-
 </details>
 
 # Usage
@@ -74,6 +80,14 @@
   **--path=** | Provide a file path to a directory or file | N / A
   **--key=** | Provide a generated decryption key | N / A
   **--version** | Show program version | N / A
+
+  **For more information on program usage, reference the manpage:**
+  <div id="header" align="left">
+    
+  ```bash
+  man alien
+  ```
+  </div>
   
 </br>
 
