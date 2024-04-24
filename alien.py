@@ -24,10 +24,6 @@ from random import choices, choice, shuffle
 from cryptography.fernet import Fernet as fernet
 from os import geteuid, system, path, walk, rename, stat, fsync, urandom, remove, stat
 
-# CHECK IF PROGRAM IS BEING RAN AS ROOT
-def IsRoot():
-    return geteuid() == 0
-
 # PRINT WELCOME MESSAGE
 def PrintWelcome(COLOR_1, COLOR_2):
     MSG = f"""{COLOR_1}
@@ -577,7 +573,7 @@ def main():
 
 # CHECK MAIN EXECUTION
 if __name__ == "__main__":
-    if IsRoot():
+    if (geteuid() == 0):
         main()
     else:
         print("\033[38;5;46mWARNING: \033[38;5;231mAliencrypt MUST be run as root!")
