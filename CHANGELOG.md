@@ -1,5 +1,10 @@
 # Changelog
 
+# [3.0.2] - 2024-4-24
+### Fixed
+- C version: Renamed header file ```<strings.h>``` to ```<string.h>```
+- C version: Added definition for GNU Source because the ```strdup()``` function did not show up on Linux systems automatically
+
 # [3.0.1] - 2024-4-23
 ### Fixed
 - C version: Bugs and security fixes
