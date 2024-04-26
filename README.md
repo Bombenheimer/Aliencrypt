@@ -1,6 +1,6 @@
 <div id="header" align="center">
-  
-  # <div style="text-align: center;"> **ＡＬＩＥＮＣＲＹＰＴ** </div>
+
+  [![3D fonts](https://see.fontimg.com/api/renderfont4/rg737/eyJyIjoiZnMiLCJoIjo2OCwidyI6MjAwMCwiZnMiOjM0LCJmZ2MiOiIjNkNGRjBFIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/QWxpZW5jcnlwdA/perdite-hollow-regular.png)](https://www.fontspace.com/category/3d)
 
   **"sᴡɪss ᴀʀᴍʏ ᴋɴɪғᴇ"** ғᴏʀ ғɪʟᴇ ʜᴀɴᴅʟɪɴɢ. :alien:
 
@@ -27,6 +27,8 @@
 <details>
   </br>
 
+  **ʏᴏᴜ ᴄᴀɴ ɪɴsᴛᴀʟʟ ʟɪʙʀᴀʀɪᴇs ғʀᴏᴍ sᴏᴜʀᴄᴇ ᴏʀ ғʀᴏᴍ ʏᴏᴜʀ ᴅᴇᴅɪᴄᴀᴛᴇᴅ ᴘᴀᴄᴋᴀɢᴇ ᴍᴀɴᴀɢᴇʀ:**
+  
   **ᴄ ᴠᴇʀsɪᴏɴ ᴅᴇᴘᴇɴᴅᴇɴᴄɪᴇs**
   - ɢᴄᴄ (ᴄ99 ᴀɴᴅ ᴜᴘ)
   - [ʟɪʙsᴏᴅɪᴜᴍ](https://github.com/jedisct1/libsodium/releases/tag/1.0.19-RELEASE)
@@ -49,6 +51,13 @@
   sudo make install
   sudo make clean
   ```
+
+  **ᴛᴏ ᴜɴɪɴsᴛᴀʟʟ, ʀᴜɴ:**
+  ```bash
+  sudo make uninstall
+  ```
+
+  </br>
   
   **ᴛᴏ ɪɴsᴛᴀʟʟ ᴀɴᴅ ʀᴜɴ ᴛʜᴇ ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ ᴏғ ᴛʜᴇ ᴘʀᴏɢʀᴀᴍ, ʀᴜɴ:**
   ```bash
@@ -76,6 +85,8 @@
   **--shred** | ᴏᴠᴇʀᴡʀɪᴛᴇ ᴀɴᴅ ᴀ ғɪʟᴇ ᴏʀ ᴀʟʟ ғɪʟᴇs ɪɴ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ | ɴ / ᴀ
   **--help** | sʜᴏᴡ ᴘʀᴏɢʀᴀᴍ ᴜsᴀɢᴇ ᴏᴘᴛɪᴏɴs | ɴ / ᴀ
   **--path=** | ᴘʀᴏᴠɪᴅᴇ ᴀ ғɪʟᴇ ᴘᴀᴛʜ ᴛᴏ ᴀ ᴅɪʀᴇᴄᴛᴏʀʏ ᴏʀ ғɪʟᴇ | ɴ / ᴀ
+  **--logo** | sʜᴏᴡ ᴀʟɪᴇɴᴄʀʏᴘᴛ ʟᴏɢᴏ | N / A
+  **--color=** | sʜᴏᴡ ᴘʀᴏɢʀᴀᴍ sᴛᴅᴏᴜᴛ ɪɴ ᴀ ᴅɪғғᴇʀᴇɴᴛ ᴄᴏʟᴏʀ sᴄʜᴇᴍᴇ | 1, 2, 3, 4, 5, 6, 7
   **--key=** | ᴘʀᴏᴠɪᴅᴇ ᴀ ɢᴇɴᴇʀᴀᴛᴇᴅ ᴅᴇᴄʀʏᴘᴛɪᴏɴ ᴋᴇʏ | ɴ / ᴀ
   **--version** | sʜᴏᴡ ᴘʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ | ɴ / ᴀ
 
