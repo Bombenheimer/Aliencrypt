@@ -111,7 +111,7 @@
 #define SSHEET_NUM 7
 #define VECTOR_NUM 10
 #define VIDEO_NUM 27
-#define SCRIPT_NUM 17
+#define SCRIPT_NUM 19
 #define BINARY_NUM 10
 #define CONFIG_NUM 6
 #define TEMP_NUM 2
@@ -121,7 +121,7 @@
 #define LOG_NUM 1
 
 // VERSION NUMBER
-#define VER_NUM "3.0.2"
+#define VER_NUM "3.0.3"
 
 // FUNCTION PROTOTYPES FOR OPERATIONS
 int PrintLogo(bool showLogo, char* color1, char* color2);
@@ -274,13 +274,14 @@ int main(int argc, char* argv[])
 			}
 			if (strcmp(argv[i], "--version") == 0)
 			{
-				showVersion = true;
+				showVersion = true; // SHOW PROGRAM VERSION
 			}
 
 			// IF THE USER CHOOSES A COLOR PARSE THROUGH THE INPUT TO FIND THE COLOR NUMBER
 			// IF ITS AN INVALID COLOR, RAISE AN ERROR
 			if (strstr(argv[i], "--color=") != NULL)
-			{	
+			{
+				// MATCH NUMBER WITH COLORS
 				switch (argv[i][8])
 				{
 					case '1':
@@ -331,6 +332,7 @@ int main(int argc, char* argv[])
 			// IF THE USER PROVIDES A PATH, PARSE THROUGH THE INPUT TO FIND THE PATH AND COLLECT FILES FROM THAT DIRECTORY
 			// IF ITS AN INVALID PATH ARGUMENT, RAISE AN ERROR
 			// IF THE USER PROVIDED NO PATH, COLLECT FILES FROM CURRENT DIRECTORY
+			// IF THE USER PROVIDED A PATH WITH NO WILDCARD, GET THE FILES FROM THAT DIRECTORY
 			if ((strstr(argv[i], "--path=") != NULL))
 			{
 				if (argv[i][7] != '/')
@@ -359,24 +361,32 @@ int main(int argc, char* argv[])
 						if ((directory = opendir(pathToDir)) != NULL)
 						{
 							// EXTRACT THE SEACH PATTERN
-							for (int i = 0; searchWildCard[i] != '\0'; i++)
+							for (unsigned int i = 0; searchWildCard[i] != '\0'; i++)
 							{
 								searchWildCard[i] = searchWildCard[i + 1];
 							}
 
+							// READ DIRECTORY CONTENTS
 							while ((entry = readdir(directory)) != NULL)
 							{
+								// GET DIRECTORY ENTRIES
 								char* filename = strdup(entry->d_name);
 								snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+								// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
 								if (stat(fullPath, &statbuf) == -1)
 								{
 									continue;
 								}
+
+								// SKIP THE ENTRY IF IT IS NOT A FILE OR DOES NOT MATCH THE SEARCH PATTERN
 								if ((not( S_ISREG(statbuf.st_mode))) or (strstr(filename, searchWildCard) == NULL))
 								{
 									free(filename);
 									continue;
 								}
+
+								// ALLOCATE MEMORY FOR FILE ENTRY
 								fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
 
 								// CHECK IF MEMORY WAS ALLOCATED
@@ -387,28 +397,41 @@ int main(int argc, char* argv[])
 									fprintf(stderr, "aliencrypt : MEMFAIL\n");
 									return errno;
 								}
+
+								// INSERT FILENAME TO THE LIST
 								fileList[numFiles++] = filename;
 							}
+
+							// CLOSE DIRECTORY
 							closedir(directory);
 						}
 					}
 					else if (searchWildCard == NULL)
 					{
+						// OPEN DIRECTORY
 						if ((directory = opendir(pathToDir)) != NULL)
 						{
+							// READ DIRECTORY CONTENTS
 							while ((entry = readdir(directory)) != NULL)
 							{
+								// GET DIRECTORY ENTRIES
 								char* filename = strdup(entry->d_name);
 								snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+								// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
 								if (stat(fullPath, &statbuf) == -1)
 								{
 									continue;
 								}
+
+								// SKIP THE ENTRY IF IT IS NOT A FILE
 								if (not(S_ISREG(statbuf.st_mode)))
 								{
 									free(filename);
 									continue;
 								}
+
+								// ALLOCATE MEMORY FOR FILE ENTRY
 								fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
 
 								// CHECK IF MEMORY WAS ALLOCATED
@@ -419,8 +442,12 @@ int main(int argc, char* argv[])
 									fprintf(stderr, "aliencrypt : MEMFAIL\n");
 									return errno;
 								}
+
+								// INSERT FILENAME TO THE LIST
 								fileList[numFiles++] = filename;
 							}
+
+							// CLOSE DIRECTORY
 							closedir(directory);
 						}
 						else if ((directory = opendir(pathToDir)) == NULL)
@@ -449,6 +476,7 @@ int main(int argc, char* argv[])
 					// CHECK IF FILE EXISTS
 					FILE *fileCheck = fopen(keyPath, "rb");
 
+					// RAISE AN ERROR IF THE KEY FILE DOES NOT EXIST, AND CLOSE THE FILE IF IT DOES
 					if (fileCheck == NULL)
 					{
 						errno = 2;
@@ -486,17 +514,6 @@ int main(int argc, char* argv[])
 				return errno;
 
 			}// END OF INVALID ARGUMENT CHECKING
-
-			// CHECK IF THE USER GAVE THE DECRYPT OPTION, BUT DID NOT HAVE THE KEY OPTION. IF SO, RAISE AN ERROR
-			if ((strstr(argv[i], "--decrypt") != NULL) and (strstr(argv[i], "--key=") == NULL))
-			{
-				errno = 1;
-				showHelp = true;
-				fprintf(stderr, "%sERROR%s: No key option provided.\n", color1, color2);
-				PrintUsage(showHelp);
-				return errno;
-
-			}// END OF DECRYPT AND KEY OPTION CHECK
 		}// END OF ARGUMENT PARSING
 
 		// CHECK IF THE USER PROVIDED NO ARGUMENTS AT ALL, OR TOO MANY. IF SO, RAISE AN ERROR
@@ -521,21 +538,30 @@ int main(int argc, char* argv[])
 		// DID NOT PROVIDE A PATH. IF SO, GET THE FILES FROM THE CURRENT DIRECTORY.
 		if (numFiles == 0)
 		{
+			// OPEN DIRECTORY
 			if ((directory = opendir(pathToDir)) != NULL)
 			{
+				// READ DIRECTORY CONTENTS
 				while ((entry = readdir(directory)) != NULL)
 				{
+					// GET DIRECTORY ENTRIES
 					char* filename = strdup(entry->d_name);
 					snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+					// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
 					if (stat(fullPath, &statbuf) == -1)
 					{
 						continue;
 					}
+
+					// SKIP THE ENTRY IF IT IS NOT A FILE
 					if (not( S_ISREG(statbuf.st_mode)))
 					{
 						free(filename);
 						continue;
 					}
+
+					// ALLOCATE MEMORY FOR FILE ENTRY
 					fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
 
 					// CHECK IF MEMORY WAS ALLOCATED
@@ -546,8 +572,12 @@ int main(int argc, char* argv[])
 						fprintf(stderr, "aliencrypt : MEMFAIL\n");
 						return errno;
 					}
+
+					// INSERT FILENAME TO THE LIST
 					fileList[numFiles++] = filename;
 				}
+
+				// CLOSE DIRECTORY
 				closedir(directory);
 			}
 		}
@@ -608,6 +638,24 @@ int main(int argc, char* argv[])
 			showLogo = false;
 		}
 
+		// CHECK IF THE USER GAVE THE DECRYPT OPTION, BUT DID NOT HAVE THE KEY OPTION. IF SO, RAISE AN ERROR
+		if (keyPath == NULL)
+		{
+			// PARSE ARGUMENTS AGAIN TO FIND THE DECRYPT ARGUMENT
+			for (int i = 0; i < argc; i++)
+			{
+				// RAISE AN ERROR, BECAUSE DECRYPT ARGUMENT AS FOUND BUT THE KEY PATH WAS NOT
+				if ((strstr(argv[i], "--decrypt") != NULL))
+				{
+					errno = 1;
+					showHelp = true;
+					fprintf(stderr, "%sERROR%s: No key option provided.\n", color1, color2);
+					PrintUsage(showHelp);
+					return errno;
+				}
+			}
+		}
+
 		// EXECUTE FUNCTIONS BASED ON BOOLEAN VALUES
 		PrintVersion(showVersion, versionNum);
 		PrintUsage(showHelp);
@@ -622,7 +670,7 @@ int main(int argc, char* argv[])
 			ShowFileTypes(showFileTypes, fileList, numFiles, color1, color2, color3);
 
 			// ITERATOR FOR WHILE LOOP
-			int i = 0;
+			unsigned int i = 0;
 
 			// LIST OF BAD DIRECTORIES
 			BadDir LinuxDirs[11] = {"/etc", "/bin", "/lib", "/boot", "/root", "/var", "/sys", "/proc", "/sbin",
@@ -631,6 +679,8 @@ int main(int argc, char* argv[])
 			// CHECK THE USER PROVIDED PATH TO SEE IF IT MATCHES THE ONE OF THE BAD DIRECTORES. IF SO, RAISE AN ERROR
 			while (i < 11)
 			{
+				// RAISE AN ERROR IF THE USER DID NOT CHOOSE TO SHOW FILES OR FILE TYPES AND IF THERE IS A SENSITIVE
+				// DIRECTORY IN THE PATH ARGUMENT
 				if ((strstr(pathToDir, LinuxDirs[i]) != NULL) and ((showFiles == false) and showFileTypes == false))
 				{
 					errno = 1;
@@ -658,7 +708,7 @@ int main(int argc, char* argv[])
 			ShowFileTypes(showFileTypes, fileList, numFiles, color1, color2, color3);
 
 			// ITERATOR FOR WHILE LOOP
-			int i = 0;
+			unsigned int i = 0;
 
 			// LIST OF BAD DIRECTORIES
 			BadDir MacDirs[8] = {"/System", "/usr", "/bin", "/Library", "/Applications", "/private", "/var", "/sbin"};
@@ -666,6 +716,8 @@ int main(int argc, char* argv[])
 			// CHECK THE USER PROVIDED PATH TO SEE IF IT MATCHES THE ONE OF THE BAD DIRECTORES. IF SO, RAISE AN ERROR
 			while (i < 8)
 			{
+				// RAISE AN ERROR IF THE USER DID NOT CHOOSE TO SHOW FILES OR FILE TYPES AND IF THERE IS A SENSITIVE
+				// DIRECTORY IN THE PATH ARGUMENT
 				if ((strstr(pathToDir, MacDirs[i]) != NULL) and ((showFiles == false) and showFileTypes == false))
 				{
 					errno = 1;
@@ -696,6 +748,7 @@ int main(int argc, char* argv[])
 	CLOCK_END = clock();
 	CLOCK_TIME = ((double) (CLOCK_END - CLOCK_START)) / CLOCKS_PER_SEC;
 	
+	// PRINT USAGE STATISTICS TO STDOUT
 	if (numFunctionCalls > 1)
 	{
 		printf("\n\n\033[38;5;231m[%u function calls executed in %lf seconds.]\n", numFunctionCalls, CLOCK_TIME);
@@ -729,10 +782,9 @@ void PrintUsage(bool showHelp)
 	// IF STATEMENT GUARD
 	if (showHelp == true)
 	{
-		const char* usageMessage = "usage: sudo alien [--encrypt] [--decrypt] [--show-files]\n"
-		                   	"                  [--show-file-types] [--remove-exif]\n"
-				   	"                  [--shred] [--help [--path=path_to_dir]\n"
-				   	"                  [--logo] [--color=1234567] [--version]\n";
+		const char* usageMessage = "usage: sudo alien [--encrypt] [--decrypt] [--show-files] [--key=key_path]\n"
+		                   	"                  [--show-file-types] [--remove-exif] [--shred] [--help]\n"
+				   	"                  [--path=path_to_dir] [--logo] [--color=1234567][--version] \n";
 		fprintf(stderr, "%s", usageMessage);
 
 		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
@@ -757,7 +809,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		char* L7 = "                       Aliencrypt (Unix C Version)\n";
 		char* L8 = "                   [Program designed by Bombenheimer]\n";
 		char* L9 = "                    https://github.com/Bombenheimer/\n";
-		char* L10 = "                                 v3.0.2\n";
+		char* L10 = "                                 v3.0.3\n";
 
 		// GET THE LENGTH OF THE PROGRAM LOGO
 		int programLogoLen = snprintf(NULL, 0, "%s%s %s %s %s %s%s %s %s %s %s %s%s", color1, L1, L2, L3, L4, L5, color2, L6, L7, L8, L9, color1, L10);
@@ -789,7 +841,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
 
-	}// END OF IF STATEMENT GUARD
+	} // END OF IF STATEMENT GUARD
 	
 	return 0;
 
@@ -833,7 +885,7 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int nu
 			// APPEND THE FILENAME TO THE FULL FILE PATH VARIABLE
 			strcat(pathToFile, fileList[i]);
 
-			// CHECK IF FILE METADATA CAN BE RETRIVED
+			// CHECK IF FILE METADATA CAN BE RETRIVED. IF NOT, CONTINUE
 			if (stat(pathToFile, &file_stat) == 0)
 			{
 				// FILE METADATA
@@ -842,11 +894,11 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int nu
 				char size_unit[4];
 
 				// GET FILE SIZE UNIT
-				if (size >= 0 and size <= 1023)
+				if (size >= 0 and size <= 1000)
 				{
 					strcpy(size_unit, "BiB");
 				}
-				if (size >= 1024 and size <= 1048575)
+				if (size >= 1001 and size <= 1048575)
 				{
 					strcpy(size_unit, "KiB");
 					size = size / 1024;
@@ -886,7 +938,9 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int nu
 			}
 			else
 			{
-				perror("Error in show files.\n");
+				free(pathToFile);
+				free(fileList[i]);
+				continue;
 			}
 
 			// FREE MEMORY BACK TO SYSTEM
@@ -907,13 +961,14 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int nu
 // IF THE USER CHOOSES TO SHOW ALL FILE TYPES, SHOW THEM IN STDOUT
 void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, char* color1, char* color2, char* color3)
 {
+	// IF STATEMENT GUARD
 	if (showFileTypes == true)
 	{
 		// ARCHIVE FILE EXTENTIONS
 		const char* archiveTypes[ARCHIVE_NUM] = {".7z", ".ace", ".alz", ".arc", ".arj", ".bz", ".bz2", ".cab", ".cpio", ".deb",
 	                                         	 ".dmg", ".gz", ".img", ".iso", ".jar", ".lha", ".lz", ".lzma", ".lzo", ".rar",
-	                                         	 ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo", ".tar.xz",
-						 	 ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
+	                                         	 ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo",
+							 ".tar.xz", ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
 
 		// AUDIO FILE EXTENTIONS
 		const char* audioTypes[AUDIO_NUM] = {".aac", ".ac3", ".aif", ".aifc", ".aiff", ".amr", ".au", ".caf", ".flac", ".m4a",
@@ -954,7 +1009,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 
 		// SCRIPT OR PROGRAMMING LANGUAGE FILE EXTENTIONS
 		const char* scriptTypes[SCRIPT_NUM] = {".py", ".c", ".java", ".sh", ".cpp", ".lol", ".js", ".asm", ".cmd", ".bat",
-	                                               ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs"};
+	                                               ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs", ".h", ".hpp"};
 
 		// BINARY FILE EXTENTIONS
 		const char* binaryTypes[BINARY_NUM] = {".exe", ".out", ".dll", ".bin", ".elf", ".app", ".apk", ".so", ".class", ".jar"};
@@ -992,7 +1047,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				const char* fileExtention = strchr(fileList[i], '.');
 
 				// INNER LOOP FOR FILE TYPE ARCHIVE
-				for (int j = 0; j < ARCHIVE_NUM; j++)
+				for (unsigned int j = 0; j < ARCHIVE_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, archiveTypes[j]) == 0)
@@ -1008,7 +1063,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE AUDIO
-				for (int j = 0; j < AUDIO_NUM; j++)
+				for (unsigned int j = 0; j < AUDIO_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, audioTypes[j]) == 0)
@@ -1024,7 +1079,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE CAD
-				for (int j = 0; j < CAD_NUM; j++)
+				for (unsigned int j = 0; j < CAD_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, cadTypes[j]) == 0)
@@ -1040,7 +1095,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE DOCUMENT
-				for (int j = 0; j < DOC_NUM; j++)
+				for (unsigned int j = 0; j < DOC_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, documentTypes[j]) == 0)
@@ -1056,7 +1111,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE EBOOK
-				for (int j = 0; j < EBOOK_NUM; j++)
+				for (unsigned int j = 0; j < EBOOK_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, ebookTypes[j]) == 0)
@@ -1073,7 +1128,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 		
 			
 				// INNER LOOP FOR FILE TYPE FONT
-				for (int j = 0; j < FONT_NUM; j++)
+				for (unsigned int j = 0; j < FONT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, fontTypes[j]) == 0)
@@ -1090,7 +1145,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE IMAGE
-				for (int j = 0; j < IMAGE_NUM; j++)
+				for (unsigned int j = 0; j < IMAGE_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, imageTypes[j]) == 0)
@@ -1106,7 +1161,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE PRESENTATION
-				for (int j = 0; j < PRESENT_NUM; j++)
+				for (unsigned int j = 0; j < PRESENT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, presentationTypes[j]) == 0)
@@ -1122,7 +1177,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 		
 				// INNER LOOP FOR FILE TYPE SPREADSHEET
-				for (int j = 0; j < SSHEET_NUM; j++)
+				for (unsigned int j = 0; j < SSHEET_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, spreadsheetTypes[j]) == 0)
@@ -1138,7 +1193,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 		
 				// INNER LOOP FOR FILE TYPE VECTOR
-				for (int j = 0; j < VECTOR_NUM; j++)
+				for (unsigned int j = 0; j < VECTOR_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, vectorTypes[j]) == 0)
@@ -1154,7 +1209,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE VIDEO
-				for (int j = 0; j < VIDEO_NUM; j++)
+				for (unsigned int j = 0; j < VIDEO_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, videoTypes[j]) == 0)
@@ -1170,7 +1225,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE SCRIPT
-				for (int j = 0; j < SCRIPT_NUM; j++)
+				for (unsigned int j = 0; j < SCRIPT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, scriptTypes[j]) == 0)
@@ -1186,7 +1241,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE BINARY
-				for (int j = 0; j < BINARY_NUM; j++)
+				for (unsigned int j = 0; j < BINARY_NUM; j++)
 				{	
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, binaryTypes[j]) == 0)
@@ -1202,7 +1257,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 		
 				// INNER LOOP FOR FILE TYPE CONFIG
-				for (int j = 0; j < CONFIG_NUM; j++)
+				for (unsigned int j = 0; j < CONFIG_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, configTypes[j]) == 0)
@@ -1218,7 +1273,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE TEMP
-				for (int j = 0; j < TEMP_NUM; j++)
+				for (unsigned int j = 0; j < TEMP_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, tempTypes[j]) == 0)
@@ -1234,7 +1289,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 		
 				// INNER LOOP FOR FILE TYPE 
-				for (int j = 0; j < META_NUM; j++)
+				for (unsigned int j = 0; j < META_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, metadataTypes[j]) == 0)
@@ -1250,7 +1305,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE BACKUP
-				for (int j = 0; j < BACKUP_NUM; j++)
+				for (unsigned int j = 0; j < BACKUP_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, backupTypes[j]) == 0)
@@ -1266,7 +1321,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE DATABASE
-				for (int j = 0; j < DB_NUM; j++)
+				for (unsigned int j = 0; j < DB_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, databaseTypes[j]) == 0)
@@ -1282,7 +1337,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 				}
 
 				// INNER LOOP FOR FILE TYPE LOG
-				for (int j = 0; j < LOG_NUM; j++)
+				for (unsigned int j = 0; j < LOG_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, logTypes[j]) == 0)
@@ -1309,26 +1364,26 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 
 		// PRINT NUMBER OF EACH FILE TYPE TO STDOUT
 		printf("                                %sFILE TYPES\n\n", color1);
-		printf("%sAll Files: %s%d\033[38;5;231m\n\n", color2, color3, numFiles);
+		printf("%sAll Files: %s%u\033[38;5;231m\n\n", color2, color3, numFiles);
 		printf("%sArchive and Package Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.archive);
-		printf("%sAudio Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.audio);
-		printf("%sCad Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.cad);
-		printf("%sDocument Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.document);
-		printf("%sEbook Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
-		printf("%sFont Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.font);
-		printf("%sImage Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.image);
-		printf("%sPresentation Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
-		printf("%sSpreadsheet Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
-		printf("%sVector Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.vector);
-		printf("%sVideo Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.video);
-		printf("%sScript Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.script);
-		printf("%sBinary and Executable Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.binary);
-		printf("%sConfiguration Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
-		printf("%sTemporary Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
-		printf("%sMetadata Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
-		printf("%sBackup Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.backup);
-		printf("%sDatabase Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.database);
-		printf("%sLog Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.log);
+		printf("%sAudio Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.audio);
+		printf("%sCad Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.cad);
+		printf("%sDocument Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.document);
+		printf("%sEbook Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
+		printf("%sFont Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.font);
+		printf("%sImage Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.image);
+		printf("%sPresentation Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
+		printf("%sSpreadsheet Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
+		printf("%sVector Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.vector);
+		printf("%sVideo Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.video);
+		printf("%sScript Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.script);
+		printf("%sBinary and Executable Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.binary);
+		printf("%sConfiguration Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
+		printf("%sTemporary Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
+		printf("%sMetadata Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
+		printf("%sBackup Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.backup);
+		printf("%sDatabase Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.database);
+		printf("%sLog Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.log);
 
 		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
@@ -1339,6 +1394,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 // IF THE USER CHOOSES TO REMOVE EXIF METADATA FROM FILES, REMOVE ALL DATA AND SHOW STATUS TO STDOUT
 void RemoveExif(bool removeExif, char** fileList, char* pathToDir, unsigned int numFiles, char* color2)
 {
+	// IF STATEMENT GUARD
 	if (removeExif == true)
 	{
 		// PRINT SPACE BEFORE PROGRAM START
@@ -1412,9 +1468,11 @@ void RemoveExif(bool removeExif, char** fileList, char* pathToDir, unsigned int 
 					fputc(c, writefile);
 				}
 
+				// CLOSE BOTH FILE POINTERS
 				fclose(readfile);
 				fclose(writefile);
 				
+				// FREE MEMORY AND PRINT SUCCESS STATUS TO STDOUT
 				exif_data_unref(exif_data); // FREE MEMORY BACK TO SYSTEM
 				printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
 				free(pathToFile);
@@ -1470,7 +1528,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 		srand(time(NULL));
 
 		// GENERATE KEYNAME
-		for (int i = 0; i < KEY_NAME_LEN - 1;)
+		for (unsigned int i = 0; i < KEY_NAME_LEN - 1;)
 		{
 			int charSet = rand() % 2;
 			int charSetLen = strlen(keyChars[charSet]);
@@ -1663,6 +1721,7 @@ int EncryptFiles(bool encryptFiles, unsigned int numFiles, char** fileList, char
 // IF THE USER CHOOSES TO OVERWRITE AND DELETE THE FILES, OVERWRITE AND DELETE THEM AND SHOW THEIR STATUS IN STDOUT
 int ShredFiles(bool shredFiles, char** fileList, unsigned int numFiles, char* pathToDir, char* color1, char* color2)
 {
+	// IF STATEMENT GUARD
 	if (shredFiles == true)
 	{
 		// PRINT SPACE BEFORE PROGRAM START
@@ -1778,7 +1837,7 @@ int DecryptFiles(bool decryptFiles, unsigned int numFiles, char** fileList, char
 		const char* CHECK = "\xE2\x9C\x94";
 
 		// PRINT START OF PROGRAM STATUS TO STDOUT
-		printf("%sStarting file shreding...\033[38;5;231m\n", color2);
+		printf("%sStarting decryption...\033[38;5;231m\n", color2);
 
 		// FOR LOOP FOR NUM FILES
 		for (unsigned int i = 0; i < numFiles; i++)

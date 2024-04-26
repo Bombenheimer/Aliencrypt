@@ -19,4 +19,8 @@ install: all
 	chown root $(BIN_DIR)/alien
 
 clean:
-	rm -f alien.o
+	rm -f alien.o alien
+
+uninstall:
+	rm -rf /usr/local/share/man/man8/
+	rm -f /usr/local/bin/alien

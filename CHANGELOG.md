@@ -1,5 +1,14 @@
 # Changelog
 
+# [3.0.3] - 2024-4-26
+### Fixed
+- C version: Fixed help message to display the ```--key=``` argument when the ```--help``` argument is chosen
+- C version: Fixed a formatting bug in the ```--show-file-types``` argument
+- C version: Fixed a bug where the program would raise no key file provided error even when the user provided a key in the ```--decrypt``` argument
+
+### Added
+- C version: Added 2 new file extentions to the Programming file type: ```.hpp``` and ```.h```
+
 # [3.0.2] - 2024-4-24
 ### Fixed
 - C version: Renamed header file ```<strings.h>``` to ```<string.h>```
