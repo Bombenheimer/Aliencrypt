@@ -16,7 +16,7 @@
   **ᴅᴏᴡɴʟᴏᴀᴅs** | ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bombenheimer/aliencrypt/total?style=flat&logo=github)
   **sᴜᴘᴘᴏʀᴛᴇᴅ ᴏs** | ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=linux&logoColor=white&label=GNU%20%2F%20Linux&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Supported-green?style=flat&logo=apple&logoColor=white&label=macOS&color=0BDA51) </br> ![Static Badge](https://img.shields.io/badge/Not%20Supported-red?style=flat&logo=windows&logoColor=white&label=Windows&color=FF3131)
   
-  sᴇᴇ [**ᴄʜᴀɴɢᴇʟᴏɢ**](https://github.com/Bombenheimer/Aliencrypt/blob/main/CHANGELOG.md) ғᴏʀ ᴅᴇᴛᴀɪʟs.
+  sᴇᴇ [**ᴄʜᴀɴɢᴇʟᴏɢ**](CHANGELOG.md) ғᴏʀ ᴅᴇᴛᴀɪʟs.
 
 </div>
 
