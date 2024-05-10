@@ -1,18 +1,26 @@
 /*
- * INTRODUCTION:
- * 	This program was designed by Bombenheimer.
- * 	Follow me on GitHub for more projects like these and collaborate.
- *
- * SOCIALS:
- * 	- GitHub: https://github.com/Bombenheimer/
- * 	- Linkedin: https://www.linkedin.com/in/bruce-smith-4a4941296/
- * 	- Discord: https://discord.com/channels/@arrgs8
- *	- Spotify: https://open.spotify.com/user/31i7hr5eqfinn6ricygtgsywuthu?si=6150908ac8814b04
- *
- * IMPORTANT NOTES:
- * 	(1) This Program MUST be ran as root!
- * 	(2) This Program also requires Libexif and Libsodium for file I/O operations. See repo for details.
- */
+* MIT License
+* 
+* Copyright (c) 2024 Bombenheimer
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 
 // DEFINE MACRO FOR GNU SOURCE
 #ifndef _GNU_SOURCE
@@ -167,7 +175,28 @@ struct NumFileTypes
 // GLOBAL VARIABLE FOR ALL FUNCTIONS TO USE
 unsigned int numFunctionCalls = 0;
 
-// MAIN FUCNTION
+/*
+ * FUNCTION NAME: main()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	argc:
+ * 	argv:
+ *
+ * DESCRIPTION:
+ * 	MAIN FUNCTION WHERE PROGRAM EXECUTION WILL OCCUR
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - 
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * RETURN VALUE:
+ *  0 / EXIT_SUCCESS - SUCCESSFUL PROGRAM EXECUTION
+ *  1 / EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
+ *  2 - FILE OR DIRECTORY NOT FOUND
+ */
 int main(int argc, char* argv[])
 {
 	// CLOCK TIME VARIABLES
@@ -762,7 +791,30 @@ int main(int argc, char* argv[])
 
 } // END OF MAIN
 
-// IF THE USER CHOOSES TO PRINT THE VERSION NUMBER, PRINT TO STDOUT
+/*
+ * FUNCTION NAME: PrintVersion()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showVersion: BOOLEAN TYPE VARIABLE
+ * 	versionNum: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  SHOW THE PROGRAM VERSION NUMBER TO STDOUT
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    SHOW VERSION IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - PRINT THE VERSION NUMBER TO STDOUT
+ *
+ * 	3 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT
+ * 	    THE FUNCTION HAS BEEN COMPLETED
+ *
+ * 	4 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void PrintVersion(bool showVersion, char* versionNum)
 {
 	// IF STATEMENT GUARD
@@ -776,7 +828,31 @@ void PrintVersion(bool showVersion, char* versionNum)
 	} // END OF IF STATEMENT GUARD
 } // END OF PRINT VERSION FUNCTION
 
-// IF THE USER CHOOSES TO PRINT THE USAGE MESSAGE, PRINT TO STDOUT
+/*
+ * FUNCTION NAME: PrintUsage()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showHelp: BOOLEAN TYPE VARIABLE
+ *
+ * DESCRIPTION:
+ *  SHOW THE USAGE MESSAGE IN STDOUT
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    SHOW HELP IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - INITIALIZE PROGRAM USAGE GUIDE
+ *
+ * 	3 - PRINT USAGE MESSAGE TO STDOUT
+ *
+ * 	4 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT
+ * 	    THE FUNCTION HAS BEEN COMPLETED
+ *
+ * 	5 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void PrintUsage(bool showHelp)
 {
 	// IF STATEMENT GUARD
@@ -793,7 +869,49 @@ void PrintUsage(bool showHelp)
 	} // END OF IF STATEMENT GUARD
 } // END OF PRINT USAGE MESSAGE FUNCTION
 
-// IF THE USER CHOOSES TO SHOW THE LOGO, PRINT TO STDOUT
+/*
+ * FUNCTION NAME: PrintLogo()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showLogo: BOOLEAN TYPE VARIABLE
+ * 	color1: DEFINED CONSTANT STRING
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ * 	PRINTS A USAGE MESSAGE TO STDOUT
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE OF THE SHOW LOGO
+ * 	    FUNCTION IS SET TO TRUE OT FALSE. IF IT IS TRUE, THE PROGRAM
+ * 	    WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - INITIALZE EACH LINE IN THE LOGO
+ *
+ * 	3 - GET THE LENGTH OF THE ENTIRE LOGO WITH sprintf() AND THEN
+ * 	    STORE IT IN A VARIABLE
+ *
+ *  4 - ALLOCATE MEMORY FOR THE PROGRAM LOGO TO STORE EVERYTHING
+ *      AS WELL AS THE COLOR STRINGS
+ *
+ *  5 - CHECK IF MEMORY HAS BEEN ALLOCATED
+ *
+ *  6 - FORMAT THE LOGO TO BE STORED IN THE PROGRAM LOGO
+ *
+ *  7 - CLEAR TERMINAL SCREEN
+ *
+ *  8 - PRINT THE PROGRAM LOGO TO STDOUT
+ *
+ *  9 - FREE MEMORY ALLOCATED TO PROGRAM LOGO BACK TO SYSTEM
+ *
+ *  10 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ *       HAS BEEN COMPLETED
+ *
+ *  11 - END FUNCTION
+ *
+ * RETURN VALUE:
+ *  0 / EXIT_SUCCESS - SUCCESSFUL PROGRAM EXECUTION
+ *  1 / EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
+ */
 int PrintLogo(bool showLogo, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
@@ -848,6 +966,73 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 } // END OF PRINT LOGO FUNCTION
 
 // IF THE USER CHOOSES TO SHOW FILES, SHOW THEM IN STDOUT
+/*
+ * FUNCTION NAME: PrintUsage()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showFiles: BOOLEAN TYPE VARIABLE
+ * 	fileList: TWO DIMENSIONAL CHAR ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED INTEGER TYPE VARIABLE
+ * 	color1: DEFINED CONSTANT STRING
+ * 	color2: DEFINED CONSTANT STRING
+ * 	color3: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  SHOW FILES AND THEIR INFORMATION TO STDOUT
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    SHOW FILES IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - CLEAR TERMINAL SCREEN
+ *
+ * 	3 - INITIALIZE TITLE AND CATEGORIES
+ *
+ * 	4 - INITIALIZE STRUCTURE TO HOLD FILE INFORMATION
+ *
+ * 	5 - PRINT TITLE AND CATEGORIES
+ *
+ * 	6 - INITIALZE FOR LOOP TO LOOP THROUGH FILES
+ *
+ * 	7 - ALLOCATE MEMORY FOR PATH TO FILE VARIABLE
+ *
+ * 	8 - COPY DIR PATH TO THE PATH TO FILE VARIABLE
+ *
+ * 	9 - CHECK IF THERE IS A PATH SEPERATOR AT THE END
+ * 	    OF THE FILE PATH AND APPEND ONE IF THERE IS NOT
+ *
+ * 	10 - APPEND THE FILENAME TO THE PATH TO FILE VARIABLE
+ *
+ * 	11 - EVALUATE IF METADATA OF A FILE COULD BE RETRIVED.
+ * 	     IF NOT, FREE MEMORY PREVIOUSLY ALLOCATED TO THE
+ * 	     FILENAME AND THE PATH TO FILE VARIABLE AND CONTINUE
+ * 	     TO THE NEXT FILE.
+ *
+ * 	12 - INITIALIZE THE PERMISSIONS, FILE SIZE, AND SIZE UNIT
+ * 	     VARIABLES FOR FILE INFORMATION PRINTING
+ *
+ * 	13 - GET THE FILE SIZE UNIT BY EVALUATING THE SIZE OF THE FILE
+ * 	     IN BYTES, WHICH INCLUDE BiB, KiB, MiB, GiB, AND TiB.
+ *
+ * 	14 - PRINT THE FILE AND ITS INFORMATION TO STDOUT AND FORMAT THE LINE
+ * 	     BASED ON THE LINE NUMBER TO PREVENT UNALIGNMENT WHEN PRINTING
+ *
+ * 	15 - FREE MEMORY PREVIOUSLY ALLOCATED TO THE
+ * 	     FILENAME AND THE PATH TO FILE VARIABLE
+ *
+ * 	16 - REPEAT 7-15 FOR EACH FILE UNTIL ALL FILES HAVE BEEN LOOPED THROUGH
+ *
+ * 	17 - FREE MEMORY ALLOCATED TO FILE LIST BACK TO THE SYSTEM
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int numFiles, char* color1, char* color2, char* color3)
 {
 	// IF STATEMENT GUARD
@@ -966,32 +1151,32 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 	{
 		// ARCHIVE FILE EXTENTIONS
 		const char* archiveTypes[ARCHIVE_NUM] = {".7z", ".ace", ".alz", ".arc", ".arj", ".bz", ".bz2", ".cab", ".cpio", ".deb",
-	                                         	 ".dmg", ".gz", ".img", ".iso", ".jar", ".lha", ".lz", ".lzma", ".lzo", ".rar",
-	                                         	 ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo",
-							 ".tar.xz", ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
+	                                           ".dmg", ".gz", ".img", ".iso", ".jar", ".lha", ".lz", ".lzma", ".lzo", ".rar",
+	                                           ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo",
+		                                         ".tar.xz", ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
 
 		// AUDIO FILE EXTENTIONS
 		const char* audioTypes[AUDIO_NUM] = {".aac", ".ac3", ".aif", ".aifc", ".aiff", ".amr", ".au", ".caf", ".flac", ".m4a",
-	                                     	     ".m4b", ".mp3", ".oga", ".voc", ".wav", ".weba", ".wma"};
+	                                       ".m4b", ".mp3", ".oga", ".voc", ".wav", ".weba", ".wma"};
 
 		// CAD FILE EXTENTIONS
 		const char* cadTypes[CAD_NUM] = {".wdg", ".dxf"};
 
 		const char* documentTypes[DOC_NUM] = {".abw", ".djvu", ".doc", ".docm", ".docx", ".dot", ".dotx", ".html", ".hwp", ".lwp",
-	                                      	      ".md", ".odt", ".pages", ".pdf", ".rst", ".rtf", ".tex", ".txt", ".wpd", ".wps", ".zabw"};
+	                                        ".md", ".odt", ".pages", ".pdf", ".rst", ".rtf", ".tex", ".txt", ".wpd", ".wps", ".zabw"};
 
 		// EBOOK FILE EXTENTIONS
 		const char* ebookTypes[EBOOK_NUM] = {".azw", ".azw3", ".azw4", ".cbc", ".cbr", ".cbz", ".chm", ".epub", ".fb2", ".htm",
-	                                             ".htmlz", ".lit", ".lrf", ".mobi", ".pdb", ".pml", ".prc", ".rb", ".snb", ".tcr", ".txtz"};
+	                                       ".htmlz", ".lit", ".lrf", ".mobi", ".pdb", ".pml", ".prc", ".rb", ".snb", ".tcr", ".txtz"};
 
 		// FONT FILE EXTENTIONS
 		const char* fontTypes[FONT_NUM] = {".eot", ".otf", ".ttf", ".woff", ".woff2"};
 
 		// IMAGE FILE EXTENTIONS
 		const char* imageTypes[IMAGE_NUM] = {".3fr", ".arw", ".avif", ".bmp", ".cr2", ".cr3", ".crw", ".dcr", ".dng", ".eps",
-	                                             ".erf", ".gif", ".heic", ".heif", ".icns", ".ico", ".jfif", ".jpeg", ".jpg", ".mos",
-	                                             ".mrw", ".nef", ".odd", ".odg", ".orf", ".pef", ".png", ".ppm", ".ps", ".psd",
-	                                             ".raf", ".raw", ".rw2", ".tif", ".tiff", ".webp", ".x3f", ".xcf", ".xps"};
+	                                       ".erf", ".gif", ".heic", ".heif", ".icns", ".ico", ".jfif", ".jpeg", ".jpg", ".mos",
+	                                       ".mrw", ".nef", ".odd", ".odg", ".orf", ".pef", ".png", ".ppm", ".ps", ".psd",
+	                                       ".raf", ".raw", ".rw2", ".tif", ".tiff", ".webp", ".x3f", ".xcf", ".xps"};
 
 		// PRESENTATION FILE EXTENTIONS
 		const char* presentationTypes[PRESENT_NUM] = {".dps", ".key", ".odp", ".pot", ".potx", ".pps", ".ppsx", ".ppt", ".pptm", ".pptx"};
@@ -1004,12 +1189,12 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, c
 
 		// VIDEO FILE EXTENTIONS
 		const char* videoTypes[VIDEO_NUM] = {".3g2", ".3gp", ".3gpp", ".avi", ".cavs", ".dv", ".dvr", ".flv", ".m2ts", ".m4v",
-	                                             ".mkv", ".mod", ".mov", ".mp4", ".mpeg", ".mpg", ".mts", ".mxf", ".ogg", ".rm",
-	                                             ".rmvb", ".swf", ".ts", ".vob", ".webm", ".wmv", ".wtv"};
+	                                       ".mkv", ".mod", ".mov", ".mp4", ".mpeg", ".mpg", ".mts", ".mxf", ".ogg", ".rm",
+	                                       ".rmvb", ".swf", ".ts", ".vob", ".webm", ".wmv", ".wtv"};
 
 		// SCRIPT OR PROGRAMMING LANGUAGE FILE EXTENTIONS
 		const char* scriptTypes[SCRIPT_NUM] = {".py", ".c", ".java", ".sh", ".cpp", ".lol", ".js", ".asm", ".cmd", ".bat",
-	                                               ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs", ".h", ".hpp"};
+	                                         ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs", ".h", ".hpp"};
 
 		// BINARY FILE EXTENTIONS
 		const char* binaryTypes[BINARY_NUM] = {".exe", ".out", ".dll", ".bin", ".elf", ".app", ".apk", ".so", ".class", ".jar"};
