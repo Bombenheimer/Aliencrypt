@@ -1,3 +1,14 @@
 # IGNORE GENERATED OBJECT FILES AND BINARIES
+SABBATH.txt
+FILE-1.txt
+FILE-2.txt
+FILE-3.txt
+FILE-4.txt
+FILE-5.txt
+FILE-6.txt
+FILE-7.txt
+FILE-8.txt
 alien
 alien.o
+.DS_Store
+*.dYSM/*
