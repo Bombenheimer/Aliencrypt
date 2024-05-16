@@ -48,7 +48,7 @@
 #include <unistd.h> // FUNCTIONS: geteuid(), unlink()
 #include <dirent.h> // FUNCTIONS, MACROS, AND STRUCTS: DIR, opendir() readdir(), closedir(), struct dirent
 #include <iso646.h> // MACROS: and, or, not
-#include <getopt.h>
+#include <getopt.h> // FUNCTIONS AND MACROS: getopt_long(), opt, optind
 
 #endif // END OF HEADER GUARD
 
@@ -182,8 +182,8 @@ unsigned int numFunctionCalls = 0;
  * FUNCTION NAME: main()
  * 
  * OPTIONAL INPUT PARAMETERS:
- * 	argc:
- * 	argv:
+ * 	argc: INTEGER TYPE VARIABLE
+ * 	argv: STRING ARRAY TYPE VARIABLE
  *
  * DESCRIPTION:
  * 	MAIN FUNCTION WHERE PROGRAM EXECUTION WILL OCCUR
@@ -698,6 +698,31 @@ void PrintVersion(bool showVersion, char* versionNum)
 	} // END OF IF STATEMENT GUARD
 } // END OF PRINT VERSION FUNCTION
 
+/*
+ * FUNCTION NAME: PrintUsage()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	errorNum: UNSIGNED SHORT INT TYPE VARIABLE
+ *
+ * DESCRIPTION:
+ *  SHOW HELP MESSAGE BASED ON INTEGER RETURN VALUE
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - INITIALIZE LONG AND SHORT HELP MESSAGES AS CONSTANT STRINGS
+ *
+ * 	2 - EVALUATE IF THE RETURN VALUE errorNum IS A 0 OR A NON - ZERO
+ * 	    INTEGER. IF NOT 0, SHOW THE SHORT HELP MESSAGE AS THIS INDICATES
+ * 	    PROGRAM FAILURE. IF NOT, SHOW THE LONG HELP MESSAGE AS THIS
+ * 	    INDICATES THAT THE USER PURPOSEFULY CHOSE TO SHOW A
+ * 	    HELP MESSAGE
+ *
+ * 	3 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT 
+ * 	    THE FUNCTION HAS BEEN COMPLETED
+ *
+ * 	4 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void PrintUsage(unsigned short int errorNum)
 {
   // LONG HELP MESSAGE
@@ -780,8 +805,8 @@ void PrintUsage(unsigned short int errorNum)
  *  11 - END FUNCTION
  *
  * RETURN VALUE:
- *  0 / EXIT_SUCCESS - SUCCESSFUL PROGRAM EXECUTION
- *  1 / EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
+ *  EXIT_SUCCESS - SUCCESSFUL PROGRAM EXECUTION
+ *  EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
  */
 int PrintLogo(bool showLogo, char* color1, char* color2)
 {
@@ -809,10 +834,9 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		// CHECK IF MEMORY WAS ALLOCATED
 		if (not(programLogo))
 		{
-			errno = 1;
 			fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 			fprintf(stderr, "aliencrypt : MEMFAIL\n");
-			return errno;
+			return EXIT_FAILURE;
 		}
 
 		// FORMAT THE LOGO AND COPY AS A STRING
@@ -832,17 +856,16 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 
 	} // END OF IF STATEMENT GUARD
 	
-	return 0;
+	return EXIT_SUCCESS;
 
 } // END OF PRINT LOGO FUNCTION
 
-// IF THE USER CHOOSES TO SHOW FILES, SHOW THEM IN STDOUT
 /*
- * FUNCTION NAME: PrintUsage()
+ * FUNCTION NAME: ShowFiles()
  * 
  * OPTIONAL INPUT PARAMETERS:
  * 	showFiles: BOOLEAN TYPE VARIABLE
- * 	fileList: TWO DIMENSIONAL CHAR ARRAY TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
  * 	pathToDir: CHAR ARRAY TYPE VARIABLE
  * 	numFiles: UNSIGNED INTEGER TYPE VARIABLE
  * 	color1: DEFINED CONSTANT STRING
@@ -1014,7 +1037,55 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short 
 	} // END OF IF STATEMENT GUARD
 } // END OF SHOW FILES FUCNTION
 
-// IF THE USER CHOOSES TO SHOW ALL FILE TYPES, SHOW THEM IN STDOUT
+/*
+ * FUNCTION NAME: ShowFileTypes()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showFileTypes: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color1: DEFINED CONSTANT STRING
+ * 	color2: DEFINED CONSTANT STRINGS
+ * 	color3: DEFINED CONSTANT STRING
+ * 
+ * DESCRIPTION:
+ *  SHOW NUMBER OF FILES OF EACH TYPE
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    showFileTypes IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - INITIALIZE CONSTANT STRING ARRAYS OF FILE EXTENTIONS
+ * 	    FOR EACH FILE TYPE
+ *
+ * 	3 - INITIALIZE STRUCTURE TO HOLD THE NUMBER OF FILES FOR ECH TYPE
+ * 	    AND INITIALIZE THEM ALL TO 0
+ *
+ * 	4 - INITIALIZE OUTTER LOOP TO LOOP THROUGH EACH FILE IN fileList
+ *
+ * 	5 - SEACH FOR THE FIRST OCCURENCE OF THE FILE SEPRARATOR "." AND STORE
+ * 	    IT TO dotptr
+ *
+ * 	6 - EVALUATE IF dotptr is RETURNS NULL or NOT. IF SO, THE FILE IS MOST LIKLEY
+ * 	    AN EXECUTABLE AND EXECUTABLE FILES MUST BE COUNTED AND FUNCTION. WILL CONTINUE
+ * 	    TO NEXT FILE. IF NOT, THEN TRY EVERY OTHER POSSIBILITY TO MATCH EVERY FILE EXTENTION
+ * 	    IN EACH FILE TYPE AND STOP AND CONTINUE THE LOOP TO THE NEXT FILE WHEN MATCHED AND
+ * 	    FREE MEMORY ALLOCATED TO FILE LIST, AND CONTINUE TO THE NEXT FILE TYPE IF NOT MATCHED
+ *
+ * 	7 - REPEAT 5 - 6 FOR EACH FILE IN FILE LIST UNTIL THE LOOP IS FINISHED
+ *
+ * 	8 - FREE THE POINTER TO FILE LIST
+ *
+ * 	9 - PRINT THE NUMBER OF EACH FILE IN EACH FILE TYPE TO STDOUT
+ *
+ * 	10 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	11 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFiles, char* color1, char* color2, char* color3)
 {
 	// IF STATEMENT GUARD
@@ -1445,7 +1516,64 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 	} // END OF IF STATEMENT GUARD
 } // END OF SHOW FILE TYPES FUNCTION
 
-// IF THE USER CHOOSES TO REMOVE EXIF METADATA FROM FILES, REMOVE ALL DATA AND SHOW STATUS TO STDOUT
+/*
+ * FUNCTION NAME: RemoveExif()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	makeVerbose: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  REMOVE EXIF METADATA FROM FILES
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * 	4 - 
+ *
+ * 	5 - 
+ *
+ * 	6 - 
+ *
+ * 	7 - 
+ *
+ * 	8 - 
+ *
+ * 	9 - 
+ *
+ * 	10 - 
+ *
+ * 	11 - 
+ *
+ * 	12 - 
+ *
+ * 	13 - 
+ *
+ * 	14 - 
+ *
+ * 	15 - 
+ *
+ * 	16 - 
+ *
+ * 	17 - 
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathToDir, unsigned short int numFiles, char* color2)
 {
 	// IF STATEMENT GUARD
