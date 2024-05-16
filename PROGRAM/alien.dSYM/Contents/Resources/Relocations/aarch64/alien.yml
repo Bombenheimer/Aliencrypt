@@ -1,0 +1,19 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     alien
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002680, symSize: 0xE08 }
+  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _numFunctionCalls, symObjAddr: 0xE738, symBinAddr: 0x10000C1E0, symSize: 0x0 }
+  - { offsetInCU: 0x69, offset: 0x69, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100002680, symSize: 0xE08 }
+  - { offsetInCU: 0x8F, offset: 0x8F, size: 0x8, addend: 0x0, symName: _main.long_options, symObjAddr: 0x56C8, symBinAddr: 0x10000C000, symSize: 0x0 }
+  - { offsetInCU: 0x806, offset: 0x806, size: 0x8, addend: 0x0, symName: _PrintUsage, symObjAddr: 0xF04, symBinAddr: 0x100003584, symSize: 0xA8 }
+  - { offsetInCU: 0x84A, offset: 0x84A, size: 0x8, addend: 0x0, symName: _PrintVersion, symObjAddr: 0xFAC, symBinAddr: 0x10000362C, symSize: 0x78 }
+  - { offsetInCU: 0x87F, offset: 0x87F, size: 0x8, addend: 0x0, symName: _PrintLogo, symObjAddr: 0x1024, symBinAddr: 0x1000036A4, symSize: 0x2C4 }
+  - { offsetInCU: 0x992, offset: 0x992, size: 0x8, addend: 0x0, symName: _ShowFiles, symObjAddr: 0x12E8, symBinAddr: 0x100003968, symSize: 0x640 }
+  - { offsetInCU: 0xACB, offset: 0xACB, size: 0x8, addend: 0x0, symName: _ShowFileTypes, symObjAddr: 0x1928, symBinAddr: 0x100003FA8, symSize: 0xF4C }
+  - { offsetInCU: 0xF21, offset: 0xF21, size: 0x8, addend: 0x0, symName: _RemoveExif, symObjAddr: 0x2874, symBinAddr: 0x100004EF4, symSize: 0x3BC }
+  - { offsetInCU: 0x1086, offset: 0x1086, size: 0x8, addend: 0x0, symName: _KeyNameGen, symObjAddr: 0x2C30, symBinAddr: 0x1000052B0, symSize: 0x26C }
+  - { offsetInCU: 0x1165, offset: 0x1165, size: 0x8, addend: 0x0, symName: _EncryptFiles, symObjAddr: 0x2E9C, symBinAddr: 0x10000551C, symSize: 0x66C }
+  - { offsetInCU: 0x1319, offset: 0x1319, size: 0x8, addend: 0x0, symName: _ShredFiles, symObjAddr: 0x3508, symBinAddr: 0x100005B88, symSize: 0x454 }
+  - { offsetInCU: 0x149A, offset: 0x149A, size: 0x8, addend: 0x0, symName: _DecryptFiles, symObjAddr: 0x395C, symBinAddr: 0x100005FDC, symSize: 0x628 }
+...

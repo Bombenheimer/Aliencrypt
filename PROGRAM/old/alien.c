@@ -37,7 +37,8 @@
 #include <stdlib.h> // FUNCTIONS AND MACROS: free(), malloc(), realloc(), size_t, NULL
 
 // EXTERNAL LIBRARIES
-#include <sodium.h> // FUNCTIONS AND MACROS: crypto_secretbox_KEYBYTES, crypto_secretbox_NONCEBYTES, crypto_secretbox_MACBYTES, sodium_init(), randombytes_buf(), crypto_secretbox_detached(), crypto_secretbox_open_detached()
+#include <sodium.h> // FUNCTIONS AND MACROS: crypto_secretbox_KEYBYTES, crypto_secretbox_NONCEBYTES, crypto_secretbox_MACBYTES, sodium_init()
+		    // randombytes_buf(), crypto_secretbox_detached(), crypto_secretbox_open_detached()
 #include <libexif/exif-data.h> // FUNCTIONS AND MACROS: exif_data_new_from_file(), exif_data_unref(), ExifData
 
 // HEADER GUARDS TO DETECT OPERATING SYSTEM
@@ -48,105 +49,101 @@
 #include <unistd.h> // FUNCTIONS: geteuid(), unlink()
 #include <dirent.h> // FUNCTIONS, MACROS, AND STRUCTS: DIR, opendir() readdir(), closedir(), struct dirent
 #include <iso646.h> // MACROS: and, or, not
-#include <getopt.h>
 
 #endif // END OF HEADER GUARD
 
-// TRUN COLOR OFF
-#define _COLOR_OFF "\033[38;5;231m" // WHITE
-
 // DEFAULT COLORS
-#define _DEFAULT_COLOR_1 "\033[38;5;46m" // GREEN
-#define _DEFAULT_COLOR_2 "\033[38;5;231m" // WHITE
-#define _DEFAULT_COLOR_3 "\033[38;5;231m" // WHITE
+#define DEFAULT_COLOR_1 "\033[38;5;46m" // GREEN
+#define DEFAULT_COLOR_2 "\033[38;5;231m" // WHITE
+#define DEFAULT_COLOR_3 "\033[38;5;231m" // WHITE
 
 // HOLIDAY SEASON COLORS
-#define _HOLIDAY_COLOR_1 "\033[38;5;160m" // RED
-#define _HOLIDAY_COLOR_2 "\033[38;5;46m" // GREEN
-#define _HOLIDAY_COLOR_3 "\033[38;5;231m" // WHITE
+#define HOLIDAY_COLOR_1 "\033[38;5;160m" // RED
+#define HOLIDAY_COLOR_2 "\033[38;5;46m" // GREEN
+#define HOLIDAY_COLOR_3 "\033[38;5;231m" // WHITE
 
 // CYBERPUNK COLORS
-#define _CYBER_COLOR_1 "\033[38;5;87m" // CYAN
-#define _CYBER_COLOR_2 "\033[38;5;184m" // YELLOW
-#define _CYBER_COLOR_3 "\033[38;5;93m" // PURPLE
+#define CYBER_COLOR_1 "\033[38;5;87m" // CYAN
+#define CYBER_COLOR_2 "\033[38;5;184m" // YELLOW
+#define CYBER_COLOR_3 "\033[38;5;93m" // PURPLE
 
 // FROZEN DARK COLORS
-#define _FROZEND_COLOR_1 "\033[38;5;111m" // ICE BLUE 
-#define _FROZEND_COLOR_2 "\033[38;5;102m" // LIGHT SLATE GREY
-#define _FROZEND_COLOR_3 "\033[38;5;67m" // STEEL BLUE
+#define FROZEND_COLOR_1 "\033[38;5;111m" // ICE BLUE 
+#define FROZEND_COLOR_2 "\033[38;5;102m" // LIGHT SLATE GREY
+#define FROZEND_COLOR_3 "\033[38;5;67m" // STEEL BLUE
 
 // PROTANOPIA COLORS
-#define _PROTAN_COLOR_1 "\033[38;5;71m" // GREEN
-#define _PROTAN_COLOR_2 "\033[38;5;255m" // WHITE
-#define _PROTAN_COLOR_3 "\033[38;5;255m" // WHITE
+#define PROTAN_COLOR_1 "\033[38;5;71m" // GREEN
+#define PROTAN_COLOR_2 "\033[38;5;255m" // WHITE
+#define PROTAN_COLOR_3 "\033[38;5;255m" // WHITE
 
 // DEUTERANOPIA COLORS
-#define _DEUTER_COLOR_1 "\033[38;5;70m" // GREEN
-#define _DEUTER_COLOR_2 "\033[38;5;255m" // WHITE
-#define _DEUTER_COLOR_3 "\033[38;5;255m" // WHITE
+#define DEUTER_COLOR_1 "\033[38;5;70m" // GREEN
+#define DEUTER_COLOR_2 "\033[38;5;255m" // WHITE
+#define DEUTER_COLOR_3 "\033[38;5;255m" // WHITE
 
 // TRITANOPIA COLORS
-#define _TRITAN_COLOR_1 "\033[38;5;82m" // GREEN
-#define _TRITAN_COLOR_2 "\033[38;5;255m" // WHITE
-#define _TRITAN_COLOR_3 "\033[38;5;255m" // WHITE
+#define TRITAN_COLOR_1 "\033[38;5;82m" // GREEN
+#define TRITAN_COLOR_2 "\033[38;5;255m" // WHITE
+#define TRITAN_COLOR_3 "\033[38;5;255m" // WHITE
 
 // GREYSCALE COLORS
-#define _GREYSC_COLOR_1 "\033[38;5;249m" // GREEN
-#define _GREYSC_COLOR_2 "\033[38;5;231m" // WHITE
-#define _GREYSC_COLOR_3 "\033[38;5;231m" // WHITE
+#define GREYSC_COLOR_1 "\033[38;5;249m" // GREEN
+#define GREYSC_COLOR_2 "\033[38;5;231m" // WHITE
+#define GREYSC_COLOR_3 "\033[38;5;231m" // WHITE
 
 // MAX PATH LENGTH
-#define _MAX_PATH_LEN 1024
+#define MAX_PATH_LEN 1024
 
 // KEY NAME LENGTH
-#define _KEY_NAME_LEN 13
+#define KEY_NAME_LEN 13
 
 // KEY SIZE, NONCE SIZE, AND TAG SIZE
-#define _KEY_SIZE crypto_secretbox_KEYBYTES
-#define _NONCE_SIZE crypto_secretbox_NONCEBYTES
-#define _TAG_SIZE crypto_secretbox_MACBYTES
+#define KEY_SIZE crypto_secretbox_KEYBYTES
+#define NONCE_SIZE crypto_secretbox_NONCEBYTES
+#define TAG_SIZE crypto_secretbox_MACBYTES
 
 // SHRED FILES BUFFER SIZE AND NUMBER OF PASSES
-#define _BUFFER_SIZE 4096
-#define _NUM_PASSES 5
+#define BUFFER_SIZE 4096
+#define NUM_PASSES 5
 
 // DEFINE NUMBER OF CURRENT SUPPORTED FILE EXTENTIONS FOR EACH FILE TYPE
-#define _ARCHIVE_NUM 38
-#define _AUDIO_NUM 17
-#define _CAD_NUM 2
-#define _DOC_NUM 21
-#define _EBOOK_NUM 21
-#define _FONT_NUM 5
-#define _IMAGE_NUM 39
-#define _PRESENT_NUM 10
-#define _SSHEET_NUM 7
-#define _VECTOR_NUM 10
-#define _VIDEO_NUM 27
-#define _SCRIPT_NUM 19
-#define _BINARY_NUM 10
-#define _CONFIG_NUM 6
-#define _TEMP_NUM 2
-#define _META_NUM 3
-#define _BACKUP_NUM 4
-#define _DB_NUM 3
-#define _LOG_NUM 1
+#define ARCHIVE_NUM 38
+#define AUDIO_NUM 17
+#define CAD_NUM 2
+#define DOC_NUM 21
+#define EBOOK_NUM 21
+#define FONT_NUM 5
+#define IMAGE_NUM 39
+#define PRESENT_NUM 10
+#define SSHEET_NUM 7
+#define VECTOR_NUM 10
+#define VIDEO_NUM 27
+#define SCRIPT_NUM 19
+#define BINARY_NUM 10
+#define CONFIG_NUM 6
+#define TEMP_NUM 2
+#define META_NUM 3
+#define BACKUP_NUM 4
+#define DB_NUM 3
+#define LOG_NUM 1
 
 // VERSION NUMBER
-#define _VER_NUM "3.1.3"
+#define VER_NUM "3.0.3"
 
 // FUNCTION PROTOTYPES FOR OPERATIONS
 int PrintLogo(bool showLogo, char* color1, char* color2);
-void PrintUsage(unsigned short int errorNum);
+void PrintUsage(bool showHelp);
 void PrintVersion(bool showVersion, char* versionNum);
 char* KeyNameGen(bool encryptFiles, char* color1, char* color2);
 
 // FUNCTION PROTOTYPES FOR OPTIONS
-void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathToDir, unsigned short int numFiles, char* color2);
-int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2);
-void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short int numFiles, char* color1, char* color2, char* color3);
-void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFiles, char* color1, char* color2, char* color3);
-int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned short int numFiles, char* pathToDir, char* color1, char* color2);
-int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyPath, char* color1, char* color2);
+void RemoveExif(bool removeExif, char** fileList, char* pathToDir, unsigned int numFiles, char* color2);
+int EncryptFiles(bool encryptFiles, unsigned int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2);
+void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int numFiles, char* color1, char* color2, char* color3);
+void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, char* color1, char* color2, char* color3);
+int ShredFiles(bool shredFiles, char** fileList, unsigned int numFiles, char* pathToDir, char* color1, char* color2);
+int DecryptFiles(bool decryptFiles, unsigned int numFiles, char** fileList, char* pathToDir, char* keyPath, char* color1, char* color2);
 
 // DEFINED TYPE FOR RESTRICTED DIRECTORIES
 typedef const char* BadDir;
@@ -154,25 +151,25 @@ typedef const char* BadDir;
 // STRUCTURE FOR NUMBER OF EACH FILE TYPE
 struct NumFileTypes
 {
-	unsigned short int archive;
-	unsigned short int audio;
-	unsigned short int cad;
-	unsigned short int document;
-	unsigned short int ebook;
-	unsigned short int font;
-	unsigned short int image;
-	unsigned short int presentation;
-	unsigned short int spreadsheet;
-	unsigned short int vector;
-	unsigned short int video;
-	unsigned short int script;
-	unsigned short int binary;
-	unsigned short int configuration;
-	unsigned short int temporary;
-	unsigned short int metadata;
-	unsigned short int backup;
-	unsigned short int database;
-	unsigned short int log;
+	unsigned int archive;
+	unsigned int audio;
+	unsigned int cad;
+	unsigned int document;
+	unsigned int ebook;
+	unsigned int font;
+	unsigned int image;
+	unsigned int presentation;
+	unsigned int spreadsheet;
+	unsigned int vector;
+	unsigned int video;
+	unsigned int script;
+	unsigned int binary;
+	unsigned int configuration;
+	unsigned int temporary;
+	unsigned int metadata;
+	unsigned int backup;
+	unsigned int database;
+	unsigned int log;
 };
 
 // GLOBAL VARIABLE FOR ALL FUNCTIONS TO USE
@@ -200,9 +197,9 @@ unsigned int numFunctionCalls = 0;
  *  1 / EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
  *  2 - FILE OR DIRECTORY NOT FOUND
  */
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  // CLOCK TIME VARIABLES
+	// CLOCK TIME VARIABLES
 	clock_t CLOCK_START, CLOCK_END;
 	double CLOCK_TIME;
 
@@ -210,35 +207,30 @@ int main(int argc, char *argv[])
 	CLOCK_START = clock();
 
 	// CHECK OPERATING SYSTEM. IF ITS NOT MACOS OR LINUX, RAISE AN ERROR
-	#if !(defined(__linux__)) && !(defined(__APPLE__) && defined(__MACH__)) && !(defined(_WIN32))
-		fprintf(stderr, "%sERROR%s: unknown Operating System.\n", color1, color2);
-		fprintf(stderr, "aliencrypt : os not supported\n";
-		return EXIT_FAILURE;
-  #elif defined(_WIN32)
-    fprintf(stderr, "%sERROR%s: windows is not supported in this program.\n", color1, color2);
-    fprintf(stderr, "aliencrypt : os not supported");
-    return EXIT_FAILURE;
+	#if !(defined(__linux__)) && !(defined(__APPLE__) && defined(__MACH__))
+		errno = 1;
+		fprintf(stderr, "%sERROR%s: Unknown Operating System.\n", color1, color2);
+		fprintf(stderr, "aliencrypt : %s\n", strerror(errno));
+		return errno;
 	#endif
-
-  // VARIABLES FOR WORKING WITH FILES
+	
+	// VARIABLES FOR WORKING WITH FILES
 	// SUBJECT TO CHANGE BASED ON USER PREFERENCES
 	char* keyName = NULL;
 	char* keyPath = NULL;
 	char* pathToDir = ".";
-  char* filePattern = NULL;
-	char fullPath[_MAX_PATH_LEN];
+	char fullPath[MAX_PATH_LEN];
 	char** fileList = NULL;
 	unsigned int numFiles = 0;
 	DIR *directory;
 	struct dirent *entry;
 	struct stat statbuf;
 
-  // VARIABLES FOR COLORS
+	// VARIABLES FOR COLORS
 	// SUBJECT TO CHANGE BASED ON USER PREFERENCES
-  unsigned short int colnum = 0;
-	char* color1 = _DEFAULT_COLOR_1;
-	char* color2 = _DEFAULT_COLOR_2;
-	char* color3 = _DEFAULT_COLOR_3;
+	char* color1 = DEFAULT_COLOR_1;
+	char* color2 = DEFAULT_COLOR_2;
+	char* color3 = DEFAULT_COLOR_3;
 
 	// VARIABLES FOR USER OPTIONS
 	// SUBJECT TO CHANGE BASED ON USER PREFERENCES
@@ -249,272 +241,378 @@ int main(int argc, char *argv[])
 	bool showFileTypes = false;
 	bool removeExif = false;
 	bool shredFiles = false;
+	bool showHelp = false;
 	bool showVersion = false;
-  bool makeVerbose = false;
 
 	// VERSION NUMBER
-	char* versionNum = _VER_NUM;
+	char* versionNum = VER_NUM;
 
-// CHECK IF USER IS RUNNING THE PROGRAM AS ROOT. IF NOT, RAISE AN ERROR
+	// CHECK IF USER IS RUNNING THE PROGRAM AS ROOT. IF NOT, RAISE AN ERROR
 	if (geteuid() != 0)
-  {
-		fprintf(stderr, "%sWARNING%s: aliencrypt MUST be run as root!\n", color1, color2);
-    PrintUsage(EXIT_FAILURE);
-		return EXIT_FAILURE;
-  }
-  else
-  {
-    // INITIALIZE LIBSODIUM
+	{
+		errno = 1;
+		fprintf(stderr, "%sWARNING%s: Aliencrypt MUST be run as root!\n", color1, color2);
+		fprintf(stderr, "aliencrypt : Operation not permitted\n");
+		return errno;
+	}
+	else
+	{
+
+		// INITIALIZE LIBSODIUM
 		if (sodium_init() == -1)
 		{
-			fprintf(stderr, "%sERROR%s: initialzation of Libsodium Failed.\n", color1, color2);
-			return EXIT_FAILURE;
+			fprintf(stderr, "%sERROR%s: Initialzation of Libsodium Failed.\n", color1, color2);
+			return 1;
 		}
 
-    // RESET ERROR NUMBER TO 0
-		errno = 0;
-
-    // STRUCTURE TO HOLD LONG ARGUMENTS
-    static struct option long_options[15] =
+		// PARSE ARGUMENTS
+		for (int i = 1; i < argc; i++)
 		{
-			{"help", no_argument, 0, 'h'},
-			{"encrypt", no_argument, NULL, 'E'},
-			{"decrypt", no_argument, NULL, 'D'},
-			{"remove-exif", no_argument, NULL, 'R'},
-			{"shred", no_argument, NULL, 'S'},
-      {"key", required_argument, NULL, 'k'},
-      {"pattern", required_argument, NULL, 'p'},
-      {"color", required_argument, NULL, 'c'},
-      {"verbose", no_argument, NULL, 'v'},
-      {"dirpath", required_argument, NULL, 'd'},
-			{"show-files", no_argument, NULL, 0},
-			{"show-file-types", no_argument, NULL, 0},
-      {"logo", no_argument, NULL, 0},
-      {"version", no_argument, NULL, 0},
-			{NULL, 0, NULL, 0}
-		};
-    
-    // CHECK THE COMMAND LINE ARGUMENTS AND CHANGE THE VARIABLES ACCRODINGLY. IF NONE ARE GIVEN, DEFAULT VALUES WILL BE USED
-		int opt, option_index = 0;
-		while ((opt = getopt_long(argc, argv, "k:c:d:p:EDRSvh", long_options, &option_index)) != -1)
-    {
-      // PARSE LONG OPTIONS THAT REQUIRE AN ARGUMENT AND DON'T HAVE A SHORT FORM EQUIVILENT
-			if ((opt == 0) and (optarg == NULL))
-      {
-        if (strcmp(long_options[option_index].name, "show-files") == 0)
-        {
-          showFiles = true;
-        }
-        else if (strcmp(long_options[option_index].name, "show-file-types") == 0)
-        {
-          showFileTypes = true;
-        }
-        else if (strcmp(long_options[option_index].name, "logo") == 0)
-        {
-          showLogo = true;
-        }
-        else if (strcmp(long_options[option_index].name, "version") == 0)
-        {
-          showVersion = true;
-        }
-      }
-      else
-      {
-        // CONVERT OPT TO AN ASCII CHARACTER
-        char charopt = (char)opt;
+			// PROGRAM OPTIONS
+			if (strcmp(argv[i], "--encrypt") == 0)
+			{
+				encryptFiles = true; // ENCRYPT FILES
+			}
+			if (strcmp(argv[i], "--decrypt") == 0)
+			{
+				decryptFiles = true; // DECRYPT FILES
+			}
+			if (strcmp(argv[i], "--show-files") == 0)
+			{
+				showFiles = true; // SHOW FILES
+			}
+			if (strcmp(argv[i], "--show-file-types") == 0)
+			{
+				showFileTypes = true; // SHOW FILE TYPES
+			}
+			if (strcmp(argv[i], "--remove-exif") == 0)
+			{
+				removeExif = true; // REMOVE EXIF METADATA
+			}
+			if (strcmp(argv[i], "--shred") == 0)
+			{
+				shredFiles = true; // SHRED FILES
+			}
+			if (strcmp(argv[i], "--help") == 0)
+			{
+				showHelp = true; // SHOW HELP MESSAGE
+			}
+			if (strcmp(argv[i], "--logo") == 0)
+			{
+				showLogo = true; // SHOW LOGO
+			}
+			if (strcmp(argv[i], "--version") == 0)
+			{
+				showVersion = true; // SHOW PROGRAM VERSION
+			}
 
-        // PARSE SHORT OPTIONS. LONG OPTIONS THAT HAVE CORRESPONDING SHORT OPTIONS WILL RETURN THE SAME RESULT
-        switch (charopt)
-        {
-          case 'E':
-            encryptFiles = true; // ENCRYPT FILES
-            break;
-          case 'D':
-            decryptFiles = true; // DECRYPT FILES
-            break;
-          case 'R':
-            removeExif = true; // REMOVE EXIF METADATA
-            break;
-          case 'S':
-            shredFiles = true; // SHRED FILES
-            break;
-          case 'h':
-            PrintUsage(EXIT_SUCCESS); // SHOW HELP MESSAGE
-            return EXIT_SUCCESS;
-            break;
-          case 'v':
-            makeVerbose = true; // SHOW ALL OUTPUT
-            break;
-          case 'd':
-            pathToDir = optarg;
-            break;
-          case 'p':
-            filePattern = optarg;
-            break;
-          case 'c':
-            colnum = atoi(optarg);
-            break;
-          case 'k':
-            keyPath = optarg;
-            break;
-          case '?':
-          default:
-            PrintUsage(EXIT_FAILURE);
-            return EXIT_FAILURE;
-        } // END OF SWITCH STATEMENT
-      } // END OF ARGUMENT CHECKING
-    } // END OF ARGUMENT PARSING
-    
-    // CHECK IF THERE ARE ANY ARGUMENTS IN ARGV THAT ARE NOT ARGUMENTS OR OPTIONS. IF SO, RAISE AN ERROR
-    if (optind < argc)
-    {
-      fprintf(stderr, "%sERROR%s : an option that is not an argument has been found.\n", color1, color2);
-      PrintUsage(EXIT_FAILURE);
-      return EXIT_FAILURE;
-    }
-
-    // CHECK IF THE USER PROVIDED NO ARGUMENTS AT ALL, OR TOO MANY. IF SO, RAISE AN ERROR
-    if (argc == 1)
-    {
-      fprintf(stderr, "%sERROR%s : no arguments provided.\n", color1, color2);
-      PrintUsage(EXIT_FAILURE);
-      return EXIT_FAILURE;
-    }
-
-    // CHANGE COLORS BASED ON USER PREFERENCES
-    if (colnum)
-    {
-      switch(colnum)
-      {
-        case 1:
-					color1 = _HOLIDAY_COLOR_1;
-					color2 = _HOLIDAY_COLOR_2;
-					color3 = _HOLIDAY_COLOR_3;
-					break;
-				case 2:
-					color1 = _CYBER_COLOR_1;
-					color2 = _CYBER_COLOR_2;
-					color3 = _CYBER_COLOR_3;
-					break;
-				case 3:
-					color1 = _FROZEND_COLOR_1;
-					color2 = _FROZEND_COLOR_2;
-					color3 = _FROZEND_COLOR_3;
-					break;
-				case 4:
-					color1 = _PROTAN_COLOR_1;
-					color2 = _PROTAN_COLOR_2;
-					color3 = _PROTAN_COLOR_3;
-					break;
-				case 5:
-					color1 = _DEUTER_COLOR_1;
-					color2 = _DEUTER_COLOR_2;
-					color3 = _DEUTER_COLOR_3;
-					break;
-				case 6:
-					color1 = _TRITAN_COLOR_1;
-					color2 = _TRITAN_COLOR_2;
-					color3 = _TRITAN_COLOR_3;
-					break;
-				case 7:
-					color1 = _GREYSC_COLOR_1;
-					color2 = _GREYSC_COLOR_2;
-					color3 = _GREYSC_COLOR_3;
-					break;
-				default:
-					fprintf(stderr, "%sERROR%s: color %hu does not exist.\n", color1, color2, colnum);
-					PrintUsage(EXIT_FAILURE);
-					return EXIT_FAILURE;
-					break;
-      } // END OF SWITCH STATEMENT
-    } // END OF COLOR FINDING
-
-    // OPEN DIRETCORY. IF IT IS NULL, RAISE AN ERROR
-    if ((directory = opendir(pathToDir)) == NULL)
-    {
-      fprintf(stderr, "%sERROR%s: directory or file does not exist or cannot be accessed.\n", color1, color2);
-      fprintf(stderr, "aliencrypt : no such file or directory\n");
-      PrintUsage(2);
-      return 2;
-    }
-    else
-    {
-      // READ DIRECTORY CONTENTS
-      while ((entry = readdir(directory)) != NULL)
-      {
-        // GET DIRECTORY ENTRIES
-        char* filename = strdup(entry->d_name);
-        snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
-
-        // SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
-        if (stat(fullPath, &statbuf) == -1){continue;}
-
-        // IF THE USER PROVIDED A FILE PATTERN,
-        // SKIP THE ENTRY IF IT IS NOT A FILE OR DOES NOT MATCH THE SEARCH PATTERN.
-        // OTHERWISE, ADD ALL FILES TO FILE LIST
-        if (filePattern != NULL)
-        {
-          if ((not( S_ISREG(statbuf.st_mode))) or (strstr(filename, filePattern) == NULL))
-          {
-            free(filename);
-            continue;
-          }
-        }
-        else
-        {
-          if (not( S_ISREG(statbuf.st_mode)))
-          {
-            free(filename);
-            continue;
-          }
-        }
-
-        // ALLOCATE MEMORY FOR FILE ENTRY
-        fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
-
-        // CHECK IF MEMORY WAS ALLOCATED
-				if (not(fileList))
+			// IF THE USER CHOOSES A COLOR PARSE THROUGH THE INPUT TO FIND THE COLOR NUMBER
+			// IF ITS AN INVALID COLOR, RAISE AN ERROR
+			if (strstr(argv[i], "--color=") != NULL)
+			{
+				// MATCH NUMBER WITH COLORS
+				switch (argv[i][8])
 				{
-					fprintf(stderr, "%sERROR%s: unable to retrive memory.\n", color1, color2);
-					fprintf(stderr, "aliencrypt : MEMFAIL\n");
-					return EXIT_FAILURE;
-        }
+					case '1':
+						color1 = HOLIDAY_COLOR_1;
+						color2 = HOLIDAY_COLOR_2;
+						color3 = HOLIDAY_COLOR_3;
+						break;
+					case '2':
+						color1 = CYBER_COLOR_1;
+						color2 = CYBER_COLOR_2;
+						color3 = CYBER_COLOR_3;
+						break;
+					case '3':
+						color1 = FROZEND_COLOR_1;
+						color2 = FROZEND_COLOR_2;
+						color3 = FROZEND_COLOR_3;
+						break;
+					case '4':
+						color1 = PROTAN_COLOR_1;
+						color2 = PROTAN_COLOR_2;
+						color3 = PROTAN_COLOR_3;
+						break;
+					case '5':
+						color1 = DEUTER_COLOR_1;
+						color2 = DEUTER_COLOR_2;
+						color3 = DEUTER_COLOR_3;
+						break;
+					case '6':
+						color1 = TRITAN_COLOR_1;
+						color2 = TRITAN_COLOR_2;
+						color3 = TRITAN_COLOR_3;
+						break;
+					case '7':
+						color1 = GREYSC_COLOR_1;
+						color2 = GREYSC_COLOR_2;
+						color3 = GREYSC_COLOR_3;
+						break;
+					default:
+						errno = 1;
+						showHelp = true;
+						fprintf(stderr, "%sERROR%s: Color %c does not exist.\n", color1, color2, argv[i][8]);
+						PrintUsage(showHelp);
+						return errno;
+						break;
+				}
+			}
 
-        // INSERT FILENAME TO THE LIST
-				fileList[numFiles++] = filename;
-      }
-    }
-    // CLOSE DIRECTORY
-    closedir(directory);
+			// IF THE USER PROVIDES A PATH, PARSE THROUGH THE INPUT TO FIND THE PATH AND COLLECT FILES FROM THAT DIRECTORY
+			// IF ITS AN INVALID PATH ARGUMENT, RAISE AN ERROR
+			// IF THE USER PROVIDED NO PATH, COLLECT FILES FROM CURRENT DIRECTORY
+			// IF THE USER PROVIDED A PATH WITH NO WILDCARD, GET THE FILES FROM THAT DIRECTORY
+			if ((strstr(argv[i], "--path=") != NULL))
+			{
+				if (argv[i][7] != '/')
+				{
+					errno = 1;
+					showHelp = true;
+					fprintf(stderr, "%sERROR%s: Invalid path argument.\n", color1, color2);
+					PrintUsage(showHelp);
+					return errno;
+				}
+				else
+				{
+					// EXTRACT FILE PATH
+					pathToDir = argv[i] + strlen("--path=");
 
-    // CHECK IF THE PROVIDED KEY FILE EXISTS. IF NOT, RAISE AN ERROR
-    if (keyPath != NULL)
-    {
-      FILE *filecheck = fopen(keyPath, "rb");
+					// EXTRACT LAST SLASH AND WILDCARD OPERATOR IN PATH ARGUMENT
+					char* searchLastSlash = strrchr(pathToDir, '/');
+					char* searchWildCard = strrchr(searchLastSlash, '*');
 
-      if (filecheck == NULL)
-      {
-        fprintf(stderr, "%sERROR%s: key file does not exist.\n", color1, color2);
-        fprintf(stderr, "aliencrypt : no such file or directory\n");
-        PrintUsage(2);
-        return 2;
-      }
-      else
-      {
-        fclose(filecheck);
-      }
-    }
+					if (searchWildCard != NULL)
+					{
+						// EXTRACT THE PATH FROM THE WILDCARD TO PREVENT AN ERROR
+						pathToDir[searchLastSlash - pathToDir] = '\0';
 
-    // CHECK IF THE USER GAVE THE DECRYPT OPTION, BUT DID NOT HAVE THE KEY OPTION. IF SO, RAISE AN ERROR
-    if ((decryptFiles) and (keyPath == NULL))
-    {
-      fprintf(stderr, "%sERROR%s: No key option provided.\n", color1, color2);
-      PrintUsage(EXIT_FAILURE);
-      return EXIT_FAILURE;
-    }
+						// OPEN DIRETCORY. IF IT IS NULL, RAISE AN ERROR
+						if ((directory = opendir(pathToDir)) != NULL)
+						{
+							// EXTRACT THE SEACH PATTERN
+							for (unsigned int i = 0; searchWildCard[i] != '\0'; i++)
+							{
+								searchWildCard[i] = searchWildCard[i + 1];
+							}
 
-    // HANDLE BOOLEAN VALUES BASED ON OPTIONS
-    if (decryptFiles == true)
+							// READ DIRECTORY CONTENTS
+							while ((entry = readdir(directory)) != NULL)
+							{
+								// GET DIRECTORY ENTRIES
+								char* filename = strdup(entry->d_name);
+								snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+								// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
+								if (stat(fullPath, &statbuf) == -1)
+								{
+									continue;
+								}
+
+								// SKIP THE ENTRY IF IT IS NOT A FILE OR DOES NOT MATCH THE SEARCH PATTERN
+								if ((not( S_ISREG(statbuf.st_mode))) or (strstr(filename, searchWildCard) == NULL))
+								{
+									free(filename);
+									continue;
+								}
+
+								// ALLOCATE MEMORY FOR FILE ENTRY
+								fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
+
+								// CHECK IF MEMORY WAS ALLOCATED
+								if (not(fileList))
+								{
+									errno = 1;
+									fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
+									fprintf(stderr, "aliencrypt : MEMFAIL\n");
+									return errno;
+								}
+
+								// INSERT FILENAME TO THE LIST
+								fileList[numFiles++] = filename;
+							}
+
+							// CLOSE DIRECTORY
+							closedir(directory);
+						}
+					}
+					else if (searchWildCard == NULL)
+					{
+						// OPEN DIRECTORY
+						if ((directory = opendir(pathToDir)) != NULL)
+						{
+							// READ DIRECTORY CONTENTS
+							while ((entry = readdir(directory)) != NULL)
+							{
+								// GET DIRECTORY ENTRIES
+								char* filename = strdup(entry->d_name);
+								snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+								// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
+								if (stat(fullPath, &statbuf) == -1)
+								{
+									continue;
+								}
+
+								// SKIP THE ENTRY IF IT IS NOT A FILE
+								if (not(S_ISREG(statbuf.st_mode)))
+								{
+									free(filename);
+									continue;
+								}
+
+								// ALLOCATE MEMORY FOR FILE ENTRY
+								fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
+
+								// CHECK IF MEMORY WAS ALLOCATED
+								if (not(fileList))
+								{
+									errno = 1;
+									fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
+									fprintf(stderr, "aliencrypt : MEMFAIL\n");
+									return errno;
+								}
+
+								// INSERT FILENAME TO THE LIST
+								fileList[numFiles++] = filename;
+							}
+
+							// CLOSE DIRECTORY
+							closedir(directory);
+						}
+						else if ((directory = opendir(pathToDir)) == NULL)
+						{
+							errno = 2;
+							fprintf(stderr, "%sERROR%s: Directory or file does not exist or cannot be accessed.\n", color1, color2);
+							fprintf(stderr, "aliencrypt : No such file or directory\n");
+							return errno;
+
+						} // END OF DIRECTORY CHECK
+					} // END OF PATH PARSING
+				} // END OF VALID PATH CHECKING
+			} // END OF PATH ARGUMENT PARSING
+
+			// IF THE USER CHOOSES THE DECRYPT OPTION, PARSE THROUGH THE INPUT TO FIND THE PATH
+			// IF ITS AN INVALID PATH ARGUMENT, RAISE AN ERROR
+			if (strstr(argv[i], "--key=") != NULL)
+			{
+				keyPath = strchr(argv[i], '/');
+
+				if (keyPath != NULL)
+				{
+					// EXTRACT KEY PATH
+					keyPath = argv[i] + strlen("--key=");
+
+					// CHECK IF FILE EXISTS
+					FILE *fileCheck = fopen(keyPath, "rb");
+
+					// RAISE AN ERROR IF THE KEY FILE DOES NOT EXIST, AND CLOSE THE FILE IF IT DOES
+					if (fileCheck == NULL)
+					{
+						errno = 2;
+						fprintf(stderr, "%sERROR%s: Key file does not exist.", color1, color2);
+						fprintf(stderr, "aliencrypt : Operation not permitted\n");
+						return errno;
+					}
+					else
+					{
+						fclose(fileCheck);
+					}
+				}
+				else
+				{
+					errno = 1;
+					showHelp = true;
+					fprintf(stderr, "%sERROR%s: Invalid key path argument.\n", color1, color2);
+					PrintUsage(showHelp);
+					return errno;
+				}
+			}
+
+			// CHECK IF ANYTHING THAT THE USER ENTERS IN STDIN IS NOT A VALID ARGUMENT. IF SO, RAISE AN ERROR
+			if ((strstr(argv[i], "--encrypt") == NULL) and (strstr(argv[i], "--decrypt") == NULL) and
+			   (strstr(argv[i], "--remove-exif") == NULL) and (strstr(argv[i], "--shred") == NULL) and
+			   (strstr(argv[i], "--help") == NULL) and (strstr(argv[i], "--path=") == NULL) and
+			   (strstr(argv[i], "--logo") == NULL) and (strstr(argv[i], "--color=") == NULL) and
+			   (strstr(argv[i], "--show-file-types") == NULL) and (strstr(argv[i], "--show-files") == NULL) and
+			   (strstr(argv[i], "--key=") == NULL) and (strstr(argv[i], "--version") == NULL))
+			{
+				errno = 1;
+				showHelp = true;
+				fprintf(stderr, "%sERROR%s: Illegal option %s\n", color1, color2, argv[i]);
+				PrintUsage(showHelp);
+				return errno;
+
+			}// END OF INVALID ARGUMENT CHECKING
+		}// END OF ARGUMENT PARSING
+
+		// CHECK IF THE USER PROVIDED NO ARGUMENTS AT ALL, OR TOO MANY. IF SO, RAISE AN ERROR
+		if (argc == 1)
+		{
+			errno = 1;
+			showHelp = true;
+			fprintf(stderr, "%sERROR%s: No arguments provided.\n", color1, color2);
+			PrintUsage(showHelp);
+			return errno;
+		}
+		else if (argc >= 12)
+		{
+			errno = 1;
+			showHelp = true;
+			fprintf(stderr, "%sERROR%s: Too many arguments.\n", color1, color2);
+			PrintUsage(showHelp);
+			return errno;
+		}
+
+		// CHECK IF ANY FILES WERE ADDED. IF NOT, THIS WOULD MEAN THAT THE USER
+		// DID NOT PROVIDE A PATH. IF SO, GET THE FILES FROM THE CURRENT DIRECTORY.
+		if (numFiles == 0)
+		{
+			// OPEN DIRECTORY
+			if ((directory = opendir(pathToDir)) != NULL)
+			{
+				// READ DIRECTORY CONTENTS
+				while ((entry = readdir(directory)) != NULL)
+				{
+					// GET DIRECTORY ENTRIES
+					char* filename = strdup(entry->d_name);
+					snprintf(fullPath, sizeof(fullPath), "%s/%s", pathToDir, filename);
+
+					// SKIP THE ENTRY IF RETRIVING INFORMATION ABOUT THE FILE FAILED
+					if (stat(fullPath, &statbuf) == -1)
+					{
+						continue;
+					}
+
+					// SKIP THE ENTRY IF IT IS NOT A FILE
+					if (not( S_ISREG(statbuf.st_mode)))
+					{
+						free(filename);
+						continue;
+					}
+
+					// ALLOCATE MEMORY FOR FILE ENTRY
+					fileList = (char **)realloc(fileList, (numFiles + 1) * sizeof(char *));
+
+					// CHECK IF MEMORY WAS ALLOCATED
+					if (not(fileList))
+					{
+						errno = 1;
+						fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
+						fprintf(stderr, "aliencrypt : MEMFAIL\n");
+						return errno;
+					}
+
+					// INSERT FILENAME TO THE LIST
+					fileList[numFiles++] = filename;
+				}
+
+				// CLOSE DIRECTORY
+				closedir(directory);
+			}
+		}
+		
+		// HANDLE BOOLEAN VALUES BASED ON OPTIONS
+		if (decryptFiles == true)
 		{
 			shredFiles = false;
 			removeExif = false;
@@ -536,6 +634,17 @@ int main(int argc, char *argv[])
 			removeExif = false;
 			shredFiles = false;
 		}
+		if (showHelp == true)
+		{
+			encryptFiles = false;
+			decryptFiles = false;
+			showFiles = false;
+			showFileTypes = false;
+			removeExif = false;
+			shredFiles = false;
+			showLogo = false;
+			showVersion = false;
+		}
 		if (showLogo == true)
 		{
 			encryptFiles = false;
@@ -544,6 +653,7 @@ int main(int argc, char *argv[])
 			showFileTypes = false;
 			removeExif = false;
 			shredFiles = false;
+			showHelp = false;
 			showVersion = false;
 		}
 		if (showVersion == true)
@@ -557,12 +667,30 @@ int main(int argc, char *argv[])
 			showLogo = false;
 		}
 
-    // EXECUTE FUNCTIONS BASED ON BOOLEAN VALUES
-    PrintVersion(showVersion, versionNum);
-    PrintLogo(showLogo, color1, color2);
+		// CHECK IF THE USER GAVE THE DECRYPT OPTION, BUT DID NOT HAVE THE KEY OPTION. IF SO, RAISE AN ERROR
+		if (keyPath == NULL)
+		{
+			// PARSE ARGUMENTS AGAIN TO FIND THE DECRYPT ARGUMENT
+			for (int i = 0; i < argc; i++)
+			{
+				// RAISE AN ERROR, BECAUSE DECRYPT ARGUMENT AS FOUND BUT THE KEY PATH WAS NOT
+				if ((strstr(argv[i], "--decrypt") != NULL))
+				{
+					errno = 1;
+					showHelp = true;
+					fprintf(stderr, "%sERROR%s: No key option provided.\n", color1, color2);
+					PrintUsage(showHelp);
+					return errno;
+				}
+			}
+		}
 
-    // EXECUTE FUNCTIONS BASED ON OPERATING SYSTEM
-// CHECK OPERATING SYSTEM FOR BAD DIRS. IF THERE IS ONE, WARN THE USER
+		// EXECUTE FUNCTIONS BASED ON BOOLEAN VALUES
+		PrintVersion(showVersion, versionNum);
+		PrintUsage(showHelp);
+		PrintLogo(showLogo, color1, color2);
+
+		// CHECK OPERATING SYSTEM FOR BAD DIRS. IF THERE IS ONE, WARN THE USER
 		#if defined(__linux__)
 			
 			// FUNCTIONS THAT DON'T NEED TO BE CHECKED FOR BAD DIRS CAN
@@ -584,9 +712,10 @@ int main(int argc, char *argv[])
 				// DIRECTORY IN THE PATH ARGUMENT
 				if ((strstr(pathToDir, LinuxDirs[i]) != NULL) and ((showFiles == false) and showFileTypes == false))
 				{
+					errno = 1;
 					fprintf(stderr, "%sWARNING%s: The directory you have entered is a sensitive directory.\n", color1, color2);
 					fprintf(stderr, "aliencrypt : %s : %s\n", LinuxDirs[i], strerror(errno));
-					return EXIT_FAILURE;
+					return errno;
 				}
 				
 				// INCREMENT
@@ -594,11 +723,11 @@ int main(int argc, char *argv[])
 			}
 
 			// EXECUTE OPTIONS BASED ON BOOLEAN VALUES
-			RemoveExif(removeExif, makeVerbose, fileList, pathToDir, numFiles, color2);
+			RemoveExif(removeExif, fileList, pathToDir, numFiles, color2);
 			keyName = KeyNameGen(encryptFiles, color1, color2);
-			EncryptFiles(encryptFiles, makeVerbose, numFiles, fileList, pathToDir, keyName, color1, color2);
-			ShredFiles(shredFiles, makeVerbose, fileList, numFiles, pathToDir, color1, color2);
-			DecryptFiles(decryptFiles, makeVerbose, numFiles, fileList, pathToDir, keyPath, color1, color2);
+			EncryptFiles(encryptFiles, numFiles, fileList, pathToDir, keyName, color1, color2);
+			ShredFiles(shredFiles, fileList, numFiles, pathToDir, color1, color2);
+			DecryptFiles(decryptFiles, numFiles, fileList, pathToDir, keyPath, color1, color2);
 
 		#elif defined(__APPLE__) and defined(__MACH__)
 
@@ -620,9 +749,10 @@ int main(int argc, char *argv[])
 				// DIRECTORY IN THE PATH ARGUMENT
 				if ((strstr(pathToDir, MacDirs[i]) != NULL) and ((showFiles == false) and showFileTypes == false))
 				{
+					errno = 1;
 					fprintf(stderr, "%sWARNING%s: The directory you have entered is a sensitive directory.\n", color1, color2);
 					fprintf(stderr, "aliencrypt : %s : %s\n", MacDirs[i], strerror(errno));
-					return EXIT_FAILURE;
+					return errno;
 				}
 
 				// INCREMENT
@@ -630,36 +760,36 @@ int main(int argc, char *argv[])
 			}
 
 			// EXECUTE OPTIONS BASED ON BOOLEAN VALUES
-			RemoveExif(removeExif, makeVerbose, fileList, pathToDir, numFiles, color2);
+			RemoveExif(removeExif, fileList, pathToDir, numFiles, color2);
 			keyName = KeyNameGen(encryptFiles, color1, color2);
-			EncryptFiles(encryptFiles, makeVerbose, numFiles, fileList, pathToDir, keyName, color1, color2);
-			ShredFiles(shredFiles, makeVerbose, fileList, numFiles, pathToDir, color1, color2);
-			DecryptFiles(decryptFiles, makeVerbose, numFiles, fileList, pathToDir, keyPath, color1, color2);
+			EncryptFiles(encryptFiles, numFiles, fileList, pathToDir, keyName, color1, color2);
+			ShredFiles(shredFiles, fileList, numFiles, pathToDir, color1, color2);
+			DecryptFiles(decryptFiles, numFiles, fileList, pathToDir, keyPath, color1, color2);
 
 		#endif // END OF OS CHECK AND FUNCTION EXECUTION
-  } // END OF ROOT USER CHECK
 
-  // INCREMENT FUNCTION CALL VARIABLE BECAUSE FUNCTION IS DONE
-  numFunctionCalls++;
+	} // END OF ROOT USER CHECK
+	
+	// INCREMENT FUNCTION CALL VARIABLE BECAUSE FUNCTION IS DONE
+	numFunctionCalls++;
 
-  // EVALUATE CLOCK TIME
-  CLOCK_END = clock();
+	// EVALUATE CLOCK TIME
+	CLOCK_END = clock();
 	CLOCK_TIME = ((double) (CLOCK_END - CLOCK_START)) / CLOCKS_PER_SEC;
-  
-  // PRINT USAGE STATISTICS TO STDOUT
-  if (makeVerbose)
-  {
-    if (numFunctionCalls > 1)
-    {
-      fprintf(stdout, "\n\n%s[%u function calls executed in %lf seconds.]\n", _COLOR_OFF, numFunctionCalls, CLOCK_TIME);
-    }
-    else
-    {
-      fprintf(stdout, "\n\n%s[%u function call executed in %lf seconds.]\n", _COLOR_OFF, numFunctionCalls, CLOCK_TIME);
-    }
-  }
-  return EXIT_SUCCESS;
-} // END OF MAIN 
+	
+	// PRINT USAGE STATISTICS TO STDOUT
+	if (numFunctionCalls > 1)
+	{
+		printf("\n\n\033[38;5;231m[%u function calls executed in %lf seconds.]\n", numFunctionCalls, CLOCK_TIME);
+	}
+	else
+	{
+		printf("\n\n\033[38;5;231m[%u function call executed in %lf seconds.]\n", numFunctionCalls, CLOCK_TIME);
+	}
+
+	return 0;
+
+} // END OF MAIN
 
 /*
  * FUNCTION NAME: PrintVersion()
@@ -698,47 +828,46 @@ void PrintVersion(bool showVersion, char* versionNum)
 	} // END OF IF STATEMENT GUARD
 } // END OF PRINT VERSION FUNCTION
 
-void PrintUsage(unsigned short int errorNum)
+/*
+ * FUNCTION NAME: PrintUsage()
+ * 
+ * OPTIONAL INPUT PARAMETERS:
+ * 	showHelp: BOOLEAN TYPE VARIABLE
+ *
+ * DESCRIPTION:
+ *  SHOW THE USAGE MESSAGE IN STDOUT
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    SHOW HELP IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - INITIALIZE PROGRAM USAGE GUIDE
+ *
+ * 	3 - PRINT USAGE MESSAGE TO STDOUT
+ *
+ * 	4 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT
+ * 	    THE FUNCTION HAS BEEN COMPLETED
+ *
+ * 	5 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
+void PrintUsage(bool showHelp)
 {
-  // LONG HELP MESSAGE
-  const char* longMsg = "aliencrypt v3.1.3\n"
-                        "Optional arguments:\n"
-                        "\t-E, --encrypt\t\t\t Encrypt a file or all files in a directory.\n"
-                        "\t-D, --decrypt\t\t\t Decrypt a file or all files in a directory.\n"
-                        "\t-R, --remove-exif\t\t Remove EXIF metadata from a file or all files in a directory (JPEG files only).\n"
-                        "\t-S, --shred\t\t\t Overwrite and delete a file or all files in a directory.\n"
-                        "\t-h, --help\t\t\t Show this help message.\n"
-                        "\t-p, --pattern FILE_PATTERN\t Operate on files that match a pattern.\n"
-                        "\t-c, --color 1234567\t\t Show program output in a different color scheme.\n"
-                        "\t-k, --key KEY_PATH\t\t Provide a generated decryption key.\n"
-                        "\t-v, --verbose\t\t\t Show all program output.\n"
-                        "\t-d, --dirpath DIR_PATH\t\t Provide a path to a directory or file.\n"
-                        "\t--show-files\t\t\t Show files and file info about a file or all files in a directory.\n"
-                        "\t--show-file-types\t\t Show the type of a file or all files in a directory.\n"
-                        "\t--logo\t\t\t\t Show program logo.\n"
-                        "\t--version\t\t\t Show program version.\n";
+	// IF STATEMENT GUARD
+	if (showHelp == true)
+	{
+		const char* usageMessage = "usage: sudo alien [--encrypt] [--decrypt] [--show-files] [--key=key_path]\n"
+		                   	"                  [--show-file-types] [--remove-exif] [--shred] [--help]\n"
+				   	"                  [--path=path_to_dir] [--logo] [--color=1234567][--version] \n";
+		fprintf(stderr, "%s", usageMessage);
 
-  // SHORT HELP MESSAGE
-  const char* shortMsg = "usage: sudo alien [-EDRSpvh] [-d DIR_PATH] [-c 1234567] [-k KEY_PATH]\n"
-                         "                  [--encrypt] [--decrypt] [--remove-exif] [--shred]\n"
-                         "                  [--help] [--color 1234567] [--key KEY_PATH]\n"
-                         "                  [--dirpath DIR_PATH] [--verbose] [--show-files]\n"
-                         "                  [--show-file-types] [--logo] [--version]\n"
-                         "                  [--pattern FILE_PATTERN]\n";
+		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
+		numFunctionCalls++;
 
-  if (errorNum)
-  {
-    fprintf(stdout, "%s", shortMsg);
-  }
-  else
-  {
-    fprintf(stderr, "%s", longMsg);
-  }
-
-  // INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
-  numFunctionCalls++;
-
-} // END OF PRINT USAGE FUNCTION
+	} // END OF IF STATEMENT GUARD
+} // END OF PRINT USAGE MESSAGE FUNCTION
 
 /*
  * FUNCTION NAME: PrintLogo()
@@ -798,7 +927,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		char* L7 = "                       Aliencrypt (Unix C Version)\n";
 		char* L8 = "                   [Program designed by Bombenheimer]\n";
 		char* L9 = "                    https://github.com/Bombenheimer/\n";
-		char* L10 = "                                 v3.1.3\n";
+		char* L10 = "                                 v3.0.3\n";
 
 		// GET THE LENGTH OF THE PROGRAM LOGO
 		int programLogoLen = snprintf(NULL, 0, "%s%s %s %s %s %s%s %s %s %s %s %s%s", color1, L1, L2, L3, L4, L5, color2, L6, L7, L8, L9, color1, L10);
@@ -904,7 +1033,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
  *
  * RETURN VALUE: VOID
  */
-void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short int numFiles, char* color1, char* color2, char* color3)
+void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned int numFiles, char* color1, char* color2, char* color3)
 {
 	// IF STATEMENT GUARD
 	if (showFiles == true)
@@ -1015,84 +1144,84 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short 
 } // END OF SHOW FILES FUCNTION
 
 // IF THE USER CHOOSES TO SHOW ALL FILE TYPES, SHOW THEM IN STDOUT
-void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFiles, char* color1, char* color2, char* color3)
+void ShowFileTypes(bool showFileTypes, char** fileList, unsigned int numFiles, char* color1, char* color2, char* color3)
 {
 	// IF STATEMENT GUARD
 	if (showFileTypes == true)
 	{
 		// ARCHIVE FILE EXTENTIONS
-		const char* archiveTypes[_ARCHIVE_NUM] = {".7z", ".ace", ".alz", ".arc", ".arj", ".bz", ".bz2", ".cab", ".cpio", ".deb",
-	                                            ".dmg", ".gz", ".img", ".iso", ".jar", ".lha", ".lz", ".lzma", ".lzo", ".rar",
-	                                            ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo",
-		                                          ".tar.xz", ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
+		const char* archiveTypes[ARCHIVE_NUM] = {".7z", ".ace", ".alz", ".arc", ".arj", ".bz", ".bz2", ".cab", ".cpio", ".deb",
+	                                           ".dmg", ".gz", ".img", ".iso", ".jar", ".lha", ".lz", ".lzma", ".lzo", ".rar",
+	                                           ".rpm", ".rz", ".tar", ".tar.7z", ".tar.bz", ".tar.bz2", ".tar.gz", ".tar.lzo",
+		                                         ".tar.xz", ".tar.z", ".tbz", ".tbz2", ".tgz", ".tz", ".tzo", ".xz", ".z", ".zip"};
 
 		// AUDIO FILE EXTENTIONS
-		const char* audioTypes[_AUDIO_NUM] = {".aac", ".ac3", ".aif", ".aifc", ".aiff", ".amr", ".au", ".caf", ".flac", ".m4a",
-	                                        ".m4b", ".mp3", ".oga", ".voc", ".wav", ".weba", ".wma"};
+		const char* audioTypes[AUDIO_NUM] = {".aac", ".ac3", ".aif", ".aifc", ".aiff", ".amr", ".au", ".caf", ".flac", ".m4a",
+	                                       ".m4b", ".mp3", ".oga", ".voc", ".wav", ".weba", ".wma"};
 
 		// CAD FILE EXTENTIONS
-		const char* cadTypes[_CAD_NUM] = {".wdg", ".dxf"};
+		const char* cadTypes[CAD_NUM] = {".wdg", ".dxf"};
 
-		const char* documentTypes[_DOC_NUM] = {".abw", ".djvu", ".doc", ".docm", ".docx", ".dot", ".dotx", ".html", ".hwp", ".lwp",
-	                                         ".md", ".odt", ".pages", ".pdf", ".rst", ".rtf", ".tex", ".txt", ".wpd", ".wps", ".zabw"};
+		const char* documentTypes[DOC_NUM] = {".abw", ".djvu", ".doc", ".docm", ".docx", ".dot", ".dotx", ".html", ".hwp", ".lwp",
+	                                        ".md", ".odt", ".pages", ".pdf", ".rst", ".rtf", ".tex", ".txt", ".wpd", ".wps", ".zabw"};
 
 		// EBOOK FILE EXTENTIONS
-		const char* ebookTypes[_EBOOK_NUM] = {".azw", ".azw3", ".azw4", ".cbc", ".cbr", ".cbz", ".chm", ".epub", ".fb2", ".htm",
-	                                        ".htmlz", ".lit", ".lrf", ".mobi", ".pdb", ".pml", ".prc", ".rb", ".snb", ".tcr", ".txtz"};
+		const char* ebookTypes[EBOOK_NUM] = {".azw", ".azw3", ".azw4", ".cbc", ".cbr", ".cbz", ".chm", ".epub", ".fb2", ".htm",
+	                                       ".htmlz", ".lit", ".lrf", ".mobi", ".pdb", ".pml", ".prc", ".rb", ".snb", ".tcr", ".txtz"};
 
 		// FONT FILE EXTENTIONS
-		const char* fontTypes[_FONT_NUM] = {".eot", ".otf", ".ttf", ".woff", ".woff2"};
+		const char* fontTypes[FONT_NUM] = {".eot", ".otf", ".ttf", ".woff", ".woff2"};
 
 		// IMAGE FILE EXTENTIONS
-		const char* imageTypes[_IMAGE_NUM] = {".3fr", ".arw", ".avif", ".bmp", ".cr2", ".cr3", ".crw", ".dcr", ".dng", ".eps",
-	                                        ".erf", ".gif", ".heic", ".heif", ".icns", ".ico", ".jfif", ".jpeg", ".jpg", ".mos",
-	                                        ".mrw", ".nef", ".odd", ".odg", ".orf", ".pef", ".png", ".ppm", ".ps", ".psd",
-	                                        ".raf", ".raw", ".rw2", ".tif", ".tiff", ".webp", ".x3f", ".xcf", ".xps"};
+		const char* imageTypes[IMAGE_NUM] = {".3fr", ".arw", ".avif", ".bmp", ".cr2", ".cr3", ".crw", ".dcr", ".dng", ".eps",
+	                                       ".erf", ".gif", ".heic", ".heif", ".icns", ".ico", ".jfif", ".jpeg", ".jpg", ".mos",
+	                                       ".mrw", ".nef", ".odd", ".odg", ".orf", ".pef", ".png", ".ppm", ".ps", ".psd",
+	                                       ".raf", ".raw", ".rw2", ".tif", ".tiff", ".webp", ".x3f", ".xcf", ".xps"};
 
 		// PRESENTATION FILE EXTENTIONS
-		const char* presentationTypes[_PRESENT_NUM] = {".dps", ".key", ".odp", ".pot", ".potx", ".pps", ".ppsx", ".ppt", ".pptm", ".pptx"};
+		const char* presentationTypes[PRESENT_NUM] = {".dps", ".key", ".odp", ".pot", ".potx", ".pps", ".ppsx", ".ppt", ".pptm", ".pptx"};
 
 		// SPREADSHEET FILE EXTENTIONS
-		const char* spreadsheetTypes[_SSHEET_NUM] = {".csv", ".et", ".ods", ".xls", ".xlsm", ".xlsx", ".numbers"};
+		const char* spreadsheetTypes[SSHEET_NUM] = {".csv", ".et", ".ods", ".xls", ".xlsm", ".xlsx", ".numbers"};
 
 		// VECTOR FILE EXTENTIONS
-		const char* vectorTypes[_VECTOR_NUM] = {".ai", ".cdr", ".cgm", ".emf", ".sk", ".sk1", ".svg", ".svgz", ".vsd", ".wmf"};
+		const char* vectorTypes[VECTOR_NUM] = {".ai", ".cdr", ".cgm", ".emf", ".sk", ".sk1", ".svg", ".svgz", ".vsd", ".wmf"};
 
 		// VIDEO FILE EXTENTIONS
-		const char* videoTypes[_VIDEO_NUM] = {".3g2", ".3gp", ".3gpp", ".avi", ".cavs", ".dv", ".dvr", ".flv", ".m2ts", ".m4v",
-	                                        ".mkv", ".mod", ".mov", ".mp4", ".mpeg", ".mpg", ".mts", ".mxf", ".ogg", ".rm",
-	                                        ".rmvb", ".swf", ".ts", ".vob", ".webm", ".wmv", ".wtv"};
+		const char* videoTypes[VIDEO_NUM] = {".3g2", ".3gp", ".3gpp", ".avi", ".cavs", ".dv", ".dvr", ".flv", ".m2ts", ".m4v",
+	                                       ".mkv", ".mod", ".mov", ".mp4", ".mpeg", ".mpg", ".mts", ".mxf", ".ogg", ".rm",
+	                                       ".rmvb", ".swf", ".ts", ".vob", ".webm", ".wmv", ".wtv"};
 
 		// SCRIPT OR PROGRAMMING LANGUAGE FILE EXTENTIONS
-		const char* scriptTypes[_SCRIPT_NUM] = {".py", ".c", ".java", ".sh", ".cpp", ".lol", ".js", ".asm", ".cmd", ".bat",
-	                                          ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs", ".h", ".hpp"};
+		const char* scriptTypes[SCRIPT_NUM] = {".py", ".c", ".java", ".sh", ".cpp", ".lol", ".js", ".asm", ".cmd", ".bat",
+	                                         ".php", ".lua", ".ps1", ".vbs", ".swift", ".sql", ".cs", ".h", ".hpp"};
 
 		// BINARY FILE EXTENTIONS
-		const char* binaryTypes[_BINARY_NUM] = {".exe", ".out", ".dll", ".bin", ".elf", ".app", ".apk", ".so", ".class", ".jar"};
+		const char* binaryTypes[BINARY_NUM] = {".exe", ".out", ".dll", ".bin", ".elf", ".app", ".apk", ".so", ".class", ".jar"};
 
 		// CONFIGURATION FILE EXTENTIONS
-		const char* configTypes[_CONFIG_NUM] = {".ini", ".cfg", ".conf", ".properties", ".yaml", ".yml"};
+		const char* configTypes[CONFIG_NUM] = {".ini", ".cfg", ".conf", ".properties", ".yaml", ".yml"};
 
 		// TEMPORARY FILE EXTENTIONS
-		const char* tempTypes[_TEMP_NUM] = {".tmp", ".temp"};
+		const char* tempTypes[TEMP_NUM] = {".tmp", ".temp"};
 
 		// METADATA FILE EXTENTIONS
-		const char* metadataTypes[_META_NUM] = {".json", ".meta", ".xml"};
+		const char* metadataTypes[META_NUM] = {".json", ".meta", ".xml"};
 
 		// BACKUP FILE EXTENTIONS
-		const char* backupTypes[_BACKUP_NUM] = {".old", ".bkp", ".backup", ".bak"};
+		const char* backupTypes[BACKUP_NUM] = {".old", ".bkp", ".backup", ".bak"};
 
 		// DATABASE FILE EXTENTIONS
-		const char* databaseTypes[_DB_NUM] = {".db", ".sqlite", ".mdb"};
+		const char* databaseTypes[DB_NUM] = {".db", ".sqlite", ".mdb"};
 
 		// LOG FILE EXTENTIONS
-		const char* logTypes[_LOG_NUM] = {".log"};
+		const char* logTypes[LOG_NUM] = {".log"};
 
 		// NUMBER OF EACH FILE TYPE
 		struct NumFileTypes NumFile = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 		// OUTER LOOP FOR NUMBER OF FILES
-		for (unsigned short int i = 0; i < numFiles; i++)
+		for (unsigned int i = 0; i < numFiles; i++)
 		{
 			// SEARCH FOR EXTENTION AND FILENAME SEPERATOR
 			char* dotptr = strrchr(fileList[i], '.');
@@ -1103,7 +1232,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				const char* fileExtention = strchr(fileList[i], '.');
 
 				// INNER LOOP FOR FILE TYPE ARCHIVE
-				for (unsigned short int j = 0; j < _ARCHIVE_NUM; j++)
+				for (unsigned int j = 0; j < ARCHIVE_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, archiveTypes[j]) == 0)
@@ -1119,7 +1248,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE AUDIO
-				for (unsigned short int j = 0; j < _AUDIO_NUM; j++)
+				for (unsigned int j = 0; j < AUDIO_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, audioTypes[j]) == 0)
@@ -1135,7 +1264,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE CAD
-				for (unsigned short int j = 0; j < _CAD_NUM; j++)
+				for (unsigned int j = 0; j < CAD_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, cadTypes[j]) == 0)
@@ -1151,7 +1280,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE DOCUMENT
-				for (unsigned short int j = 0; j < _DOC_NUM; j++)
+				for (unsigned int j = 0; j < DOC_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, documentTypes[j]) == 0)
@@ -1167,7 +1296,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE EBOOK
-				for (unsigned short int j = 0; j < _EBOOK_NUM; j++)
+				for (unsigned int j = 0; j < EBOOK_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, ebookTypes[j]) == 0)
@@ -1182,8 +1311,9 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 					}
 				}
 		
+			
 				// INNER LOOP FOR FILE TYPE FONT
-				for (unsigned short int j = 0; j < _FONT_NUM; j++)
+				for (unsigned int j = 0; j < FONT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, fontTypes[j]) == 0)
@@ -1196,10 +1326,11 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 					{
 						continue;
 					}
+			
 				}
 
 				// INNER LOOP FOR FILE TYPE IMAGE
-				for (unsigned short int j = 0; j < _IMAGE_NUM; j++)
+				for (unsigned int j = 0; j < IMAGE_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, imageTypes[j]) == 0)
@@ -1215,7 +1346,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE PRESENTATION
-				for (unsigned short int j = 0; j < _PRESENT_NUM; j++)
+				for (unsigned int j = 0; j < PRESENT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, presentationTypes[j]) == 0)
@@ -1231,7 +1362,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 		
 				// INNER LOOP FOR FILE TYPE SPREADSHEET
-				for (unsigned short int j = 0; j < _SSHEET_NUM; j++)
+				for (unsigned int j = 0; j < SSHEET_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, spreadsheetTypes[j]) == 0)
@@ -1247,7 +1378,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 		
 				// INNER LOOP FOR FILE TYPE VECTOR
-				for (unsigned short int j = 0; j < _VECTOR_NUM; j++)
+				for (unsigned int j = 0; j < VECTOR_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, vectorTypes[j]) == 0)
@@ -1263,7 +1394,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE VIDEO
-				for (unsigned short int j = 0; j < _VIDEO_NUM; j++)
+				for (unsigned int j = 0; j < VIDEO_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, videoTypes[j]) == 0)
@@ -1279,7 +1410,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE SCRIPT
-				for (unsigned short int j = 0; j < _SCRIPT_NUM; j++)
+				for (unsigned int j = 0; j < SCRIPT_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, scriptTypes[j]) == 0)
@@ -1295,7 +1426,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE BINARY
-				for (unsigned short int j = 0; j < _BINARY_NUM; j++)
+				for (unsigned int j = 0; j < BINARY_NUM; j++)
 				{	
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, binaryTypes[j]) == 0)
@@ -1311,7 +1442,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 		
 				// INNER LOOP FOR FILE TYPE CONFIG
-				for (unsigned short int j = 0; j < _CONFIG_NUM; j++)
+				for (unsigned int j = 0; j < CONFIG_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, configTypes[j]) == 0)
@@ -1327,7 +1458,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE TEMP
-				for (unsigned short int j = 0; j < _TEMP_NUM; j++)
+				for (unsigned int j = 0; j < TEMP_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, tempTypes[j]) == 0)
@@ -1343,7 +1474,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 		
 				// INNER LOOP FOR FILE TYPE 
-				for (unsigned short int j = 0; j < _META_NUM; j++)
+				for (unsigned int j = 0; j < META_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, metadataTypes[j]) == 0)
@@ -1359,7 +1490,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE BACKUP
-				for (unsigned short int j = 0; j < _BACKUP_NUM; j++)
+				for (unsigned int j = 0; j < BACKUP_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, backupTypes[j]) == 0)
@@ -1375,7 +1506,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE DATABASE
-				for (unsigned short int j = 0; j < _DB_NUM; j++)
+				for (unsigned int j = 0; j < DB_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, databaseTypes[j]) == 0)
@@ -1391,7 +1522,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 				}
 
 				// INNER LOOP FOR FILE TYPE LOG
-				for (unsigned short int j = 0; j < _LOG_NUM; j++)
+				for (unsigned int j = 0; j < LOG_NUM; j++)
 				{
 					// CHECK IF THE FILE EXTENTION IS AN EXACT MATCH. IF NOT, CONTINUE
 					if (strcmp(fileExtention, logTypes[j]) == 0)
@@ -1418,26 +1549,26 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 
 		// PRINT NUMBER OF EACH FILE TYPE TO STDOUT
 		printf("                                %sFILE TYPES\n\n", color1);
-		printf("%sAll Files: %s%hu\033[38;5;231m\n\n", color2, color3, numFiles);
+		printf("%sAll Files: %s%u\033[38;5;231m\n\n", color2, color3, numFiles);
 		printf("%sArchive and Package Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.archive);
-		printf("%sAudio Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.audio);
-		printf("%sCad Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.cad);
-		printf("%sDocument Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.document);
-		printf("%sEbook Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
-		printf("%sFont Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.font);
-		printf("%sImage Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.image);
-		printf("%sPresentation Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
-		printf("%sSpreadsheet Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
-		printf("%sVector Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.vector);
-		printf("%sVideo Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.video);
-		printf("%sScript Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.script);
-		printf("%sBinary and Executable Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.binary);
-		printf("%sConfiguration Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
-		printf("%sTemporary Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
-		printf("%sMetadata Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
-		printf("%sBackup Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.backup);
-		printf("%sDatabase Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.database);
-		printf("%sLog Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.log);
+		printf("%sAudio Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.audio);
+		printf("%sCad Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.cad);
+		printf("%sDocument Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.document);
+		printf("%sEbook Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
+		printf("%sFont Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.font);
+		printf("%sImage Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.image);
+		printf("%sPresentation Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
+		printf("%sSpreadsheet Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
+		printf("%sVector Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.vector);
+		printf("%sVideo Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.video);
+		printf("%sScript Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.script);
+		printf("%sBinary and Executable Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.binary);
+		printf("%sConfiguration Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
+		printf("%sTemporary Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
+		printf("%sMetadata Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
+		printf("%sBackup Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.backup);
+		printf("%sDatabase Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.database);
+		printf("%sLog Files: %s%u\033[38;5;231m\n\n", color2, color3, NumFile.log);
 
 		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
@@ -1446,16 +1577,13 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 } // END OF SHOW FILE TYPES FUNCTION
 
 // IF THE USER CHOOSES TO REMOVE EXIF METADATA FROM FILES, REMOVE ALL DATA AND SHOW STATUS TO STDOUT
-void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathToDir, unsigned short int numFiles, char* color2)
+void RemoveExif(bool removeExif, char** fileList, char* pathToDir, unsigned int numFiles, char* color2)
 {
 	// IF STATEMENT GUARD
 	if (removeExif == true)
 	{
 		// PRINT SPACE BEFORE PROGRAM START
-    if (makeVerbose)
-    {
-		  printf("\n\n");
-    }
+		printf("\n\n");
 
 		// INDICATE SUCCESS OR FAIL
 		const char* X_MARK_COL = "\033[38;5;160m";
@@ -1470,8 +1598,8 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 		unsigned char exif_marker[] = {0xFF, 0xE1};
 		unsigned char marker[2];
 
-		// FOR LOOP FOR NUM FILES
-		for (unsigned short int i = 0; i < numFiles; i++)
+		// FOR LOOP FOR NUM FILES	
+		for (unsigned int i = 0; i < numFiles; i++)
 		{
 			// ALLOCATE MEMORRY FOR FULL FILE PATH
 			char* pathToFile = (char *)malloc(strlen(pathToDir) + strlen(fileList[i]) + 2);
@@ -1503,10 +1631,7 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 				// CHECK IF FILE CAN BE OPENED
 				if (readfile == NULL and writefile == NULL)
 				{
-          if (makeVerbose)
-          {
-					  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-          }
+					printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 					free(pathToFile);
 					continue;
 				}
@@ -1534,18 +1659,12 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 				
 				// FREE MEMORY AND PRINT SUCCESS STATUS TO STDOUT
 				exif_data_unref(exif_data); // FREE MEMORY BACK TO SYSTEM
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
 				free(pathToFile);
 			}
 			else
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(pathToFile);
 				continue;
 			}
@@ -1562,7 +1681,7 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 {
 	// ALLOCATE SPACE FOR THE KEY NAME
-	char* fullKeyName = (char *)malloc(sizeof(char *) * _KEY_NAME_LEN + 9);
+	char* fullKeyName = (char *)malloc(sizeof(char *) * KEY_NAME_LEN + 9);
 
 	// CHECK IF MEMORY WAS ALLOCATED
 	if (not(fullKeyName))
@@ -1585,7 +1704,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 
 		// FORMATED STRING AND ARRAY TO HOLD GENERATED KEYNAME
 		char* keyName = "KEY-%s.key";
-		char genString[_KEY_NAME_LEN + 1];
+		char genString[KEY_NAME_LEN + 1];
 
 		// PRINT START OF OPERATION STATUS TO STDOUT
 		printf("%sGenerating key for decryption...\033[38;5;231m\n", color2);
@@ -1594,7 +1713,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 		srand(time(NULL));
 
 		// GENERATE KEYNAME
-		for (unsigned int i = 0; i < _KEY_NAME_LEN - 1;)
+		for (unsigned int i = 0; i < KEY_NAME_LEN - 1;)
 		{
 			int charSet = rand() % 2;
 			int charSetLen = strlen(keyChars[charSet]);
@@ -1606,10 +1725,10 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 		}
 
 		// NULL TERMINATE GENERATED STRING
-		genString[_KEY_NAME_LEN - 1] = '\0';
+		genString[KEY_NAME_LEN - 1] = '\0';
 		
 		// COPY CONTENTS TO KEYNAME VARIABLE
-		snprintf(fullKeyName, _KEY_NAME_LEN + 9, keyName, genString);
+		snprintf(fullKeyName, KEY_NAME_LEN + 9, keyName, genString);
 
 		// INCREMENT NUM OF FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
@@ -1625,7 +1744,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 } // END OF KEY NAME GENERATION FUNCTION
 
 // IF THE USER CHOOSES TO REMOVE ENCRYPT FILES, ENCRYPT THEM AND SHOW THEIR STATUS TO STDOUT
-int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2)
+int EncryptFiles(bool encryptFiles, unsigned int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
 	if (encryptFiles == true)
@@ -1643,16 +1762,16 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 		printf("%sStarting encryption...\033[38;5;231m\n", color2);
 
 		// GENERATE RANDOM KEY
-		unsigned char key[_KEY_SIZE];
-		randombytes_buf(key, _KEY_SIZE);
+		unsigned char key[KEY_SIZE];
+		randombytes_buf(key, KEY_SIZE);
 
 		// WRITE KEY TO KEY FILE
 		FILE *keyGen = fopen(keyName, "wb");
-		fwrite(key, 1, _KEY_SIZE, keyGen);
+		fwrite(key, 1, KEY_SIZE, keyGen);
 		fclose(keyGen);
 
 		// FOR LOOP FOR NUM FILES
-		for (unsigned short int i = 0; i < numFiles; i++)
+		for (unsigned int i = 0; i < numFiles; i++)
 		{
 			// ALLOCATE MEMORY FOR FULL FILE PATH
 			char* pathToFile = (char *)malloc(strlen(pathToDir) + strlen(fileList[i]) + 2);
@@ -1685,10 +1804,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			// TEST IF FILE CAN BE OPENED. IF NOT, PRINT FAIL STATUS AND CONTINUE
 			if (readfile == NULL)
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(pathToFile);
 				continue;
 			}
@@ -1716,12 +1832,12 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			fclose(readfile);
 
 			// GENERATE A RANDOM NONCE
-			unsigned char nonce[_NONCE_SIZE];
-			randombytes_buf(nonce, _NONCE_SIZE);
+			unsigned char nonce[NONCE_SIZE];
+			randombytes_buf(nonce, NONCE_SIZE);
 
 			// ALLOCATE MEMORY FOR THE ENCRYPTED DATA
-			unsigned char *encrypted_data = (unsigned char *)malloc(inputSize + _TAG_SIZE);
-			unsigned char tag[_TAG_SIZE];
+			unsigned char *encrypted_data = (unsigned char *)malloc(inputSize + TAG_SIZE);
+			unsigned char tag[TAG_SIZE];
 
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(encrypted_data))
@@ -1751,10 +1867,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF FILE CAN BE WRITTEN TO
 			if (writefile == NULL)
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(inputData);
 				free(encrypted_data);
 				free(fileList[i]);
@@ -1763,16 +1876,13 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			}
 
 			// WRITE ENCRYPTED DATA BACK TO FILE
-			fwrite(nonce, 1, _NONCE_SIZE, writefile);
-			fwrite(tag, 1, _TAG_SIZE, writefile);
+			fwrite(nonce, 1, NONCE_SIZE, writefile);
+			fwrite(tag, 1, TAG_SIZE, writefile);
 			fwrite(encrypted_data, 1, inputSize, writefile);
 			fclose(writefile);
 			
 			// PRINT SUCCESS STATUS TO STDOUT
-      if (makeVerbose)
-      {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
-      }
+			printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
 
 			// FREE MEMORY BACK TO SYSTEM
 			free(inputData);
@@ -1794,16 +1904,13 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 } // END OF ENCRYPT FILES FUNCTION
 
 // IF THE USER CHOOSES TO OVERWRITE AND DELETE THE FILES, OVERWRITE AND DELETE THEM AND SHOW THEIR STATUS IN STDOUT
-int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned short int numFiles, char* pathToDir, char* color1, char* color2)
+int ShredFiles(bool shredFiles, char** fileList, unsigned int numFiles, char* pathToDir, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
 	if (shredFiles == true)
 	{
 		// PRINT SPACE BEFORE PROGRAM START
-    if (makeVerbose)
-    {
-		  printf("\n\n");
-    }
+		printf("\n\n");
 
 		// INDICATE SUCCESS OR FAIL
 		const char* X_MARK_COL = "\033[38;5;160m";
@@ -1815,7 +1922,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 		printf("%sStarting file shreding...\033[38;5;231m\n", color2);
 
 		// FOR LOOP FOR NUM FILES
-		for (unsigned short int i = 0; i < numFiles; i++)
+		for (unsigned int i = 0; i < numFiles; i++)
 		{
 			// ALLOCATE MEMORY FOR FULL FILE PATH
 			char* pathToFile = (char *)malloc(strlen(pathToDir) + strlen(fileList[i]) + 2);
@@ -1844,29 +1951,26 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 
 			// OPEN THE FILE FOR READING AND WRITING AND INITIALIZE BUFFER AND BYTES
 			FILE *file = fopen(pathToFile, "rb+");
-			unsigned char buffer[_BUFFER_SIZE];
+			unsigned char buffer[BUFFER_SIZE];
 			size_t bytes_read;
 
 			// CHECK IF FILE CAN BE OPENED FOR READING AN WRITING
 			if (file == NULL)
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(pathToFile);
 				free(fileList[i]);
 				continue;
 			}
 
 			// OVERWRITE THR FILE WITH RANDOM BYTES OF DATA
-			for (int pass = 0; pass < _NUM_PASSES; pass++)
+			for (int pass = 0; pass < NUM_PASSES; pass++)
 			{
 				// RESET FILE POSITION TO BEGINNING
 				fseek(file, 0, SEEK_SET);
 
 				// FILL BUFFER WITH DATA
-				while ((bytes_read = fread(buffer, 1, _BUFFER_SIZE, file)) > 0)
+				while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, file)) > 0)
 				{
 					for (size_t i = 0; i < bytes_read; i++)
 					{
@@ -1889,10 +1993,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 			unlink(pathToFile);
 
 			// PRINT SUCCESS STATUS TO STDOUT
-      if (makeVerbose)
-      {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
-      }
+			printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
 
 			// FREE MEMORY BACK TO SYSTEM
 			free(pathToFile);
@@ -1909,7 +2010,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 } // END OF SHRED FILES FUNCTION
 
 // IF THE USER CHOOSES TO REMOVE ENCRYPT FILES, ENCRYPT THEM AND SHOW THEIR STATUS TO STDOUT
-int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyPath, char* color1, char* color2)
+int DecryptFiles(bool decryptFiles, unsigned int numFiles, char** fileList, char* pathToDir, char* keyPath, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
 	if (decryptFiles == true)
@@ -1952,9 +2053,9 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			strcat(pathToFile, fileList[i]);
 
 			// READ KEY FROM FILE
-			unsigned char key[_KEY_SIZE];
+			unsigned char key[KEY_SIZE];
 			FILE *keyRead = fopen(keyPath, "rb");
-			fread(key, 1, _KEY_SIZE, keyRead);
+			fread(key, 1, KEY_SIZE, keyRead);
 			fclose(keyRead);
 
 			// OPEN ENCRYPTED FILE
@@ -1963,28 +2064,25 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF FILE CAN BE OPENED
 			if (readfile == NULL)
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(pathToFile);
 				continue;
 			}
 
 			// READ NONCE FROM FILE
-			unsigned char nonce[_NONCE_SIZE];
+			unsigned char nonce[NONCE_SIZE];
 			fseek(readfile, 0, SEEK_SET);
-			fread(nonce, 1, _NONCE_SIZE, readfile);
+			fread(nonce, 1, NONCE_SIZE, readfile);
 
 			// READ AUTHENTICATION TAG FROM FILE
-			unsigned char tag[_TAG_SIZE];
-			fseek(readfile, _NONCE_SIZE, SEEK_SET);
-			fread(tag, 1, _TAG_SIZE, readfile);
+			unsigned char tag[TAG_SIZE];
+			fseek(readfile, NONCE_SIZE, SEEK_SET);
+			fread(tag, 1, TAG_SIZE, readfile);
 
 			// GET ENCRYPTED DATA SIZE
 			fseek(readfile, 0, SEEK_END);
-			long encrypted_size = ftell(readfile) - _NONCE_SIZE - _TAG_SIZE;
-			fseek(readfile, _NONCE_SIZE + _TAG_SIZE, SEEK_SET);
+			long encrypted_size = ftell(readfile) - NONCE_SIZE - TAG_SIZE;
+			fseek(readfile, NONCE_SIZE + TAG_SIZE, SEEK_SET);
 
 			// ALLOCATE MEMORY FOR ENCRYPTED FILE DATA
 			unsigned char *encrypted_data = (unsigned char *)malloc(encrypted_size);
@@ -2031,10 +2129,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF FILE CAN BE WRITTEN TO
 			if (writefile == NULL)
 			{
-        if (makeVerbose)
-        {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
-        }
+				printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
 				free(decrypted_data);
 				free(encrypted_data);
 				free(pathToFile);
@@ -2042,14 +2137,11 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			}
 
 			// WRITE DECRYPTED DATA BACK TO FILE
-			fwrite(decrypted_data, 1, encrypted_size - _TAG_SIZE, writefile);
+			fwrite(decrypted_data, 1, encrypted_size - TAG_SIZE, writefile);
 			fclose(writefile);
 
 			// PRINT SUCCESS STATUS TO STDOUT
-      if (makeVerbose)
-      {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
-      }
+			printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
 
 			// FREE MEMORY BACK TO SYSTEM
 			free(encrypted_data);
