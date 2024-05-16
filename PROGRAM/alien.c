@@ -1528,7 +1528,7 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
  * 	color2: DEFINED CONSTANT STRING
  *
  * DESCRIPTION:
- *  REMOVE EXIF METADATA FROM FILES
+ *  REMOVE EXIF METADATA FROM A FILE OR FILES IN A DIRECTORY
  * 
  * PROGRAM EXECUTION STEPS:
  * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
@@ -1686,7 +1686,64 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 	} // END OF IF STATEMENT GUARD
 } // END OF REMOVE EXIF METADATA FUNCTION
 
-// IF THE USER CHOOSES TO ENCRYPT FILES, FIRST GENERATE A NAME FOR THE KEY
+/*
+ * FUNCTION NAME: KeyNameGen()
+ * 
+ * INPUT PARAMETERS:
+ * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	makeVerbose: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  GENERATE A NAME FOR A DECRYPTION KEY
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * 	4 - 
+ *
+ * 	5 - 
+ *
+ * 	6 - 
+ *
+ * 	7 - 
+ *
+ * 	8 - 
+ *
+ * 	9 - 
+ *
+ * 	10 - 
+ *
+ * 	11 - 
+ *
+ * 	12 - 
+ *
+ * 	13 - 
+ *
+ * 	14 - 
+ *
+ * 	15 - 
+ *
+ * 	16 - 
+ *
+ * 	17 - 
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 {
 	// ALLOCATE SPACE FOR THE KEY NAME
@@ -1752,7 +1809,64 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 
 } // END OF KEY NAME GENERATION FUNCTION
 
-// IF THE USER CHOOSES TO REMOVE ENCRYPT FILES, ENCRYPT THEM AND SHOW THEIR STATUS TO STDOUT
+/*
+ * FUNCTION NAME: EncryptFiles()
+ * 
+ * INPUT PARAMETERS:
+ * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	makeVerbose: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  ENCRYPT A FILE OR FILES IN A DIRECTORY
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * 	4 - 
+ *
+ * 	5 - 
+ *
+ * 	6 - 
+ *
+ * 	7 - 
+ *
+ * 	8 - 
+ *
+ * 	9 - 
+ *
+ * 	10 - 
+ *
+ * 	11 - 
+ *
+ * 	12 - 
+ *
+ * 	13 - 
+ *
+ * 	14 - 
+ *
+ * 	15 - 
+ *
+ * 	16 - 
+ *
+ * 	17 - 
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
@@ -1921,7 +2035,64 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 
 } // END OF ENCRYPT FILES FUNCTION
 
-// IF THE USER CHOOSES TO OVERWRITE AND DELETE THE FILES, OVERWRITE AND DELETE THEM AND SHOW THEIR STATUS IN STDOUT
+/*
+ * FUNCTION NAME: ShredFiles()
+ * 
+ * INPUT PARAMETERS:
+ * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	makeVerbose: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  OVERWRITE AND DELETE A  FILE OR FILES IN A DIRECTORY
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * 	4 - 
+ *
+ * 	5 - 
+ *
+ * 	6 - 
+ *
+ * 	7 - 
+ *
+ * 	8 - 
+ *
+ * 	9 - 
+ *
+ * 	10 - 
+ *
+ * 	11 - 
+ *
+ * 	12 - 
+ *
+ * 	13 - 
+ *
+ * 	14 - 
+ *
+ * 	15 - 
+ *
+ * 	16 - 
+ *
+ * 	17 - 
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned short int numFiles, char* pathToDir, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
@@ -2036,7 +2207,64 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 
 } // END OF SHRED FILES FUNCTION
 
-// IF THE USER CHOOSES TO REMOVE ENCRYPT FILES, ENCRYPT THEM AND SHOW THEIR STATUS TO STDOUT
+/*
+ * FUNCTION NAME: DecryptFiles()
+ * 
+ * INPUT PARAMETERS:
+ * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	makeVerbose: BOOLEAN TYPE VARIABLE
+ * 	fileList: STRING ARRAY TYPE VARIABLE
+ * 	pathToDir: CHAR ARRAY TYPE VARIABLE
+ * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	color2: DEFINED CONSTANT STRING
+ *
+ * DESCRIPTION:
+ *  DECRYPT A FILE OR FILES IN A DIRECTORY WITH A USER PROVIDED DECRYPTION KEY
+ * 
+ * PROGRAM EXECUTION STEPS:
+ * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
+ *
+ * 	2 - 
+ *
+ * 	3 - 
+ *
+ * 	4 - 
+ *
+ * 	5 - 
+ *
+ * 	6 - 
+ *
+ * 	7 - 
+ *
+ * 	8 - 
+ *
+ * 	9 - 
+ *
+ * 	10 - 
+ *
+ * 	11 - 
+ *
+ * 	12 - 
+ *
+ * 	13 - 
+ *
+ * 	14 - 
+ *
+ * 	15 - 
+ *
+ * 	16 - 
+ *
+ * 	17 - 
+ *
+ * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	     HAS BEEN COMPLETED
+ *
+ * 	19 - END FUNCTION
+ *
+ * RETURN VALUE: VOID
+ */
 int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyPath, char* color1, char* color2)
 {
 	// IF STATEMENT GUARD
@@ -2194,5 +2422,4 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 	return 0;
 
 } // END OF DECRYPT FILES FUNCTION
-
  // END OF PROGRAM
