@@ -846,7 +846,7 @@ int PrintLogo(bool showLogo, char* color1, char* color2)
 		system("clear");
 
 		// PRINT LOGO
-		printf("%s", programLogo);
+		fprintf(stdout, "%s", programLogo);
 
 		// FREE ALLOCATED MEMORY BACK TO SYSTEM
 		free(programLogo);
@@ -943,7 +943,7 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short 
 		struct stat file_stat;
 
 		// PRINT TITLE AND CATEGORIES
-		printf("%s%s%s%s", color1, listLineHead1, listLineHead2, color2);
+		fprintf(stdout, "%s%s%s%s", color1, listLineHead1, listLineHead2, color2);
 
 		// OUTER LOOP FOR NUM FILES
 		for (unsigned int i = 0; i < numFiles; i++)
@@ -1000,19 +1000,19 @@ void ShowFiles(bool showFiles, char** fileList, char* pathToDir, unsigned short 
 
 				if (i + 1 < 10)
 				{
-					printf("%s%d%s...............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
+					fprintf(stdout, "%s%d%s...............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
 				}
 				if (i + 1 >= 10)
 				{
-					printf("%s%d%s..............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
+					fprintf(stdout, "%s%d%s..............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
 				}
 				if (i + 1 >= 100)
 				{
-					printf("%s%d%s.............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
+					fprintf(stdout, "%s%d%s.............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
 				}
 				if (i + 1 >= 1000)
 				{
-					printf("%s%d%s............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
+					fprintf(stdout, "%s%d%s............%06.2lf %s...............%o...............%s\n\n", color3, i + 1, color2, size, size_unit, permissions, fileList[i]);
 				}
 			}
 			else
@@ -1488,27 +1488,27 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
 		free(fileList);
 
 		// PRINT NUMBER OF EACH FILE TYPE TO STDOUT
-		printf("                                %sFILE TYPES\n\n", color1);
-		printf("%sAll Files: %s%hu\033[38;5;231m\n\n", color2, color3, numFiles);
-		printf("%sArchive and Package Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.archive);
-		printf("%sAudio Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.audio);
-		printf("%sCad Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.cad);
-		printf("%sDocument Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.document);
-		printf("%sEbook Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
-		printf("%sFont Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.font);
-		printf("%sImage Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.image);
-		printf("%sPresentation Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
-		printf("%sSpreadsheet Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
-		printf("%sVector Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.vector);
-		printf("%sVideo Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.video);
-		printf("%sScript Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.script);
-		printf("%sBinary and Executable Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.binary);
-		printf("%sConfiguration Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
-		printf("%sTemporary Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
-		printf("%sMetadata Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
-		printf("%sBackup Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.backup);
-		printf("%sDatabase Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.database);
-		printf("%sLog Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.log);
+		fprintf(stdout, "                                %sFILE TYPES\n\n", color1);
+	  fprintf(stdout, "%sAll Files: %s%hu\033[38;5;231m\n\n", color2, color3, numFiles);
+		fprintf(stdout, "%sArchive and Package Files: %s%d\033[38;5;231m\n\n", color2, color3, NumFile.archive);
+		fprintf(stdout, "%sAudio Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.audio);
+		fprintf(stdout, "%sCad Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.cad);
+		fprintf(stdout, "%sDocument Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.document);
+		fprintf(stdout, "%sEbook Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.ebook);
+		fprintf(stdout, "%sFont Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.font);
+		fprintf(stdout, "%sImage Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.image);
+		fprintf(stdout, "%sPresentation Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.presentation);
+		fprintf(stdout, "%sSpreadsheet Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.spreadsheet);
+		fprintf(stdout, "%sVector Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.vector);
+		fprintf(stdout, "%sVideo Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.video);
+		fprintf(stdout, "%sScript Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.script);
+		fprintf(stdout, "%sBinary and Executable Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.binary);
+		fprintf(stdout, "%sConfiguration Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.configuration);
+		fprintf(stdout, "%sTemporary Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.temporary);
+		fprintf(stdout, "%sMetadata Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.metadata);
+		fprintf(stdout, "%sBackup Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.backup);
+		fprintf(stdout, "%sDatabase Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.database);
+		fprintf(stdout, "%sLog Files: %s%hu\033[38;5;231m\n\n", color2, color3, NumFile.log);
 
 		// INCREMENT NUM FUNCTION CALLS BECAUSE FUNCTION IS DONE
 		numFunctionCalls++;
@@ -1535,42 +1535,60 @@ void ShowFileTypes(bool showFileTypes, char** fileList, unsigned short int numFi
  * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
  * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
  *
- * 	2 - 
+ * 	2 - ADD A SPACE AT THE BEGINNING OF THE FUNCTIONS
+ * 	    EXECUTION IF THE USER CHOOSES VERBOSE OUTPUT
  *
- * 	3 - 
+ * 	3 - INITIALIZE STATUS VARIABLES THAT WILL BE
+ * 	    PRINTED IF THE USER CHHOSES TO SHOW VERBOSE
+ * 	    OUTPUT WHEN makeVerbose IS TRUE
  *
- * 	4 - 
+ * 	4 - INFORM THE USER THE THE FUNCTION IS STARTING
  *
- * 	5 - 
+ * 	5 - INITIALIZE EXIF DATA MARKERS
  *
- * 	6 - 
+ * 	6 - INITIALIZE OUTTER FOR LOOP TO LOOP THROUGH
+ * 	    EACH FILE
  *
- * 	7 - 
+ * 	7 - ALLOCATE MEMORY FOR THE FULL FILE PATH TO
+ * 	    THE FILE pathToFile
  *
- * 	8 - 
+ * 	8 - COPY THE DIR PATH TO pathToFile
  *
- * 	9 - 
+ * 	9 - ADD A PATH SEPERATOR IN pathToFile IF THERE IS
+ * 	    NOT ONE ALREADY PROVIDED BY THER USER
  *
- * 	10 - 
+ * 	10 - APPEND THE FILE NAME TO pathToFile
  *
- * 	11 - 
+ * 	11 - CHECK TO SEE IF EXIF DATA CAN BE LOADED FROM 
+ * 	     THE FILE. IF NOT, PRINT A FAIL STATUS IF makeVerbose
+ * 	     IS TRUE, FREE MEMORY ALLOCATED TO pathToFile, AND
+ * 	     CONTINUE TO THE NEXT FILE IN THE LIST
  *
- * 	12 - 
+ * 	12 - OPEN THE FILE IN WRITE MODE AND AGAIN IN READ MODE
  *
- * 	13 - 
+ * 	13 - CHECK IF THE FILE CAN BE OPENED. IF NOT, PRINT A FAIL
+ * 	     STATUS IF makeVerbose IS TRUE, FREE MEMORY ALLOCATED
+ * 	     TO pathToFile, AND CONTINUE TO THE NEXT FILE IN THE
+ * 	     LIST
  *
- * 	14 - 
+ * 	14 - READ FILE CONTENTS AND SKIP ANY DATA THAT MATCHES
+ * 	     THE EXIF MARKERS AND STORE IT TO THE readfile
+ * 	     FILE POINTER
  *
- * 	15 - 
+ * 	15 - WRITE CONTENTS READ FROM readfile BACK TO THE FILE
+ * 	     WITHOUT THE EXIF DATA
  *
- * 	16 - 
+ * 	16 - CLOSE BOTH readfile AND writefile FILE POINTERS
  *
- * 	17 - 
+ * 	17 - FREE LOADED EXIF DATA BACK TO SYSTEM
  *
- * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	18 - PRINT SUCCESS STATUS TO STDOUT IF makeVerbose IS 
+ * 	     TRUE, THEN FREE MEMORY ALLOCATED TO pathToFile
+ *
+ * 	19 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
  * 	     HAS BEEN COMPLETED
  *
- * 	19 - END FUNCTION
+ * 	20 - END FUNCTION
  *
  * RETURN VALUE: VOID
  */
@@ -1582,17 +1600,20 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 		// PRINT SPACE BEFORE PROGRAM START
     if (makeVerbose)
     {
-		  printf("\n\n");
+		  fprintf(stdout, "\n\n");
     }
 
-		// INDICATE SUCCESS OR FAIL
-		const char* X_MARK_COL = "\033[38;5;160m";
-		const char* CHECK_MARK_COL = "\033[38;5;119m";
-		const char* X = "\xE2\x9C\x97";
-		const char* CHECK = "\xE2\x9C\x94";
+		// VARIABLES TO INDICATE SUCCESS OR FAIL OF DATA REMOVAL
+    if (makeVerbose)
+    {
+		  const char* X_MARK_COL = "\033[38;5;160m";
+		  const char* CHECK_MARK_COL = "\033[38;5;119m";
+		  const char* X = "\xE2\x9C\x97";
+		  const char* CHECK = "\xE2\x9C\x94";
+    }
 
 		// PRINT START OF PROGRAM STATUS TO STDOUT
-		printf("%sRemoving exif metadata...\033[38;5;231m\n", color2);
+		fprintf(stdout, "%sRemoving exif metadata...\033[38;5;231m\n", color2);
 
 		// VARIABLES FOR EXIF MARKERS
 		unsigned char exif_marker[] = {0xFF, 0xE1};
@@ -1629,11 +1650,11 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 				FILE *writefile = fopen(pathToFile, "wb");
 
 				// CHECK IF FILE CAN BE OPENED
-				if (readfile == NULL and writefile == NULL)
+				if ((readfile == NULL) and (writefile == NULL))
 				{
           if (makeVerbose)
           {
-					  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+					  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
           }
 					free(pathToFile);
 					continue;
@@ -1660,11 +1681,13 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 				fclose(readfile);
 				fclose(writefile);
 				
-				// FREE MEMORY AND PRINT SUCCESS STATUS TO STDOUT
-				exif_data_unref(exif_data); // FREE MEMORY BACK TO SYSTEM
+        // FREE MEMORY BACK TO SYSTEM
+				exif_data_unref(exif_data);
+
+        // PRINT SUCCESS STATUS TO STDOUT
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
         }
 				free(pathToFile);
 			}
@@ -1672,7 +1695,7 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(pathToFile);
 				continue;
@@ -1690,30 +1713,28 @@ void RemoveExif(bool removeExif, bool makeVerbose, char** fileList, char* pathTo
  * FUNCTION NAME: KeyNameGen()
  * 
  * INPUT PARAMETERS:
- * 	removeExif: BOOLEAN TYPE VARIABLE
- * 	makeVerbose: BOOLEAN TYPE VARIABLE
- * 	fileList: STRING ARRAY TYPE VARIABLE
- * 	pathToDir: CHAR ARRAY TYPE VARIABLE
- * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	encryptFiles: BOOLEAN TYPE VARIABLE
+ * 	color1: DEFINED CONSTANT STRING
  * 	color2: DEFINED CONSTANT STRING
  *
  * DESCRIPTION:
  *  GENERATE A NAME FOR A DECRYPTION KEY
  * 
  * PROGRAM EXECUTION STEPS:
- * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
- * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	1 - ALLOCATE MEMORY FOR THE DECRYPTION KEY FILE NAME
+ *
+ * 	2 - CHECK IF MEMORY FOR fullKeyName WAS ALLOCATED
+ *
+ * 	3 - USE THE IF STATEMENT GUARD TO EVALUATE IF
+ * 	    encryptFiles IS TRUE OR FALSE. IF IT IS TRUE,
  * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
  *
- * 	2 - 
+ * 	4 - INITIALIZE OUTTER FOR LOOP TO LOOP THROUGH
+ * 	    EACH FILE
  *
- * 	3 - 
+ * 	5 - CHECK IF MEMORY WAS ALLOCATED TO pathToFile
  *
- * 	4 - 
- *
- * 	5 - 
- *
- * 	6 - 
+ * 	6 - COPY THE DIR PATH TO pathToFile
  *
  * 	7 - 
  *
@@ -1752,10 +1773,9 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 	// CHECK IF MEMORY WAS ALLOCATED
 	if (not(fullKeyName))
 	{
-		errno = 1;
 		fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 		fprintf(stderr, "aliencrypt : MEMFAIL\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	// IF STATEMENT GUARD
@@ -1763,7 +1783,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 	{
 
 		// PRINT SPACE BEFORE PROGRAM START
-		printf("\n\n");
+		fprintf(stdout, "\n\n");
 
 		// CHAR SETS
 		const char* keyChars[] = {"0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
@@ -1773,7 +1793,7 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
 		char genString[_KEY_NAME_LEN + 1];
 
 		// PRINT START OF OPERATION STATUS TO STDOUT
-		printf("%sGenerating key for decryption...\033[38;5;231m\n", color2);
+		fprintf(stdout, "%sGenerating key for decryption...\033[38;5;231m\n", color2);
 		
 		// SEED THE RANDOM NUMBER GENERATOR
 		srand(time(NULL));
@@ -1813,11 +1833,13 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
  * FUNCTION NAME: EncryptFiles()
  * 
  * INPUT PARAMETERS:
- * 	removeExif: BOOLEAN TYPE VARIABLE
+ * 	encryptFiles: BOOLEAN TYPE VARIABLE
  * 	makeVerbose: BOOLEAN TYPE VARIABLE
- * 	fileList: STRING ARRAY TYPE VARIABLE
- * 	pathToDir: CHAR ARRAY TYPE VARIABLE
  * 	numFiles: UNSIGNED SHORT INT TYPE VARIABLE
+ * 	fileList: CHAR ARRAY TYPE VARIABLE
+ * 	pathToDir: STRING TYPE VARIABLE
+ * 	keyName: STRING TYPE VARIABLE
+ * 	color1: DEFINED CONSTANT STRING
  * 	color2: DEFINED CONSTANT STRING
  *
  * DESCRIPTION:
@@ -1825,47 +1847,95 @@ char* KeyNameGen(bool encryptFiles, char* color1, char* color2)
  * 
  * PROGRAM EXECUTION STEPS:
  * 	1 - USE THE IF STATEMENT GUARD TO EVALUATE IF
- * 	    removeExif IS TRUE OR FALSE. IF IT IS TRUE,
+ * 	    encryptFiles IS TRUE OR FALSE. IF IT IS TRUE,
  * 	    THE PROGRAM WILL CONTINUE AND END IF NOT
  *
- * 	2 - 
+ * 	2 - INITIALIZE STATUS VARIABLES THAT WILL BE
+ * 	    PRINTED IF THE USER CHHOSES TO SHOW VERBOSE
+ * 	    OUTPUT WHEN makeVerbose is TRUE
  *
- * 	3 - 
+ * 	3 - INFORM THE USER WHAT THE NAME OF THE 
+ * 	    DECRYPTION KEY IS
  *
- * 	4 - 
+ * 	4 - INFORM THE USER THAT THE FUNCTION IS STARTING
  *
- * 	5 - 
+ * 	5 - GENERATE A RANDOM KEY
  *
- * 	6 - 
+ * 	6 - WRITE THE KEY TO A FILE USING THE GENERATED KEY
+ * 	    NAME
  *
- * 	7 - 
+ * 	7 - INITIALIZE OUTER LOOP TO LOOP THROUGH EACH FILE
  *
- * 	8 - 
+ * 	8 - ALLOCATE MEMORY FOR THE FULL FILE PATH TO
+ * 	    THE FILE pathToFile
  *
- * 	9 - 
+ * 	9 - ADD A PATH SEPERATOR IN pathToFile IF THERE IS
+ * 	    NOT ONE ALREADY PROVIDED BY THER USER
  *
- * 	10 - 
+ * 	10 - APPEND THE FILE NAME TO pathToFile
  *
- * 	11 - 
+ * 	11 - OPEN pathToFile IN READ BINARY MODE
  *
- * 	12 - 
+ * 	12 - CHECK IF pathToFile CAN BE OPENED. IF NOT,
+ * 	     PRINT A FAIL STATUS IF makeVerbose IS TRUE,
+ * 	     THEN FREE MEMORY ALLOCATED TO pathToFile AND
+ * 	     THEN CONTINUE TO THE NEXT FILE
  *
- * 	13 - 
+ * 	13 - GET THE SIZE OF THE FILE AT pathToFile AND STORE 
+ * 	     IT TO VARIABLE inputSize
  *
- * 	14 - 
+ * 	14 - ALLOCATE MEMORY FOR FILE DATA inputData
  *
- * 	15 - 
+ * 	15 - CHECK IF MEMORY CAN BE ALLOCATED TO inputData.
+ * 	     IF NOT, FREE MEMORY ALLOCATED TO pathToFile, THEN
+ * 	     PRINT A MEMFAIL STATEMENT AND END THE PROGRAM
  *
- * 	16 - 
+ * 	16 - READ THE FILE DATA AND STORE IT TO inputData
  *
- * 	17 - 
+ * 	17 - GENERATE A RANDOM NONCE
  *
- * 	18 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
+ * 	18 - ALLOCATE MEMORY FOR THE ENCRYPTED DATA encrypted_data
+ *
+ * 	19 - CHECK IF MEMORY CAN BE ALLOCATED TO encrypted_data.
+ * 	     IF NOT, FREE MEMORY ALLOCATED TO pathToFile, THEN
+ * 	     PRINT A MEMFAIL STATEMENT AND END THE PROGRAM
+ *
+ * 	20 - ENCRYPT THE DATA
+ *
+ * 	21 - CHECK IF THE DATA WAS ENCRYPTED. IF NOT, FREE MEMORY
+ * 	     ALLOCATED TO encrypted_data, inputData, AND inputSize
+ * 	     BACK TO SYSTEM AND THEN PRINT A MEMFAIL STATEMENT AND
+ * 	     END THE PROGRAM
+ *
+ * 	22 - OPEN FILE pathToFile IN WRITE BINARY MODE TO WRITE ENCRYPTED
+ * 	     DATA BACK TO IT
+ *
+ * 	23 - CHECK IF pathToFile CAN BE OPENED FOR WRITING. IF NOT,
+ * 	     PRINT A FAIL STATUS, IF makeVerbose IS TRUE, FREE
+ * 	     MEMORY ALLOCATED TO encrypted_data, inputData, pathToFile,
+ * 	     AND THE CURRENT ELEMENT IN fileList BACK TO SYSTEM, AND THEN
+ * 	     CONTINUE TO THE NEXT FILE
+ *
+ * 	24 - WRITE ENCRYPTED DATA BACK TO FILE AND CLOSE IT
+ *
+ * 	25 - PRINT A SUCCESS STATUS IF makeVerbose IS TRUE
+ *
+ * 	26 - FREE MEMORY ALLOCATED TO inputData, encrypted_data, AND 
+ * 	     pathToFile
+ *
+ * 	27 - REPEAT STEPS 8 - 26 UNTIL EACH FILE HAS BEEN ENCRYPTED IN THE
+ * 	     FILE LIST
+ *
+ * 	28 - FREE MEMORY ALLOCATED TO KEY NAME keyName BACK TO SYSTEM
+ *
+ * 	29 - INCREMENT NUM FUNCTION CALLS TO INDICATE THAT THE FUNCTION
  * 	     HAS BEEN COMPLETED
  *
- * 	19 - END FUNCTION
+ * 	30 - END FUNCTION
  *
- * RETURN VALUE: VOID
+ * RETURN VALUE:
+ *  EXIT_SUCCESS - SUCCESSFUL PROGRAM EXECUTION
+ *  EXIT_FAILURE - UNSUCCESSFUL PROGRAM EXECUTION; OPERAION NOT PERMITTED
  */
 int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFiles, char** fileList, char* pathToDir, char* keyName, char* color1, char* color2)
 {
@@ -1873,16 +1943,19 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 	if (encryptFiles == true)
 	{
 		// INDICATE SUCCESS OR FAIL
-		const char* X_MARK_COL = "\033[38;5;160m";
-		const char* CHECK_MARK_COL = "\033[38;5;119m";
-		const char* X = "\xE2\x9C\x97";
-		const char* CHECK = "\xE2\x9C\x94";
+    if (makeVerbose)
+    {
+		  const char* X_MARK_COL = "\033[38;5;160m";
+		  const char* CHECK_MARK_COL = "\033[38;5;119m";
+		  const char* X = "\xE2\x9C\x97";
+		  const char* CHECK = "\xE2\x9C\x94";
+    }
 
 		// PRINT WHERE THE KEY IS SAVED IN STDOUT
-		printf("Key is saved in : %s%s\n", color1, keyName);
+		fprintf(stdout, "Key is saved in : %s%s\n", color1, keyName);
 
 		// PRINT START OF PROGRAM STATUS TO STDOUT
-		printf("%sStarting encryption...\033[38;5;231m\n", color2);
+		fprintf(stdout, "%sStarting encryption...\033[38;5;231m\n", color2);
 
 		// GENERATE RANDOM KEY
 		unsigned char key[_KEY_SIZE];
@@ -1902,10 +1975,9 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(pathToFile))
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// COPY PATH TO DIRECTORY TO FULL FILE PATH VARIABLE
@@ -1929,7 +2001,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(pathToFile);
 				continue;
@@ -1947,10 +2019,9 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			if (not(inputData))
 			{
 				fclose(readfile);
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// READ THE FILE DATA
@@ -1969,22 +2040,20 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			if (not(encrypted_data))
 			{
 				free(pathToFile);
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// ENCRYPT THE DATA
 			if (crypto_secretbox_detached(encrypted_data, tag, inputData, inputSize, nonce, key) != 0)
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to encrypt file %s.\n", color1, color2, pathToFile);
 				fprintf(stderr, "aliencrypt : ENCRYPT_ERR\n");
 				free(inputData);
 				free(encrypted_data);
 				free(pathToFile);
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// OPEN FILE TO WRITE
@@ -1995,7 +2064,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(inputData);
 				free(encrypted_data);
@@ -2013,7 +2082,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 			// PRINT SUCCESS STATUS TO STDOUT
       if (makeVerbose)
       {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
+			  fprintf(stdout, "%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
       }
 
 			// FREE MEMORY BACK TO SYSTEM
@@ -2031,7 +2100,7 @@ int EncryptFiles(bool encryptFiles, bool makeVerbose, unsigned short int numFile
 
 	} // END OF IF STATEMENT GUARD
 	
-	return 0;
+	return EXIT_SUCCESS;
 
 } // END OF ENCRYPT FILES FUNCTION
 
@@ -2101,7 +2170,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 		// PRINT SPACE BEFORE PROGRAM START
     if (makeVerbose)
     {
-		  printf("\n\n");
+		  fprintf(stdout, "\n\n");
     }
 
 		// INDICATE SUCCESS OR FAIL
@@ -2111,7 +2180,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 		const char* CHECK = "\xE2\x9C\x94";
 
 		// PRINT START OF PROGRAM STATUS TO STDOUT
-		printf("%sStarting file shreding...\033[38;5;231m\n", color2);
+		fprintf(stdout, "%sStarting file shreding...\033[38;5;231m\n", color2);
 
 		// FOR LOOP FOR NUM FILES
 		for (unsigned short int i = 0; i < numFiles; i++)
@@ -2122,10 +2191,9 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(pathToFile))
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// COPY PATH TO DIRECTORY TO FULL FILE PATH VARIABLE
@@ -2151,7 +2219,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(pathToFile);
 				free(fileList[i]);
@@ -2190,7 +2258,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 			// PRINT SUCCESS STATUS TO STDOUT
       if (makeVerbose)
       {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
+			  fprintf(stdout, "%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
       }
 
 			// FREE MEMORY BACK TO SYSTEM
@@ -2203,7 +2271,7 @@ int ShredFiles(bool shredFiles, bool makeVerbose, char** fileList, unsigned shor
 
 	} // END OF IF STATEMENT GUARD
 	
-	return 0;
+	return EXIT_SUCCESS;
 
 } // END OF SHRED FILES FUNCTION
 
@@ -2277,7 +2345,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 		const char* CHECK = "\xE2\x9C\x94";
 
 		// PRINT START OF PROGRAM STATUS TO STDOUT
-		printf("%sStarting decryption...\033[38;5;231m\n", color2);
+		fprintf(stdout, "%sStarting decryption...\033[38;5;231m\n", color2);
 
 		// FOR LOOP FOR NUM FILES
 		for (unsigned int i = 0; i < numFiles; i++)
@@ -2288,10 +2356,9 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(pathToFile))
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// COPY PATH TO DIRECTORY TO FULL FILE PATH VARIABLE
@@ -2321,7 +2388,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(pathToFile);
 				continue;
@@ -2348,10 +2415,9 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(encrypted_data))
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// READ ENCRYPTED DATA FROM ENCRYPTED FILE AND CLOSE THE FILE
@@ -2364,10 +2430,9 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// CHECK IF MEMORY WAS ALLOCATED
 			if (not(decrypted_data))
 			{
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to retrive memory.\n", color1, color2);
 				fprintf(stderr, "aliencrypt : MEMFAIL\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// DECRYPT THE DATA
@@ -2375,10 +2440,9 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			{
 				free(decrypted_data);
 				free(encrypted_data);
-				errno = 1;
 				fprintf(stderr, "%sERROR%s: Unable to encrypt file %s.\n", color1, color2, pathToFile);
 				fprintf(stderr, "aliencrypt : ENCRYPT_ERR\n");
-				return errno;
+				return EXIT_FAILURE;
 			}
 
 			// WRITE OPEN FILE TO WRITE
@@ -2389,7 +2453,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			{
         if (makeVerbose)
         {
-				  printf("%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
+				  fprintf(stdout, "%s%s%s: %s\n", X_MARK_COL, X, color2, pathToFile);
         }
 				free(decrypted_data);
 				free(encrypted_data);
@@ -2404,7 +2468,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 			// PRINT SUCCESS STATUS TO STDOUT
       if (makeVerbose)
       {
-			  printf("%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
+			  fprintf(stdout, "%s%s%s: %s\n", CHECK_MARK_COL, CHECK, color2, pathToFile);
       }
 
 			// FREE MEMORY BACK TO SYSTEM
@@ -2419,7 +2483,7 @@ int DecryptFiles(bool decryptFiles, bool makeVerbose, unsigned short int numFile
 
 	} // END OF IF STATEMENT GUARD
 
-	return 0;
+	return EXIT_SUCCESS;
 
 } // END OF DECRYPT FILES FUNCTION
  // END OF PROGRAM
